@@ -1856,7 +1856,7 @@ Light:
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1.61
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -1889,13 +1889,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 170076733}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 118.2, z: 0}
+  m_LocalRotation: {x: -0.033256512, y: -0.39790693, z: -0.10085596, w: 0.9112586}
+  m_LocalPosition: {x: 225.58865, y: 16.41, z: -159.08347}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: -8.098001, y: -46.529003, z: -9.145}
 --- !u!1 &175841821
 GameObject:
   m_ObjectHideFlags: 0
@@ -19601,6 +19601,16 @@ Prefab:
         type: 2}
       propertyPath: m_Intensity
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 108384628292632340, guid: 3f986823c4e971c4e8d4fd2f45c78ee8,
+        type: 2}
+      propertyPath: m_Lightmapping
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 108384628292632340, guid: 3f986823c4e971c4e8d4fd2f45c78ee8,
+        type: 2}
+      propertyPath: m_Shadows.m_Type
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f986823c4e971c4e8d4fd2f45c78ee8, type: 2}
