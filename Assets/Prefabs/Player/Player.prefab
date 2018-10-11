@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 114695043097716968}
   - component: {fileID: 114347368707838464}
   - component: {fileID: 114011987467300822}
+  - component: {fileID: 114774859497858988}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1187,6 +1188,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 200
+--- !u!114 &114774859497858988
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1439525827173438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c639741292e28846a6fb850b4f832ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  absorber: {fileID: 1815046931754396}
+  absorberParticles: {fileID: 198178394643270880}
+  minParticleCount: 100
+  maxParticleCount: 500
+  maxShieldSize: 5
+  sizeIncreaseRate: 0.3
+  minHealthDecreaseRate: 0.25
+  minDamageAmount: 10
 --- !u!135 &135987185668063648
 SphereCollider:
   m_ObjectHideFlags: 1
