@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FortBlast.Player
+namespace FortBlast.Player.Data
 {
     public static class PlayerData
     {
@@ -14,5 +14,6 @@ namespace FortBlast.Player
         // Movement Params
         public const string HorizontalAxis = "Horizontal";
         public const string VerticalAxis = "Vertical";
+        public const string MouseX = "Mouse X";
     }
 }

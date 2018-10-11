@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using FortBlast.Player.Data;
 using UnityEngine;
 
-namespace FortBlast.Player
+namespace FortBlast.Player.Movement
 {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(Animator))]
