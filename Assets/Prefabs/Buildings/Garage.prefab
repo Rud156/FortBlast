@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4812124155953570}
   - component: {fileID: 33599166990864104}
   - component: {fileID: 23809254825755908}
-  - component: {fileID: 64875685850073576}
+  - component: {fileID: 65334983346191378}
   m_Layer: 0
   m_Name: Walls
   m_TagString: Untagged
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 4368276707152130}
   - component: {fileID: 33256447821328818}
   - component: {fileID: 23577318596499668}
-  - component: {fileID: 64489563335759102}
+  - component: {fileID: 65160873869606604}
   m_Layer: 0
   m_Name: Roof
   m_TagString: Untagged
@@ -55,6 +55,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4360157536752044}
+  - component: {fileID: 114735470456391234}
   m_Layer: 0
   m_Name: Garage
   m_TagString: Untagged
@@ -72,7 +73,7 @@ GameObject:
   - component: {fileID: 4885131992019750}
   - component: {fileID: 33094667503987560}
   - component: {fileID: 23464594356417750}
-  - component: {fileID: 64696663479639472}
+  - component: {fileID: 65569455278768574}
   m_Layer: 0
   m_Name: Foundation (1)
   m_TagString: Untagged
@@ -86,8 +87,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1375358547644486}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 184.8, y: 10.25, z: -31.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4368276707152130}
@@ -95,7 +96,7 @@ Transform:
   - {fileID: 4812124155953570}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!4 &4368276707152130
 Transform:
   m_ObjectHideFlags: 1
@@ -261,8 +262,8 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1233330408824776}
   m_Mesh: {fileID: 4300450, guid: 7c481f901e6fd6544a2901233ce8f8b2, type: 3}
---- !u!64 &64489563335759102
-MeshCollider:
+--- !u!65 &65160873869606604
+BoxCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -270,27 +271,11 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300452, guid: 7c481f901e6fd6544a2901233ce8f8b2, type: 3}
---- !u!64 &64696663479639472
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1648238234304010}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300454, guid: 7c481f901e6fd6544a2901233ce8f8b2, type: 3}
---- !u!64 &64875685850073576
-MeshCollider:
+  serializedVersion: 2
+  m_Size: {x: 24.596401, y: 1.0000048, z: 41.70611}
+  m_Center: {x: -11, y: 1.4999986, z: -19.500006}
+--- !u!65 &65334983346191378
+BoxCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -298,8 +283,33 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300450, guid: 7c481f901e6fd6544a2901233ce8f8b2, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 23.501556, y: 7.000002, z: 40.351997}
+  m_Center: {x: -11, y: 3.499999, z: -19.737226}
+--- !u!65 &65569455278768574
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1648238234304010}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 39.000008, y: 2.000002, z: 41.00002}
+  m_Center: {x: -3.4999998, y: -0.0000008940708, z: -19.500008}
+--- !u!114 &114735470456391234
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1375358547644486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56cfd1605f5d9524c982697a44f1565b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 1
+  movementSpeed: 0.2
+  maxMovementDirection: 0.7
+  randomDelay: 0
