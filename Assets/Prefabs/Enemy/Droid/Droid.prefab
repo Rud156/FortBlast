@@ -1729,7 +1729,7 @@ MonoBehaviour:
   laserPoint: {fileID: 1334300728437364, guid: a9213d64f41c77a4d97f039e3e27e2b5, type: 2}
   launchPoint_1: {fileID: 4176482766350094}
   launchPoint_2: {fileID: 4968946058520152}
-  launchSpeed: 10
+  launchSpeed: 25
 --- !u!114 &114617386871510974
 MonoBehaviour:
   m_ObjectHideFlags: 1

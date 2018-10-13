@@ -78,12 +78,6 @@ namespace FortBlast.Enemy.Droid.Patrol
                     {
                         if (_playerFound && !_attackingPlayer)
                         {
-                            if (_lazingAround)
-                            {
-                                _droidLaze.StopLazingAbout();
-                                StopCoroutine(_coroutine);
-                                _lazingAround = false;
-                            }
                             // Attack Player
                             _coroutine = StartCoroutine(AttackPlayer());
                         }
@@ -130,6 +124,7 @@ namespace FortBlast.Enemy.Droid.Patrol
                 _currentTarget = _player;
                 _playerFound = true;
                 _droidAgent.stoppingDistance = distanceToStopFromPlayer;
+                ResetAnimationOnFindingPlayer();
             }
             else
             {
@@ -143,6 +138,16 @@ namespace FortBlast.Enemy.Droid.Patrol
 
                 _currentTarget = _currentPatrolPointIndex == -1 ?
                      null : _patrolPoints[_currentPatrolPointIndex];
+            }
+        }
+
+        private void ResetAnimationOnFindingPlayer()
+        {
+            if (_lazingAround)
+            {
+                _droidLaze.StopLazingAbout();
+                StopCoroutine(_coroutine);
+                _lazingAround = false;
             }
         }
 

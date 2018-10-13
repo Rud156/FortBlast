@@ -53,8 +53,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4376782140911746}
-  - component: {fileID: 65513814104674586}
   - component: {fileID: 54016508803699674}
+  - component: {fileID: 135956407254512526}
   m_Layer: 0
   m_Name: Laser Shot Holder
   m_TagString: Untagged
@@ -82,7 +82,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1886864576492720}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 121.61679, y: 15.011798, z: -157.02}
+  m_LocalPosition: {x: 138.34, y: 15.011798, z: -159.38727}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4640329099121276}
@@ -98,7 +98,7 @@ Transform:
   m_GameObject: {fileID: 1504802083428826}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.5}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4376782140911746}
   m_RootOrder: 0
@@ -160,8 +160,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65513814104674586
-BoxCollider:
+--- !u!135 &135956407254512526
+SphereCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -170,8 +170,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.2, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0.5}
 --- !u!198 &198354337866946226
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -357,7 +357,7 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 1, g: 0.42698693, b: 0, a: 1}
+      minColor: {r: 1, g: 0.29586366, b: 0.0039215684, a: 1}
       maxColor: {r: 1, g: 0, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
@@ -796,7 +796,7 @@ ParticleSystem:
     serializedVersion: 5
     enabled: 1
     type: 4
-    angle: 9.6907
+    angle: 10
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -826,7 +826,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.1
+      value: 0.45
       mode: 0
       spread: 0
       speed:
@@ -945,7 +945,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 50
+      scalar: 100
       minScalar: 10
       maxCurve:
         serializedVersion: 2
