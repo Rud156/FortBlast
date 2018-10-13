@@ -27,7 +27,7 @@ namespace FortBlast.Common
         /// Start is called on the frame when a script is enabled just before
         /// any of the Update methods is called the first time.
         /// </summary>
-        void Start() => _posOffset = transform.position;
+        void Start() => _posOffset = transform.localPosition;
 
         /// <summary>
         /// Update is called every frame, if the MonoBehaviour is enabled.
@@ -52,7 +52,7 @@ namespace FortBlast.Common
             }
 
 
-            transform.position = _tempPos;
+            transform.localPosition = _tempPos;
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using FortBlast.Extras;
 using UnityEngine;
@@ -13,6 +14,10 @@ namespace FortBlast.Enemy.Droid
         public float minimumDetectionDistance;
         public float lookRotationSpeed;
 
+        [Header("Distances")]
+        public float distanceToStopFromPlayer;
+        public float distanceToStopFromPatrolPoint;
+
 
         private NavMeshAgent _droidAgent;
 
@@ -20,7 +25,8 @@ namespace FortBlast.Enemy.Droid
         private int _currentPatrolPointIndex;
 
         private Transform _player;
-        private bool _resetPatrol;
+        private bool _playerFound;
+        private bool _coroutineRunning;
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -29,8 +35,9 @@ namespace FortBlast.Enemy.Droid
         void Start()
         {
             _droidAgent = GetComponent<NavMeshAgent>();
-            _player = GameObject.FindGameObjectWithTag(TagManager.Player).transform;
-            _resetPatrol = true;
+            _player = GameObject.FindGameObjectWithTag(TagManager.Player)?.transform;
+            _playerFound = true;
+            _coroutineRunning = false;
         }
 
         /// <summary>
@@ -42,6 +49,30 @@ namespace FortBlast.Enemy.Droid
             LookTowardsTarget();
 
             SetAgentDestination();
+            CheckPatrolPointTargetReached();
+        }
+
+        private void CheckPatrolPointTargetReached()
+        {
+            if (!_droidAgent.pathPending && !_coroutineRunning)
+            {
+                if (_droidAgent.remainingDistance <= _droidAgent.stoppingDistance)
+                {
+                    if (!_droidAgent.hasPath || _droidAgent.velocity.sqrMagnitude == 0f)
+                    {
+                        if (_playerFound)
+                        {
+                            // Attack Player
+                            StartCoroutine(AttackPlayer());
+                        }
+                        else
+                        {
+                            // Laze Then Move to Next Patrol Point
+                            StartCoroutine(LazePatrolPoint());
+                        }
+                    }
+                }
+            }
         }
 
         private void LookTowardsTarget()
@@ -52,9 +83,12 @@ namespace FortBlast.Enemy.Droid
             Vector3 lookDirection = _currentTarget.position - transform.position;
             lookDirection.y = 0;
 
-            Quaternion rotation = Quaternion.LookRotation(lookDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation,
-                lookRotationSpeed * Time.deltaTime);
+            if (lookDirection != Vector3.zero)
+            {
+                Quaternion rotation = Quaternion.LookRotation(lookDirection);
+                transform.rotation = Quaternion.Slerp(transform.rotation, rotation,
+                    lookRotationSpeed * Time.deltaTime);
+            }
         }
 
         private void SetAgentDestination()
@@ -65,23 +99,28 @@ namespace FortBlast.Enemy.Droid
             _droidAgent.SetDestination(_currentTarget.position);
         }
 
+        #region FindNextTarget
+
         private void CheckAndSetNextTarget()
         {
             bool isPlayerNearby = CheckPlayerInRange();
             if (isPlayerNearby)
+            {
                 _currentTarget = _player;
+                _playerFound = true;
+                _droidAgent.stoppingDistance = distanceToStopFromPlayer;
+            }
             else
             {
-                if (_resetPatrol)
+                if (_playerFound)
                 {
                     _currentPatrolPointIndex = GetClosestPatrolPoint();
-                    _resetPatrol = false;
+                    _playerFound = false;
+                    _droidAgent.stoppingDistance = distanceToStopFromPatrolPoint;
                 }
-                else
-                    _currentPatrolPointIndex = GetNextSequentialPatrolPoint(_currentPatrolPointIndex);
 
                 _currentTarget = _currentPatrolPointIndex == -1 ?
-                    patrolPoints[_currentPatrolPointIndex] : null;
+                     null : patrolPoints[_currentPatrolPointIndex];
             }
         }
 
@@ -92,10 +131,7 @@ namespace FortBlast.Enemy.Droid
 
             float distanceToPlayer = Vector3.Distance(_player.position, transform.position);
             if (distanceToPlayer <= minimumDetectionDistance)
-            {
-                _resetPatrol = true;
                 return true;
-            }
 
             return false;
         }
@@ -127,6 +163,24 @@ namespace FortBlast.Enemy.Droid
                 currentPatrolPointIndex = 0;
 
             return currentPatrolPointIndex;
+        }
+
+        #endregion FindNextTarget
+
+        IEnumerator AttackPlayer()
+        {
+            _coroutineRunning = true;
+            yield return new WaitForSeconds(5);
+            _coroutineRunning = false;
+        }
+
+        private IEnumerator LazePatrolPoint()
+        {
+            _coroutineRunning = true;
+            yield return new WaitForSeconds(5);
+
+            _currentPatrolPointIndex = GetNextSequentialPatrolPoint(_currentPatrolPointIndex);
+            _coroutineRunning = false;
         }
     }
 }
