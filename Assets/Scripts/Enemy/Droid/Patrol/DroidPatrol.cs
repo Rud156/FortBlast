@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using FortBlast.Enemy.Droid.Helpers;
 using FortBlast.Extras;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace FortBlast.Enemy.Droid
+namespace FortBlast.Enemy.Droid.Patrol
 {
     [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(DroidAttack))]
+    [RequireComponent(typeof(DroidLaze))]
     public class DroidPatrol : MonoBehaviour
     {
         [Header("Patrol Stats")]
-        public List<Transform> patrolPoints;
+        public Transform patrolPointGroup;
         public float minimumDetectionDistance;
         public float lookRotationSpeed;
 
@@ -20,13 +23,19 @@ namespace FortBlast.Enemy.Droid
 
 
         private NavMeshAgent _droidAgent;
+        private DroidLaze _droidLaze;
+        private DroidAttack _droidAttack;
 
+        private List<Transform> _patrolPoints;
         private Transform _currentTarget;
         private int _currentPatrolPointIndex;
 
         private Transform _player;
         private bool _playerFound;
-        private bool _coroutineRunning;
+        private bool _attackingPlayer;
+
+        private Coroutine _coroutine;
+        private bool _lazingAround;
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -35,9 +44,16 @@ namespace FortBlast.Enemy.Droid
         void Start()
         {
             _droidAgent = GetComponent<NavMeshAgent>();
+            _droidLaze = GetComponent<DroidLaze>();
+            _droidAttack = GetComponent<DroidAttack>();
+
             _player = GameObject.FindGameObjectWithTag(TagManager.Player)?.transform;
             _playerFound = true;
-            _coroutineRunning = false;
+
+            _patrolPoints = new List<Transform>();
+            for (int i = 0; i < patrolPointGroup.childCount; i++)
+                _patrolPoints.Add(patrolPointGroup.GetChild(i));
+
         }
 
         /// <summary>
@@ -54,21 +70,28 @@ namespace FortBlast.Enemy.Droid
 
         private void CheckPatrolPointTargetReached()
         {
-            if (!_droidAgent.pathPending && !_coroutineRunning)
+            if (!_droidAgent.pathPending)
             {
                 if (_droidAgent.remainingDistance <= _droidAgent.stoppingDistance)
                 {
                     if (!_droidAgent.hasPath || _droidAgent.velocity.sqrMagnitude == 0f)
                     {
-                        if (_playerFound)
+                        if (_playerFound && !_attackingPlayer)
                         {
+                            if (_lazingAround)
+                            {
+                                _droidLaze.StopLazingAbout();
+                                StopCoroutine(_coroutine);
+                                _lazingAround = false;
+                            }
                             // Attack Player
-                            StartCoroutine(AttackPlayer());
+                            _coroutine = StartCoroutine(AttackPlayer());
+
                         }
-                        else
+                        else if (!_playerFound && !_lazingAround)
                         {
                             // Laze Then Move to Next Patrol Point
-                            StartCoroutine(LazePatrolPoint());
+                            _coroutine = StartCoroutine(LazePatrolPoint());
                         }
                     }
                 }
@@ -99,11 +122,10 @@ namespace FortBlast.Enemy.Droid
             _droidAgent.SetDestination(_currentTarget.position);
         }
 
-        #region FindNextTarget
-
         private void CheckAndSetNextTarget()
         {
-            bool isPlayerNearby = CheckPlayerInRange();
+            bool isPlayerNearby = DroidPatrolHelpers
+                .CheckPlayerInRange(_player, transform, minimumDetectionDistance);
             if (isPlayerNearby)
             {
                 _currentTarget = _player;
@@ -114,73 +136,35 @@ namespace FortBlast.Enemy.Droid
             {
                 if (_playerFound)
                 {
-                    _currentPatrolPointIndex = GetClosestPatrolPoint();
+                    _currentPatrolPointIndex = DroidPatrolHelpers
+                        .GetClosestPatrolPoint(_currentTarget, _player, transform, _patrolPoints);
                     _playerFound = false;
                     _droidAgent.stoppingDistance = distanceToStopFromPatrolPoint;
                 }
 
                 _currentTarget = _currentPatrolPointIndex == -1 ?
-                     null : patrolPoints[_currentPatrolPointIndex];
+                     null : _patrolPoints[_currentPatrolPointIndex];
             }
         }
-
-        private bool CheckPlayerInRange()
-        {
-            if (_player == null)
-                return false;
-
-            float distanceToPlayer = Vector3.Distance(_player.position, transform.position);
-            if (distanceToPlayer <= minimumDetectionDistance)
-                return true;
-
-            return false;
-        }
-
-        private int GetClosestPatrolPoint()
-        {
-            if (_currentTarget == _player)
-                return -1;
-
-            float minDistance = float.MaxValue;
-            int currentPatrolPointIndex = -1;
-            for (int i = 0; i < patrolPoints.Count; i++)
-            {
-                float currentPointDistance = Vector3.Distance(patrolPoints[i].position, transform.position);
-                if (currentPointDistance < minDistance)
-                {
-                    minDistance = currentPointDistance;
-                    currentPatrolPointIndex = i;
-                }
-            }
-
-            return currentPatrolPointIndex;
-        }
-
-        private int GetNextSequentialPatrolPoint(int currentPatrolPointIndex)
-        {
-            currentPatrolPointIndex += 1;
-            if (currentPatrolPointIndex >= patrolPoints.Count)
-                currentPatrolPointIndex = 0;
-
-            return currentPatrolPointIndex;
-        }
-
-        #endregion FindNextTarget
 
         IEnumerator AttackPlayer()
         {
-            _coroutineRunning = true;
+            _attackingPlayer = true;
+            _droidAttack.AttackPlayer();
             yield return new WaitForSeconds(5);
-            _coroutineRunning = false;
+            _attackingPlayer = false;
         }
 
         private IEnumerator LazePatrolPoint()
         {
-            _coroutineRunning = true;
-            yield return new WaitForSeconds(5);
+            _lazingAround = true;
+            float lazeWaitTime = _droidLaze.LazeAroundSpot();
+            yield return new WaitForSeconds(lazeWaitTime);
+            _droidLaze.StopLazingAbout();
 
-            _currentPatrolPointIndex = GetNextSequentialPatrolPoint(_currentPatrolPointIndex);
-            _coroutineRunning = false;
+            _currentPatrolPointIndex = DroidPatrolHelpers
+                .GetNextSequentialPatrolPoint(_currentPatrolPointIndex, _patrolPoints.Count);
+            _lazingAround = false;
         }
     }
 }
