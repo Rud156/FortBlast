@@ -14,6 +14,7 @@ namespace FortBlast.Enemy.Tower
         [Header("Attack")]
         public float attackAngleTolerance;
         public float waitTimeBetweenAttack;
+        public float attackTime;
         public float attackDamage;
         public float playerBaseOffset;
 
@@ -25,6 +26,7 @@ namespace FortBlast.Enemy.Tower
         private Transform _player;
         private Renderer _laserRenderer;
         private bool _attackingPlayer;
+        private bool _laserCreated;
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -34,6 +36,7 @@ namespace FortBlast.Enemy.Tower
         {
             _player = GameObject.FindGameObjectWithTag(TagManager.Player)?.transform;
             _attackingPlayer = false;
+            _laserCreated = false;
         }
 
         /// <summary>
@@ -41,7 +44,19 @@ namespace FortBlast.Enemy.Tower
         /// </summary>
         void Update()
         {
+            if (!_attackingPlayer)
+            {
+                float normalizedAngle = CheckPlayerInsideFOV();
+                if (normalizedAngle != -1)
+                {
+                    LookAtPlayer();
 
+                    if (IsAngleWithinToleranceLevel(normalizedAngle))
+                        StartCoroutine(AttackPlayer());
+                }
+            }
+            else if (_laserCreated)
+                TileLaserTexture();
         }
 
         private float CheckPlayerInsideFOV()
@@ -107,6 +122,11 @@ namespace FortBlast.Enemy.Tower
 
             _laserRenderer = lineRenderer.GetComponent<Renderer>();
             _attackingPlayer = true;
+            _laserCreated = true;
+
+            yield return new WaitForSeconds(attackTime);
+            _laserCreated = false;
+            Destroy(laserInstance);
 
             yield return new WaitForSeconds(waitTimeBetweenAttack);
             _attackingPlayer = false;
