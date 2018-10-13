@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4523240605529938}
+  - component: {fileID: 114105202282306822}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Untagged
@@ -193,7 +194,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1381772700942920}
-  m_LocalRotation: {x: 0, y: -0.006219854, z: 0, w: 0.9999807}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.037, y: 6.157, z: 0.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -202,15 +203,15 @@ Transform:
   - {fileID: 4936501318514022}
   m_Father: {fileID: 4523240605529938}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!4 &4523240605529938
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1033258138677084}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 130.47, y: 10.561799, z: -152.05}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 348.4417, y: -4.5241385, z: -308.69684}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4966828321778340}
@@ -263,7 +264,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1698903032478066}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.04255277, y: 1.4912009, z: 3.2915184}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -574,6 +575,25 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114105202282306822
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1033258138677084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4723ff887dc7d3d45b7431f917ab6da7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLookAngle: 120
+  rotationSpeed: 10
+  attackAngleDifferenceTolerance: 10
+  waitTimeBetweenAttack: 10
+  attackDamage: 50
+  towerTop: {fileID: 4503901319573816}
+  laserShootingPoint: {fileID: 4936501318514022}
+  laser: {fileID: 1328147906834994, guid: 3604f683a6d1f674bb4a310aa1eedb7c, type: 2}
 --- !u!135 &135949861939156208
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -21,6 +21,9 @@ namespace FortBlast.Enemy.Droid.Patrol
         public float distanceToStopFromPlayer;
         public float distanceToStopFromPatrolPoint;
 
+        [Header("Attack")]
+        public float waitTimeBetweenAttacks = 5f;
+
 
         private NavMeshAgent _droidAgent;
         private DroidLaze _droidLaze;
@@ -155,7 +158,7 @@ namespace FortBlast.Enemy.Droid.Patrol
         {
             _attackingPlayer = true;
             yield return StartCoroutine(_droidAttack.AttackPlayer(_player));
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(waitTimeBetweenAttacks);
             _attackingPlayer = false;
         }
 

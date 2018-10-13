@@ -9275,6 +9275,30 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 20.000002, y: 0.29999998, z: 20.000002}
   m_Center: {x: 0, y: 0.16179813, z: 0}
+--- !u!1 &752836766 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1033258138677084, guid: d4cba1bb784db994e8d3140a616c1e67,
+    type: 2}
+  m_PrefabInternal: {fileID: 1745682615}
+--- !u!114 &752836767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 752836766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4723ff887dc7d3d45b7431f917ab6da7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLookAngle: 180
+  rotationSpeed: 10
+  attackAngleDifferenceTolerance: 10
+  waitTimeBetweenAttack: 10
+  attackDamage: 50
+  towerTop: {fileID: 987980499}
+  laserShootingPoint: {fileID: 1237374546}
+  laser: {fileID: 1328147906834994, guid: 3604f683a6d1f674bb4a310aa1eedb7c, type: 2}
 --- !u!1 &753583464
 GameObject:
   m_ObjectHideFlags: 0
@@ -12181,6 +12205,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4523240605529938, guid: d4cba1bb784db994e8d3140a616c1e67,
     type: 2}
   m_PrefabInternal: {fileID: 984062040}
+--- !u!4 &987980499 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4503901319573816, guid: d4cba1bb784db994e8d3140a616c1e67,
+    type: 2}
+  m_PrefabInternal: {fileID: 1745682615}
 --- !u!1001 &1004980486
 Prefab:
   m_ObjectHideFlags: 0
@@ -15357,7 +15386,7 @@ MonoBehaviour:
     type: 2}
   maxDroidsToSpawn: 9
   droidParent: {fileID: 429689611}
-  spawnOnStart: 1
+  spawnOnStart: 0
 --- !u!1 &1207699370
 GameObject:
   m_ObjectHideFlags: 0
@@ -15672,6 +15701,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4586877557549152, guid: 3f986823c4e971c4e8d4fd2f45c78ee8,
     type: 2}
   m_PrefabInternal: {fileID: 1235709659}
+--- !u!4 &1237374546 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4936501318514022, guid: d4cba1bb784db994e8d3140a616c1e67,
+    type: 2}
+  m_PrefabInternal: {fileID: 1745682615}
 --- !u!1001 &1245550630
 Prefab:
   m_ObjectHideFlags: 0
@@ -22312,6 +22346,26 @@ Prefab:
     - target: {fileID: 4523240605529938, guid: d4cba1bb784db994e8d3140a616c1e67, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4503901319573816, guid: d4cba1bb784db994e8d3140a616c1e67, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4503901319573816, guid: d4cba1bb784db994e8d3140a616c1e67, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4503901319573816, guid: d4cba1bb784db994e8d3140a616c1e67, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4503901319573816, guid: d4cba1bb784db994e8d3140a616c1e67, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4503901319573816, guid: d4cba1bb784db994e8d3140a616c1e67, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4cba1bb784db994e8d3140a616c1e67, type: 2}
