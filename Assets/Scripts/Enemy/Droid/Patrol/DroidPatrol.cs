@@ -154,7 +154,7 @@ namespace FortBlast.Enemy.Droid.Patrol
         IEnumerator AttackPlayer()
         {
             _attackingPlayer = true;
-            _droidAttack.AttackPlayer(_player);
+            yield return StartCoroutine(_droidAttack.AttackPlayer(_player));
             yield return new WaitForSeconds(5);
             _attackingPlayer = false;
         }

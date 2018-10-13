@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace FortBlast.Enemy.Droid.Patrol
@@ -6,7 +7,6 @@ namespace FortBlast.Enemy.Droid.Patrol
     {
         [Header("Effects")]
         public GameObject droidLaser;
-        public GameObject laserPoint;
 
         [Header("Launch Points")]
         public Transform launchPoint_1;
@@ -14,27 +14,60 @@ namespace FortBlast.Enemy.Droid.Patrol
 
         [Header("Launch Stats")]
         public float launchSpeed;
+        public float playerBaseOffset;
 
-        public void AttackPlayer(Transform player)
+        private Renderer _laserRenderer_1;
+        private Renderer _laserRenderer_2;
+        private bool _laserCreated;
+
+        /// <summary>
+        /// Start is called on the frame when a script is enabled just before
+        /// any of the Update methods is called the first time.
+        /// </summary>
+        void Start() => _laserCreated = false;
+
+        /// <summary>
+        /// Update is called every frame, if the MonoBehaviour is enabled.
+        /// </summary>
+        void Update()
         {
-            GameObject laserPoint_1 = Instantiate(laserPoint, launchPoint_1.position, Quaternion.identity);
-            GameObject laserPoint_2 = Instantiate(laserPoint, launchPoint_2.position, Quaternion.identity);
-            laserPoint_1.transform.SetParent(launchPoint_1);
-            laserPoint_2.transform.SetParent(launchPoint_2);
+            if (_laserCreated)
+                TileLaserTexture();
+        }
 
-            Vector3 lookDirection_1 = player.position - launchPoint_1.position;
-            Vector3 lookDirection_2 = player.position - launchPoint_2.position;
+        private void TileLaserTexture()
+        {
+            float textureTilling = Mathf.Cos(Time.time) * 4f + 1;
 
-            Quaternion rotation_1 = Quaternion.LookRotation(lookDirection_1);
-            Quaternion rotation_2 = Quaternion.LookRotation(lookDirection_2);
+            _laserRenderer_1.material.mainTextureScale = new Vector2(textureTilling, 1);
+            _laserRenderer_2.material.mainTextureScale = new Vector2(textureTilling, 1);
+        }
 
-            GameObject droidLaser_1 = Instantiate(droidLaser, launchPoint_1.position, rotation_1);
-            GameObject droidLaser_2 = Instantiate(droidLaser, launchPoint_2.position, rotation_2);
+        public IEnumerator AttackPlayer(Transform player)
+        {
+            Quaternion rotation_1 = Quaternion.LookRotation(player.position - launchPoint_1.position);
+            Quaternion rotation_2 = Quaternion.LookRotation(player.position - launchPoint_2.position);
 
-            Rigidbody laserRb_1 = droidLaser_1.GetComponent<Rigidbody>();
-            laserRb_1.velocity = droidLaser_1.transform.forward * launchSpeed;
-            Rigidbody laserRb_2 = droidLaser_2.GetComponent<Rigidbody>();
-            laserRb_2.velocity = droidLaser_1.transform.forward * launchSpeed;
+            GameObject droidLaserInstance_1 = Instantiate(droidLaser, launchPoint_1.position, rotation_1);
+            GameObject droidLaserInstance_2 = Instantiate(droidLaser, launchPoint_1.position, rotation_2);
+
+            LineRenderer line_1 = droidLaserInstance_1.GetComponentInChildren<LineRenderer>();
+            LineRenderer line_2 = droidLaserInstance_2.GetComponentInChildren<LineRenderer>();
+
+            line_1.SetPosition(0, launchPoint_1.position);
+            line_1.SetPosition(1, player.position + Vector3.up * playerBaseOffset);
+            line_2.SetPosition(0, launchPoint_2.position);
+            line_2.SetPosition(1, player.position + Vector3.up * playerBaseOffset);
+
+            _laserCreated = true;
+            _laserRenderer_1 = line_1.GetComponent<Renderer>();
+            _laserRenderer_2 = line_2.GetComponent<Renderer>();
+
+            yield return new WaitForSeconds(0.5f);
+
+            _laserCreated = false;
+            Destroy(droidLaserInstance_1);
+            Destroy(droidLaserInstance_2);
         }
     }
 }

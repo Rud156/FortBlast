@@ -1725,11 +1725,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fecbb8b2c3cfed4b8a754e39413d73c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  droidLaser: {fileID: 1886864576492720, guid: 96fda79bbbbd17e4894c1d0b786eb82d, type: 2}
-  laserPoint: {fileID: 1334300728437364, guid: a9213d64f41c77a4d97f039e3e27e2b5, type: 2}
+  droidLaser: {fileID: 1328147906834994, guid: 763121fccfbe6bc408f653525d3235aa, type: 2}
   launchPoint_1: {fileID: 4176482766350094}
   launchPoint_2: {fileID: 4968946058520152}
   launchSpeed: 25
+  playerBaseOffset: 1.5
 --- !u!114 &114617386871510974
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1778,7 +1778,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: -1372625422
   m_Radius: 3
-  m_Speed: 3.5
+  m_Speed: 7
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
