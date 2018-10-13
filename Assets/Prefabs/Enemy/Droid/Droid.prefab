@@ -673,7 +673,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1931653104319292}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 123.61679, y: 10.561798, z: -160.08727}
+  m_LocalPosition: {x: 140.34, y: 10.561798, z: -160.08727}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4585263924205962}
@@ -1697,9 +1697,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolPointGroup: {fileID: 0}
-  minimumDetectionDistance: 5
+  minimumDetectionDistance: 40
   lookRotationSpeed: 10
-  distanceToStopFromPlayer: 5
+  distanceToStopFromPlayer: 20
   distanceToStopFromPatrolPoint: 0
 --- !u!114 &114311919863941628
 MonoBehaviour:
@@ -1725,6 +1725,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fecbb8b2c3cfed4b8a754e39413d73c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  droidLaser: {fileID: 1886864576492720, guid: 96fda79bbbbd17e4894c1d0b786eb82d, type: 2}
+  laserPoint: {fileID: 1334300728437364, guid: a9213d64f41c77a4d97f039e3e27e2b5, type: 2}
+  launchPoint_1: {fileID: 4176482766350094}
+  launchPoint_2: {fileID: 4968946058520152}
+  launchSpeed: 10
 --- !u!114 &114617386871510974
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1777,7 +1782,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 5
+  m_StoppingDistance: 10
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

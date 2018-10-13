@@ -8,13 +8,25 @@ namespace FortBlast.Player.Movement
         [Header("Rotation")]
         public float rotationSpeed;
 
+        [Header("Debug")]
+        public bool lockCursor;
+
         private float _yaw;
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
         /// any of the Update methods is called the first time.
         /// </summary>
-        void Start() => _yaw = transform.rotation.eulerAngles.y;
+        void Start()
+        {
+            _yaw = transform.rotation.eulerAngles.y;
+
+            if (lockCursor)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+        }
 
         /// <summary>
         /// Update is called every frame, if the MonoBehaviour is enabled.

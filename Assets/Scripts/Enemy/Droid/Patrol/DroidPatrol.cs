@@ -86,7 +86,6 @@ namespace FortBlast.Enemy.Droid.Patrol
                             }
                             // Attack Player
                             _coroutine = StartCoroutine(AttackPlayer());
-
                         }
                         else if (!_playerFound && !_lazingAround)
                         {
@@ -150,7 +149,7 @@ namespace FortBlast.Enemy.Droid.Patrol
         IEnumerator AttackPlayer()
         {
             _attackingPlayer = true;
-            _droidAttack.AttackPlayer();
+            _droidAttack.AttackPlayer(_player);
             yield return new WaitForSeconds(5);
             _attackingPlayer = false;
         }
