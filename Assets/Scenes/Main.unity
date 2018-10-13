@@ -15054,7 +15054,7 @@ MonoBehaviour:
   - {fileID: 1894188590}
   droidPrefab: {fileID: 1931653104319292, guid: d5413782271f7c74f9e4a8ba40ac21a2,
     type: 2}
-  maxDroidsToSpawn: 5
+  maxDroidsToSpawn: 9
   droidParent: {fileID: 429689611}
   spawnOnStart: 1
 --- !u!1 &1207699370

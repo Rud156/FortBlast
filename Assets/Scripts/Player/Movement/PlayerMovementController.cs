@@ -9,6 +9,7 @@ namespace FortBlast.Player.Movement
     {
         [Header("Movement")]
         public float movementSpeed;
+        public float runningSpeed;
 
         private Rigidbody _playerRB;
         private Animator _playerAnimator;
@@ -53,7 +54,8 @@ namespace FortBlast.Player.Movement
             if (moveX != 0)
                 xVelocity = transform.right * moveX;
 
-            Vector3 combinedVelocity = (zVelocity + xVelocity) * movementSpeed * Time.deltaTime;
+            float playerSpeed = Input.GetKey(KeyCode.LeftShift) ? runningSpeed : movementSpeed;
+            Vector3 combinedVelocity = (zVelocity + xVelocity) * playerSpeed * Time.deltaTime;
             _playerRB.velocity = new Vector3(combinedVelocity.x, _playerRB.velocity.y, combinedVelocity.z);
         }
     }
