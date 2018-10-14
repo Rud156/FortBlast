@@ -548,13 +548,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4723ff887dc7d3d45b7431f917ab6da7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLookAngle: 120
-  rotationSpeed: 10
+  maxLookAngle: 60
+  rotationSpeed: 5
+  waitTimeBetweenLaze: 7
   attackAngleTolerance: 10
   waitTimeBetweenAttack: 5
   attackTime: 1
   attackDamage: 50
-  playerBaseOffset: 0
+  playerBaseOffset: 1.5
+  maxPlayerTargetRange: 30
   towerTop: {fileID: 4503901319573816}
   laserShootingPoint: {fileID: 4936501318514022}
   laser: {fileID: 1328147906834994, guid: 3604f683a6d1f674bb4a310aa1eedb7c, type: 2}
