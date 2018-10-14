@@ -8,10 +8,13 @@ namespace FortBlast.Player.Shooter
         [Header("Absorber System")]
         public GameObject absorber;
         public ParticleSystem absorberParticles;
+        public Light absorberLight;
 
         [Header("Shield Affecter")]
         public float minParticleCount;
         public float maxParticleCount;
+        public float minLightIntensity;
+        public float maxLightIntensity;
         public float maxShieldSize;
         public float sizeIncreaseRate;
 
@@ -64,6 +67,8 @@ namespace FortBlast.Player.Shooter
                 _emissionSystem.rateOverTime = ExtensionFunctions
                     .Map(_currentSize, _minSize, maxShieldSize, minParticleCount, maxParticleCount);
                 _shapeSystem.radius = _currentSize;
+                absorberLight.intensity = ExtensionFunctions
+                    .Map(_currentSize, _minSize, maxShieldSize, minLightIntensity, maxLightIntensity);
             }
         }
     }
