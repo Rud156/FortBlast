@@ -31,19 +31,29 @@ namespace FortBlast.Player.Movement
         {
             float moveX = Input.GetAxis(PlayerData.HorizontalAxis);
             float moveZ = Input.GetAxis(PlayerData.VerticalAxis);
+            bool runKeyPressed = Input.GetKey(KeyCode.LeftShift);
 
 
-            SetAnimator(moveX, moveZ);
-            MovePlayer(moveX, moveZ);
+            SetAnimator(moveX, moveZ, runKeyPressed);
+            MovePlayer(moveX, moveZ, runKeyPressed);
         }
 
-        private void SetAnimator(float moveX, float moveZ)
+        private void SetAnimator(float moveX, float moveZ, bool runKeyPressed)
         {
             _playerAnimator.SetFloat(PlayerData.PlayerHorizontal, moveX);
-            _playerAnimator.SetFloat(PlayerData.PlayerVertical, moveZ);
+
+            if (moveZ > 0)
+            {
+                if (runKeyPressed)
+                    _playerAnimator.SetFloat(PlayerData.PlayerVertical, 1);
+                else
+                    _playerAnimator.SetFloat(PlayerData.PlayerVertical, 0.5f);
+            }
+            else
+                _playerAnimator.SetFloat(PlayerData.PlayerVertical, moveZ);
         }
 
-        private void MovePlayer(float moveX, float moveZ)
+        private void MovePlayer(float moveX, float moveZ, bool runKeyPressed)
         {
             Vector3 xVelocity = Vector3.zero;
             Vector3 zVelocity = Vector3.zero;
@@ -54,13 +64,9 @@ namespace FortBlast.Player.Movement
             if (moveX != 0)
                 xVelocity = transform.right * moveX;
 
-            bool runKeyPressed = Input.GetKey(KeyCode.LeftShift);
-
-            float playerSpeed = runKeyPressed ? runningSpeed : movementSpeed;
+            float playerSpeed = runKeyPressed && moveZ > 0 ? runningSpeed : movementSpeed;
             Vector3 combinedVelocity = (zVelocity + xVelocity) * playerSpeed * Time.deltaTime;
             _playerRB.velocity = new Vector3(combinedVelocity.x, _playerRB.velocity.y, combinedVelocity.z);
-
-            _playerAnimator.speed = runKeyPressed ? 2.5f : 1;
         }
     }
 }

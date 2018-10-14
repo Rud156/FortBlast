@@ -4604,58 +4604,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 16.430534, y: 9.609339, z: 12.414382}
   m_Center: {x: 0.21210909, y: -0.24980736, z: 1.527235}
---- !u!1001 &379048628
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4389410852613622, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 198.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4389410852613622, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 10.561798
-      objectReference: {fileID: 0}
-    - target: {fileID: 4389410852613622, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -159.08347
-      objectReference: {fileID: 0}
-    - target: {fileID: 4389410852613622, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4389410852613622, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4389410852613622, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4389410852613622, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4389410852613622, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
-      propertyPath: m_RootOrder
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 114245464361799018, guid: 756e4075fb31f88439b7a2005e13bc3c,
-        type: 2}
-      propertyPath: healthSlider
-      value: 
-      objectReference: {fileID: 1722158202}
-    - target: {fileID: 114245464361799018, guid: 756e4075fb31f88439b7a2005e13bc3c,
-        type: 2}
-      propertyPath: healthFiller
-      value: 
-      objectReference: {fileID: 1400841411}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!1001 &379604070
 Prefab:
   m_ObjectHideFlags: 0
@@ -20311,6 +20259,63 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1566762503}
   m_Mesh: {fileID: 4300312, guid: 7c481f901e6fd6544a2901233ce8f8b2, type: 3}
+--- !u!1001 &1571591470
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4439032615456392, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 225.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 4439032615456392, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 10.561798
+      objectReference: {fileID: 0}
+    - target: {fileID: 4439032615456392, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -158.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 4439032615456392, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4439032615456392, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4439032615456392, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4439032615456392, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4439032615456392, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114951996199681394, guid: 756e4075fb31f88439b7a2005e13bc3c,
+        type: 2}
+      propertyPath: mainCameraHolder
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114951996199681394, guid: 756e4075fb31f88439b7a2005e13bc3c,
+        type: 2}
+      propertyPath: healthSlider
+      value: 
+      objectReference: {fileID: 1722158202}
+    - target: {fileID: 114951996199681394, guid: 756e4075fb31f88439b7a2005e13bc3c,
+        type: 2}
+      propertyPath: healthFiller
+      value: 
+      objectReference: {fileID: 1400841411}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1001 &1577909626
 Prefab:
   m_ObjectHideFlags: 0
