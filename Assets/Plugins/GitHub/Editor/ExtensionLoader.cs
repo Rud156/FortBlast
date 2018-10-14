@@ -32,10 +32,6 @@ namespace GitHub.Unity
 
         static ExtensionLoader()
         {
-            if (Environment.GetEnvironmentVariable("GITHUB_UNITY_DISABLE") == "1")
-            {
-                return;
-            }
             EditorApplication.update += Initialize;
         }
 
