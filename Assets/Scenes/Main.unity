@@ -2418,7 +2418,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -8.098001, y: -46.529003, z: -9.145}
 --- !u!1 &175841821
 GameObject:
@@ -3810,7 +3810,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4966004141656172, guid: 5e3aee07b1fad544f88739d576c9b2cd, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e3aee07b1fad544f88739d576c9b2cd, type: 2}
@@ -4641,8 +4641,18 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4389410852613622, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 114245464361799018, guid: 756e4075fb31f88439b7a2005e13bc3c,
+        type: 2}
+      propertyPath: healthSlider
+      value: 
+      objectReference: {fileID: 1722158202}
+    - target: {fileID: 114245464361799018, guid: 756e4075fb31f88439b7a2005e13bc3c,
+        type: 2}
+      propertyPath: healthFiller
+      value: 
+      objectReference: {fileID: 1400841411}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
   m_IsPrefabAsset: 0
@@ -5632,7 +5642,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &435713952
 Prefab:
@@ -7869,7 +7879,7 @@ Transform:
   - {fileID: 1075264716}
   - {fileID: 1894188590}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &609255052
 GameObject:
@@ -8451,7 +8461,7 @@ Transform:
   - {fileID: 2089138620}
   - {fileID: 444219399}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &659124682
 Prefab:
@@ -14798,7 +14808,7 @@ RectTransform:
   m_Children:
   - {fileID: 1913414002}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -14865,7 +14875,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1163840194
 Transform:
@@ -15636,7 +15646,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1204265191
 MonoBehaviour:
@@ -15664,7 +15674,7 @@ MonoBehaviour:
     type: 2}
   maxDroidsToSpawn: 9
   droidParent: {fileID: 429689611}
-  spawnOnStart: 0
+  spawnOnStart: 1
 --- !u!1 &1207699370
 GameObject:
   m_ObjectHideFlags: 0
@@ -20807,7 +20817,7 @@ Transform:
   - {fileID: 1340014065}
   - {fileID: 984062041}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1608496540
 Prefab:

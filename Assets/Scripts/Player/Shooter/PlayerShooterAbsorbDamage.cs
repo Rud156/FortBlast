@@ -1,3 +1,5 @@
+using System;
+using FortBlast.Player.Status_Setters;
 using FortBlast.Extras;
 using UnityEngine;
 
@@ -19,9 +21,9 @@ namespace FortBlast.Player.Shooter
         public float sizeIncreaseRate;
 
         [Header("Health Affecter")]
-        public float minHealthDecreaseRate;
-        public float minDamageAmount;
+        public float maxHealthDecreaseRate;
 
+        private PlayerHealthSetter _playerHealthSetter;
         private float _minSize;
         private float _currentSize;
         private ParticleSystem.EmissionModule _emissionSystem;
@@ -33,24 +35,13 @@ namespace FortBlast.Player.Shooter
         /// </summary>
         void Start()
         {
+            _playerHealthSetter = GetComponent<PlayerHealthSetter>();
+
             _minSize = absorber.transform.localScale.x;
             _currentSize = _minSize;
 
             _emissionSystem = absorberParticles.emission;
             _shapeSystem = absorberParticles.shape;
-        }
-
-        /// <summary>
-        /// OnTriggerEnter is called when the Collider other enters the trigger.
-        /// </summary>
-        /// <param name="other">The other Collider involved in this collision.</param>
-        void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag(TagManager.Player))
-                return;
-
-            _currentSize = _currentSize + sizeIncreaseRate <= maxShieldSize ?
-                _currentSize + sizeIncreaseRate : maxShieldSize;
         }
 
         /// <summary>
@@ -63,13 +54,32 @@ namespace FortBlast.Player.Shooter
             if (!mousePressed)
                 _currentSize = _minSize;
             else
-            {
-                _emissionSystem.rateOverTime = ExtensionFunctions
-                    .Map(_currentSize, _minSize, maxShieldSize, minParticleCount, maxParticleCount);
-                _shapeSystem.radius = _currentSize;
-                absorberLight.intensity = ExtensionFunctions
-                    .Map(_currentSize, _minSize, maxShieldSize, minLightIntensity, maxLightIntensity);
-            }
+                SetObjectsBasedOnSize();
+
+            ChangeHealthBasedOnShieldSize();
+        }
+
+        public void DamagePlayerAndDecreaseHealth(float damageAmount)
+        {
+            _currentSize = _currentSize + sizeIncreaseRate <= maxShieldSize ?
+                _currentSize + sizeIncreaseRate : maxShieldSize;
+            _playerHealthSetter.TakeDamage(damageAmount);
+        }
+
+        private void ChangeHealthBasedOnShieldSize()
+        {
+            float damageAmount = ExtensionFunctions.Map(_currentSize, _minSize, maxShieldSize,
+                0, maxHealthDecreaseRate);
+            _playerHealthSetter.TakeDamage(damageAmount);
+        }
+
+        private void SetObjectsBasedOnSize()
+        {
+            _emissionSystem.rateOverTime = ExtensionFunctions
+                            .Map(_currentSize, _minSize, maxShieldSize, minParticleCount, maxParticleCount);
+            _shapeSystem.radius = _currentSize;
+            absorberLight.intensity = ExtensionFunctions
+                .Map(_currentSize, _minSize, maxShieldSize, minLightIntensity, maxLightIntensity);
         }
     }
 }

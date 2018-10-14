@@ -1,4 +1,5 @@
 using System.Collections;
+using FortBlast.Player.Shooter;
 using UnityEngine;
 
 namespace FortBlast.Enemy.Droid.Patrol
@@ -13,8 +14,8 @@ namespace FortBlast.Enemy.Droid.Patrol
         public Transform launchPoint_2;
 
         [Header("Launch Stats")]
-        public float launchSpeed;
         public float playerBaseOffset;
+        public float attackDamage;
 
         private Renderer _laserRenderer_1;
         private Renderer _laserRenderer_2;
@@ -54,6 +55,8 @@ namespace FortBlast.Enemy.Droid.Patrol
             LineRenderer line_1 = droidLaserInstance_1.GetComponentInChildren<LineRenderer>();
             LineRenderer line_2 = droidLaserInstance_2.GetComponentInChildren<LineRenderer>();
 
+
+
             line_1.SetPosition(0, launchPoint_1.position);
             line_1.SetPosition(1, player.position + Vector3.up * playerBaseOffset);
             line_2.SetPosition(0, launchPoint_2.position);
@@ -62,6 +65,8 @@ namespace FortBlast.Enemy.Droid.Patrol
             _laserCreated = true;
             _laserRenderer_1 = line_1.GetComponent<Renderer>();
             _laserRenderer_2 = line_2.GetComponent<Renderer>();
+
+            player.GetComponent<PlayerShooterAbsorbDamage>().DamagePlayerAndDecreaseHealth(attackDamage * 2);
 
             yield return new WaitForSeconds(0.5f);
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using FortBlast.Extras;
+using FortBlast.Player.Shooter;
 using UnityEngine;
 
 namespace FortBlast.Enemy.Tower
@@ -149,6 +150,8 @@ namespace FortBlast.Enemy.Tower
             _laserRenderer = lineRenderer.GetComponent<Renderer>();
             _attackingPlayer = true;
             _laserCreated = true;
+
+            _player.GetComponent<PlayerShooterAbsorbDamage>().DamagePlayerAndDecreaseHealth(attackDamage);
 
             yield return new WaitForSeconds(attackTime);
             _laserCreated = false;

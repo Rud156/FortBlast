@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 114347368707838464}
   - component: {fileID: 114011987467300822}
   - component: {fileID: 114774859497858988}
+  - component: {fileID: 114245464361799018}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1129,6 +1130,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   absorbObject: {fileID: 1815046931754396}
+--- !u!114 &114245464361799018
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1439525827173438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 283e5a58efb9c1b4a84e34d452db150e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathEffect: {fileID: 0}
+  mainCameraHolder: {fileID: 4331046226318780}
+  healthSlider: {fileID: 0}
+  healthFiller: {fileID: 0}
+  maxHealthAmount: 500
+  minHealthColor: {r: 1, g: 0, b: 0, a: 1}
+  halfHealthColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  maxHealthColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &114347368707838464
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1263,8 +1283,7 @@ MonoBehaviour:
   maxLightIntensity: 7
   maxShieldSize: 5
   sizeIncreaseRate: 0.3
-  minHealthDecreaseRate: 0.25
-  minDamageAmount: 10
+  maxHealthDecreaseRate: 0
 --- !u!135 &135987185668063648
 SphereCollider:
   m_ObjectHideFlags: 1
