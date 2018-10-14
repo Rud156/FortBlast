@@ -10,6 +10,7 @@ namespace FortBlast.Enemy.Tower
         [Range(0, 360)]
         public int maxLookAngle;
         public float rotationSpeed;
+        public float waitTimeBetweenLaze;
 
         [Header("Attack")]
         public float attackAngleTolerance;
@@ -17,8 +18,9 @@ namespace FortBlast.Enemy.Tower
         public float attackTime;
         public float attackDamage;
         public float playerBaseOffset;
+        public float maxPlayerTargetRange;
 
-        [Header("Attack Stuff")]
+        [Header("Prefabs And Movement Points")]
         public Transform towerTop;
         public Transform laserShootingPoint;
         public GameObject laser;
@@ -28,6 +30,10 @@ namespace FortBlast.Enemy.Tower
         private bool _attackingPlayer;
         private bool _laserCreated;
 
+        private Quaternion _lazeLookRotation;
+        private bool _lazingAround;
+        private Coroutine _coroutine;
+
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
         /// any of the Update methods is called the first time.
@@ -35,7 +41,9 @@ namespace FortBlast.Enemy.Tower
         void Start()
         {
             _player = GameObject.FindGameObjectWithTag(TagManager.Player)?.transform;
+
             _attackingPlayer = false;
+            _lazingAround = false;
             _laserCreated = false;
         }
 
@@ -49,10 +57,21 @@ namespace FortBlast.Enemy.Tower
                 float normalizedAngle = CheckPlayerInsideFOV();
                 if (normalizedAngle != -1)
                 {
+                    StopCoroutine(_coroutine);
+                    _lazingAround = false;
+
                     LookAtPlayer();
 
                     if (IsAngleWithinToleranceLevel(normalizedAngle))
-                        StartCoroutine(AttackPlayer());
+                        _coroutine = StartCoroutine(AttackPlayer());
+                }
+                else
+                {
+                    if (!_lazingAround)
+                        _coroutine = StartCoroutine(LazilyLookAround());
+                    else
+                        towerTop.rotation = Quaternion.Slerp(towerTop.rotation, _lazeLookRotation,
+                            rotationSpeed * Time.deltaTime);
                 }
             }
             else if (_laserCreated)
@@ -62,6 +81,10 @@ namespace FortBlast.Enemy.Tower
         private float CheckPlayerInsideFOV()
         {
             if (_player == null)
+                return -1;
+
+            float distanceToPlayer = Vector3.Distance(_player.position, towerTop.position);
+            if (distanceToPlayer > maxPlayerTargetRange)
                 return -1;
 
             Vector3 modifiedPlayerPosition = new Vector3(_player.position.x, 0, _player.position.z);
@@ -128,8 +151,17 @@ namespace FortBlast.Enemy.Tower
             _laserCreated = false;
             Destroy(laserInstance);
 
-            yield return new WaitForSeconds(waitTimeBetweenAttack);
+            yield return new WaitForSeconds(waitTimeBetweenAttack - attackTime);
             _attackingPlayer = false;
+        }
+
+        private IEnumerator LazilyLookAround()
+        {
+            int randomAngle = Random.Range(0, 360);
+            _lazeLookRotation = Quaternion.Euler(0, randomAngle, 0);
+            _lazingAround = true;
+            yield return new WaitForSeconds(waitTimeBetweenLaze);
+            _lazingAround = false;
         }
     }
 }
