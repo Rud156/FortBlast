@@ -54,9 +54,13 @@ namespace FortBlast.Player.Movement
             if (moveX != 0)
                 xVelocity = transform.right * moveX;
 
-            float playerSpeed = Input.GetKey(KeyCode.LeftShift) ? runningSpeed : movementSpeed;
+            bool runKeyPressed = Input.GetKey(KeyCode.LeftShift);
+
+            float playerSpeed = runKeyPressed ? runningSpeed : movementSpeed;
             Vector3 combinedVelocity = (zVelocity + xVelocity) * playerSpeed * Time.deltaTime;
             _playerRB.velocity = new Vector3(combinedVelocity.x, _playerRB.velocity.y, combinedVelocity.z);
+
+            _playerAnimator.speed = runKeyPressed ? 2.5f : 1;
         }
     }
 }

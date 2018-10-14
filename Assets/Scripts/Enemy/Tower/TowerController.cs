@@ -57,8 +57,11 @@ namespace FortBlast.Enemy.Tower
                 float normalizedAngle = CheckPlayerInsideFOV();
                 if (normalizedAngle != -1)
                 {
-                    StopCoroutine(_coroutine);
-                    _lazingAround = false;
+                    if (_lazingAround)
+                    {
+                        StopCoroutine(_coroutine);
+                        _lazingAround = false;
+                    }
 
                     LookAtPlayer();
 
