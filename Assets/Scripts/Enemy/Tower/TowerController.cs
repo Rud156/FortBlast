@@ -35,6 +35,8 @@ namespace FortBlast.Enemy.Tower
         private bool _lazingAround;
         private Coroutine _coroutine;
 
+        private bool _deactivateTower;
+
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
         /// any of the Update methods is called the first time.
@@ -46,6 +48,7 @@ namespace FortBlast.Enemy.Tower
             _attackingPlayer = false;
             _lazingAround = false;
             _laserCreated = false;
+            _deactivateTower = false;
         }
 
         /// <summary>
@@ -53,6 +56,9 @@ namespace FortBlast.Enemy.Tower
         /// </summary>
         void Update()
         {
+            if (_deactivateTower)
+                return;
+
             if (!_attackingPlayer)
             {
                 float normalizedAngle = CheckPlayerInsideFOV();
@@ -81,6 +87,10 @@ namespace FortBlast.Enemy.Tower
             else if (_laserCreated)
                 TileLaserTexture();
         }
+
+        public void ActivateTower() => _deactivateTower = false;
+
+        public void DeactivateTower() => _deactivateTower = true;
 
         private float CheckPlayerInsideFOV()
         {
