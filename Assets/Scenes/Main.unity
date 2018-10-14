@@ -20300,11 +20300,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114951996199681394, guid: 756e4075fb31f88439b7a2005e13bc3c,
         type: 2}
-      propertyPath: mainCameraHolder
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114951996199681394, guid: 756e4075fb31f88439b7a2005e13bc3c,
-        type: 2}
       propertyPath: healthSlider
       value: 
       objectReference: {fileID: 1722158202}
