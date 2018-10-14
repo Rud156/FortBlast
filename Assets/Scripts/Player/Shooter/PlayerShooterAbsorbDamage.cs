@@ -49,24 +49,20 @@ namespace FortBlast.Player.Shooter
         /// </summary>
         void Update()
         {
-            bool mousePressed = Input.GetMouseButton(0);
-
-            if (!mousePressed)
-                _currentSize = _minSize;
-            else
-                SetObjectsBasedOnSize();
-
-            ChangeHealthBasedOnShieldSize();
+            SetObjectsBasedOnSize();
+            DecreaseHealthBasedOnShieldSize();
         }
 
         public void DamagePlayerAndDecreaseHealth(float damageAmount)
         {
-            _currentSize = _currentSize + sizeIncreaseRate <= maxShieldSize ?
-                _currentSize + sizeIncreaseRate : maxShieldSize;
-            _playerHealthSetter.TakeDamage(damageAmount);
+            if (Input.GetMouseButton(0))
+                _currentSize = _currentSize + sizeIncreaseRate <= maxShieldSize ?
+                    _currentSize + sizeIncreaseRate : maxShieldSize;
+            else
+                _playerHealthSetter.TakeDamage(damageAmount);
         }
 
-        private void ChangeHealthBasedOnShieldSize()
+        private void DecreaseHealthBasedOnShieldSize()
         {
             float damageAmount = ExtensionFunctions.Map(_currentSize, _minSize, maxShieldSize,
                 0, maxHealthDecreaseRate);

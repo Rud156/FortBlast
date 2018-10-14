@@ -1283,7 +1283,7 @@ MonoBehaviour:
   maxLightIntensity: 7
   maxShieldSize: 5
   sizeIncreaseRate: 0.3
-  maxHealthDecreaseRate: 0
+  maxHealthDecreaseRate: 1
 --- !u!135 &135987185668063648
 SphereCollider:
   m_ObjectHideFlags: 1
