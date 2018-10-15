@@ -20906,14 +20906,6 @@ Prefab:
       propertyPath: healthFiller
       value: 
       objectReference: {fileID: 1400841411}
-    - target: {fileID: 1240162199816982, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1302480827315248, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
   m_IsPrefabAsset: 0

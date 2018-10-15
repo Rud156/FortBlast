@@ -10,9 +10,11 @@ namespace FortBlast.Player.Movement
         [Header("Movement")]
         public float movementSpeed;
         public float runningSpeed;
+        public float animatorLerpRate;
 
         private Rigidbody _playerRB;
         private Animator _playerAnimator;
+        private float _prevMoveZ;
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -22,6 +24,7 @@ namespace FortBlast.Player.Movement
         {
             _playerRB = GetComponent<Rigidbody>();
             _playerAnimator = GetComponent<Animator>();
+            _prevMoveZ = 0;
         }
 
         /// <summary>
@@ -42,15 +45,19 @@ namespace FortBlast.Player.Movement
         {
             _playerAnimator.SetFloat(PlayerData.PlayerHorizontal, moveX);
 
+            float potentialMoveZ = moveZ;
             if (moveZ > 0)
             {
                 if (runKeyPressed)
-                    _playerAnimator.SetFloat(PlayerData.PlayerVertical, 1);
+                    potentialMoveZ = Mathf.Lerp(_prevMoveZ, Mathf.Clamp01(potentialMoveZ),
+                        animatorLerpRate * Time.deltaTime);
                 else
-                    _playerAnimator.SetFloat(PlayerData.PlayerVertical, 0.5f);
+                    potentialMoveZ = Mathf.Lerp(_prevMoveZ, Mathf.Clamp(potentialMoveZ, 0, 0.5f),
+                        animatorLerpRate * Time.deltaTime);
             }
-            else
-                _playerAnimator.SetFloat(PlayerData.PlayerVertical, moveZ);
+
+            _playerAnimator.SetFloat(PlayerData.PlayerVertical, potentialMoveZ);
+            _prevMoveZ = potentialMoveZ;
         }
 
         private void MovePlayer(float moveX, float moveZ, bool runKeyPressed)
