@@ -1,25 +1,29 @@
+﻿using System.Collections.Generic;
 using FortBlast.Common;
 using FortBlast.Extras;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FortBlast.Enemy.Tower
+namespace FortBlast.Resources
 {
-    public class TowerDeactivator : MonoBehaviour
+    public class CollectCollectibles : MonoBehaviour
     {
-        [Header("UI Display")]
-        public GameObject uiPrompt;
-        public Slider timerSlider;
-        public GameObject towerSwitchLight;
+        [System.Serializable]
+        public struct Collectibles
+        {
+            public InventoryItem item;
+            public int itemCount;
+        }
 
-        [Header("Activation Stats")]
-        public TowerController towerController;
+        public List<Collectibles> collectibles;
+        public Slider uiSlider;
+        public GameObject uiDisplay;
         public float maxInteractionTime;
 
         private float _currentInteractionTime;
-        private bool _playerNearby;
-        private bool _inPlayerFOV;
-        private bool _towerDeactivated;
+        private bool _collectibleCollected;
+        private bool _isPlayerNearby;
+        private bool _isPlayerLooking;
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -27,10 +31,10 @@ namespace FortBlast.Enemy.Tower
         /// </summary>
         void Start()
         {
-            _playerNearby = false;
-            _inPlayerFOV = false;
-            _towerDeactivated = false;
             _currentInteractionTime = 0;
+            _collectibleCollected = false;
+            _isPlayerNearby = false;
+            _isPlayerLooking = false;
         }
 
         /// <summary>
@@ -40,7 +44,7 @@ namespace FortBlast.Enemy.Tower
         void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag(TagManager.Player))
-                _playerNearby = true;
+                _isPlayerNearby = true;
         }
 
         /// <summary>
@@ -50,67 +54,49 @@ namespace FortBlast.Enemy.Tower
         void OnTriggerExit(Collider other)
         {
             if (other.CompareTag(TagManager.Player))
-                _playerNearby = false;
+                _isPlayerNearby = false;
         }
 
         /// <summary>
         /// OnBecameVisible is called when the renderer became visible by any camera.
         /// </summary>
-        void OnBecameVisible() => _inPlayerFOV = true;
+        void OnBecameVisible() => _isPlayerLooking = true;
 
         /// <summary>
         /// OnBecameInvisible is called when the renderer is no longer visible by any camera.
         /// </summary>
-        void OnBecameInvisible() => _inPlayerFOV = false;
+        void OnBecameInvisible() => _isPlayerLooking = false;
 
         /// <summary>
         /// Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
         void Update()
         {
-            if (_towerDeactivated)
+            if (_collectibleCollected)
                 return;
 
-            DisplayPrompt();
-
-            CheckPlayerInteraction();
-            UpdateSliderAndDeactivateTower();
-        }
-
-        private void DisplayPrompt()
-        {
-            if (_playerNearby)
-                uiPrompt.SetActive(true);
-            else
-                uiPrompt.SetActive(false);
-        }
-
-        private void CheckPlayerInteraction()
-        {
-            if (Input.GetKey(Controls.InteractionCode) && _playerNearby && _inPlayerFOV)
-            {
-                _currentInteractionTime += Time.deltaTime;
-                timerSlider.gameObject.SetActive(true);
-            }
+            if (_isPlayerNearby && _isPlayerLooking)
+                CheckInteractionTime();
             else
             {
                 _currentInteractionTime = 0;
-                timerSlider.gameObject.SetActive(false);
+                uiDisplay.SetActive(false);
             }
+
+            float interactionRatio = _currentInteractionTime / maxInteractionTime;
+            uiSlider.value = interactionRatio;
         }
 
-        private void UpdateSliderAndDeactivateTower()
+        private void CheckInteractionTime()
         {
-            timerSlider.value = _currentInteractionTime / maxInteractionTime;
+            if (Input.GetKey(Controls.InteractionCode) && _isPlayerNearby && _isPlayerLooking)
+                _currentInteractionTime += Time.deltaTime;
+
             if (_currentInteractionTime >= maxInteractionTime)
             {
-                _towerDeactivated = true;
-
-                timerSlider.gameObject.SetActive(false);
-                uiPrompt.SetActive(false);
-                towerSwitchLight.SetActive(false);
-
-                towerController.DeactivateTower();
+                _collectibleCollected = true;
+                uiDisplay.SetActive(false);
+                // Put the items in the inventory
             }
         }
     }
