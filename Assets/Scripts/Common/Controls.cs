@@ -4,6 +4,10 @@ namespace FortBlast.Common
 {
     public static class Controls
     {
-        public static KeyCode InteractionCode = KeyCode.E;
+        // Keyboard Interaction
+        public const KeyCode InteractionCode = KeyCode.E;
+
+        // Animator Variables
+        public const string UIDisplayTextTrigger = "FadeInOut";
     }
 }

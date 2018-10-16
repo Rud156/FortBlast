@@ -9,16 +9,20 @@ namespace FortBlast.Resources
     public class CollectCollectibles : MonoBehaviour
     {
         [System.Serializable]
-        public struct Collectibles
+        public struct Collectible
         {
             public InventoryItem item;
             public int itemCount;
         }
 
-        public List<Collectibles> collectibles;
-        public Slider uiSlider;
-        public GameObject uiDisplay;
+        public List<Collectible> collectibles;
         public float maxInteractionTime;
+
+        [Header("UI Display")]
+        public Slider uiSlider;
+        public GameObject collectibleUiDisplay;
+        public Text collectibleContentUiText;
+        public Animator collectibleContentUiAnimator;
 
         private float _currentInteractionTime;
         private bool _collectibleCollected;
@@ -80,7 +84,7 @@ namespace FortBlast.Resources
             else
             {
                 _currentInteractionTime = 0;
-                uiDisplay.SetActive(false);
+                collectibleUiDisplay.SetActive(false);
             }
 
             float interactionRatio = _currentInteractionTime / maxInteractionTime;
@@ -89,14 +93,19 @@ namespace FortBlast.Resources
 
         private void CheckInteractionTime()
         {
-            if (Input.GetKey(Controls.InteractionCode) && _isPlayerNearby && _isPlayerLooking)
+            if (Input.GetKey(Controls.InteractionCode))
                 _currentInteractionTime += Time.deltaTime;
 
             if (_currentInteractionTime >= maxInteractionTime)
             {
                 _collectibleCollected = true;
-                uiDisplay.SetActive(false);
-                // Put the items in the inventory
+                collectibleUiDisplay.SetActive(false);
+
+                collectibleContentUiText.text = "";
+                collectibleContentUiAnimator.SetTrigger(Controls.UIDisplayTextTrigger);
+
+                // TODO: Put items in inventory 
+                // TODO: Make sure that the collectible has been interacted with
             }
         }
     }

@@ -52,6 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4514821500840706}
   - component: {fileID: 65939778155110424}
+  - component: {fileID: 114150256447651348}
   m_Layer: 0
   m_Name: Prop_2
   m_TagString: Untagged
@@ -766,3 +767,30 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5, y: 1, z: 3.1}
   m_Center: {x: -0.4, y: 0.6, z: 0}
+--- !u!114 &114150256447651348
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1321417452582988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5e62fce5d2c7c54e8ee284100dd9113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectibles:
+  - item: {fileID: 11400000, guid: a88b717509ab4ef488845209c1a2e1de, type: 2}
+    itemCount: 3
+  - item: {fileID: 11400000, guid: bd1d0f119cb517a4187b87d77983d792, type: 2}
+    itemCount: 5
+  - item: {fileID: 11400000, guid: 57227ab29559b75439ae20f89aa3d975, type: 2}
+    itemCount: 1
+  - item: {fileID: 11400000, guid: 091e34a28b3ecc64cb8109487a273d54, type: 2}
+    itemCount: 3
+  - item: {fileID: 11400000, guid: a201e37a38de4d74b9992161e7a9af78, type: 2}
+    itemCount: 3
+  maxInteractionTime: 10
+  uiSlider: {fileID: 0}
+  collectibleUiDisplay: {fileID: 0}
+  collectibleContentUiText: {fileID: 0}
+  collectibleContentUiAnimator: {fileID: 0}
