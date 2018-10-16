@@ -21,8 +21,6 @@ namespace FortBlast.Resources
         [Header("UI Display")]
         public Slider uiSlider;
         public GameObject collectibleUiDisplay;
-        public Text collectibleContentUiText;
-        public Animator collectibleContentUiAnimator;
 
         private float _currentInteractionTime;
         private bool _collectibleCollected;
@@ -101,11 +99,9 @@ namespace FortBlast.Resources
                 _collectibleCollected = true;
                 collectibleUiDisplay.SetActive(false);
 
-                collectibleContentUiText.text = "";
-                collectibleContentUiAnimator.SetTrigger(Controls.UIDisplayTextTrigger);
-
                 // TODO: Put items in inventory 
                 // TODO: Make sure that the collectible has been interacted with
+                // TODO: Inform display that something has been added to inventory
             }
         }
     }
