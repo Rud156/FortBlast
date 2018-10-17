@@ -388,6 +388,8 @@ MonoBehaviour:
     itemCount: 2
   - inventoryItem: {fileID: 11400000, guid: a88b717509ab4ef488845209c1a2e1de, type: 2}
     itemCount: 2
+  collectionCompletedExplosion: {fileID: 1776640308044402, guid: dd33036d498680d48bc2dea006842727,
+    type: 2}
   maxInteractionTime: 5
   uiSlider: {fileID: 114162571644952168}
   collectibleUiDisplay: {fileID: 1278017142937440}

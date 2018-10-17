@@ -10,6 +10,7 @@ namespace FortBlast.Resources
     public class CollectCollectibles : MonoBehaviour
     {
         public List<InventoryItemStats> collectibles;
+        public GameObject collectionCompletedExplosion;
         public float maxInteractionTime;
 
         [Header("UI Display")]
@@ -113,7 +114,14 @@ namespace FortBlast.Resources
                 }
 
                 ResourceManager.instance.AddResources(collectionItems);
+                DestoryCollectible();
             }
+        }
+
+        private void DestoryCollectible()
+        {
+            Instantiate(collectionCompletedExplosion, transform.position, Quaternion.identity);
+            Destroy(gameObject);
         }
     }
 }
