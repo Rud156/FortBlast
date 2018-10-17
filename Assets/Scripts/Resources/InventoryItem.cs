@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using FortBlast.Enums;
 using UnityEngine;
 
 namespace FortBlast.Resources
@@ -7,13 +8,6 @@ namespace FortBlast.Resources
     [CreateAssetMenu(fileName = "InventoryItem", menuName = "Inventory/Item")]
     public class InventoryItem : ScriptableObject
     {
-        public enum ItemType
-        {
-            Spawnable,
-            UpgradeHelper,
-            Consumable
-        };
-
         [Header("Basic Data")]
         public string displayName;
         [TextArea]

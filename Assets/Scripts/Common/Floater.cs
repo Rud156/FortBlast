@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using FortBlast.Enums;
 using UnityEngine;
 
 namespace FortBlast.Common
@@ -7,13 +8,6 @@ namespace FortBlast.Common
 
     public class Floater : MonoBehaviour
     {
-        public enum Direction
-        {
-            xAxis,
-            yAxis,
-            zAxis
-        };
-
         public float degreesPerSecond = 15.0f;
         public float amplitude = 0.5f;
         public float frequency = 1f;

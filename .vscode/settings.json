@@ -52,5 +52,8 @@
         "temp/":true,
         "Temp/":true
     },
-    "workbench.colorTheme": "eppz!"
+    "workbench.colorTheme": "eppz!",
+    "cSpell.words": [
+        "Structs"
+    ]
 }

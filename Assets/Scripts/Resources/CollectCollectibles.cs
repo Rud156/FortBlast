@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using FortBlast.Common;
 using FortBlast.Extras;
+using FortBlast.Structs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,14 +9,8 @@ namespace FortBlast.Resources
 {
     public class CollectCollectibles : MonoBehaviour
     {
-        [System.Serializable]
-        public struct Collectible
-        {
-            public InventoryItem item;
-            public int itemCount;
-        }
-
-        public List<Collectible> collectibles;
+        public List<InventoryItemStats> collectibles;
+        public float itemSelectionProbability = 0.75f;
         public float maxInteractionTime;
 
         [Header("UI Display")]
@@ -99,9 +94,23 @@ namespace FortBlast.Resources
                 _collectibleCollected = true;
                 collectibleUiDisplay.SetActive(false);
 
-                // TODO: Put items in inventory 
-                // TODO: Make sure that the collectible has been interacted with
-                // TODO: Inform display that something has been added to inventory
+                List<InventoryItemStats> collectionItems = new List<InventoryItemStats>();
+                for (int i = 0; i < collectibles.Count; i++)
+                {
+                    if (Random.Range(0f, 1f) <= itemSelectionProbability)
+                    {
+                        InventoryItemStats inventoryItemStats = collectibles[i];
+                        int randomValue = Random.Range(0, 1000) % inventoryItemStats.itemCount;
+
+                        InventoryItemStats newCollectionItem = new InventoryItemStats();
+                        newCollectionItem.itemCount = randomValue;
+                        newCollectionItem.inventoryItem = inventoryItemStats.inventoryItem;
+
+                        collectionItems.Add(newCollectionItem);
+                    }
+                }
+
+                ResourceManager.instance.AddResources(collectionItems);
             }
         }
     }
