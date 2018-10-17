@@ -10,7 +10,6 @@ namespace FortBlast.Resources
     public class CollectCollectibles : MonoBehaviour
     {
         public List<InventoryItemStats> collectibles;
-        public float itemSelectionProbability = 0.75f;
         public float maxInteractionTime;
 
         [Header("UI Display")]
@@ -97,17 +96,20 @@ namespace FortBlast.Resources
                 List<InventoryItemStats> collectionItems = new List<InventoryItemStats>();
                 for (int i = 0; i < collectibles.Count; i++)
                 {
-                    if (Random.Range(0f, 1f) <= itemSelectionProbability)
-                    {
-                        InventoryItemStats inventoryItemStats = collectibles[i];
-                        int randomValue = Random.Range(0, 1000) % inventoryItemStats.itemCount;
+                    InventoryItemStats inventoryItemStats = collectibles[i];
+                    int randomValue = Random.Range(0, 1000) % inventoryItemStats.itemCount;
 
-                        InventoryItemStats newCollectionItem = new InventoryItemStats();
-                        newCollectionItem.itemCount = randomValue;
-                        newCollectionItem.inventoryItem = inventoryItemStats.inventoryItem;
+                    if (inventoryItemStats.itemCount <= 1)
+                        randomValue = inventoryItemStats.itemCount;
+                    if (randomValue <= 0)
+                        continue;
 
-                        collectionItems.Add(newCollectionItem);
-                    }
+                    InventoryItemStats newCollectionItem = new InventoryItemStats();
+                    newCollectionItem.itemCount = randomValue;
+                    newCollectionItem.inventoryItem = inventoryItemStats.inventoryItem;
+
+                    collectionItems.Add(newCollectionItem);
+
                 }
 
                 ResourceManager.instance.AddResources(collectionItems);

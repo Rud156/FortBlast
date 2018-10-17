@@ -382,17 +382,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectibles:
-  - item: {fileID: 11400000, guid: a140ec2bd213d6646bd409f3f2c7d377, type: 2}
-    itemCount: 3
-  - item: {fileID: 11400000, guid: 9998c4ec1a867724287468528deb4259, type: 2}
+  - inventoryItem: {fileID: 11400000, guid: a140ec2bd213d6646bd409f3f2c7d377, type: 2}
+    itemCount: 7
+  - inventoryItem: {fileID: 11400000, guid: a201e37a38de4d74b9992161e7a9af78, type: 2}
     itemCount: 2
-  - item: {fileID: 11400000, guid: a201e37a38de4d74b9992161e7a9af78, type: 2}
+  - inventoryItem: {fileID: 11400000, guid: a88b717509ab4ef488845209c1a2e1de, type: 2}
     itemCount: 2
   maxInteractionTime: 5
   uiSlider: {fileID: 114162571644952168}
   collectibleUiDisplay: {fileID: 1278017142937440}
-  collectibleContentUiText: {fileID: 0}
-  collectibleContentUiAnimator: {fileID: 0}
 --- !u!114 &114162571644952168
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -925,16 +925,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectibles:
-  - item: {fileID: 11400000, guid: 9998c4ec1a867724287468528deb4259, type: 2}
+  - inventoryItem: {fileID: 11400000, guid: c95197f74979b5f4d96de806e9efcfbd, type: 2}
     itemCount: 1
-  - item: {fileID: 11400000, guid: a140ec2bd213d6646bd409f3f2c7d377, type: 2}
+  - inventoryItem: {fileID: 11400000, guid: a201e37a38de4d74b9992161e7a9af78, type: 2}
     itemCount: 5
-  - item: {fileID: 11400000, guid: 57227ab29559b75439ae20f89aa3d975, type: 2}
+  - inventoryItem: {fileID: 11400000, guid: 57227ab29559b75439ae20f89aa3d975, type: 2}
     itemCount: 1
-  - item: {fileID: 11400000, guid: 091e34a28b3ecc64cb8109487a273d54, type: 2}
+  - inventoryItem: {fileID: 11400000, guid: bd1d0f119cb517a4187b87d77983d792, type: 2}
     itemCount: 3
-  - item: {fileID: 11400000, guid: a201e37a38de4d74b9992161e7a9af78, type: 2}
+  - inventoryItem: {fileID: 11400000, guid: 9998c4ec1a867724287468528deb4259, type: 2}
     itemCount: 3
+  itemSelectionProbability: 0.75
   maxInteractionTime: 7
   uiSlider: {fileID: 114275839050936218}
   collectibleUiDisplay: {fileID: 1514218000872046}
