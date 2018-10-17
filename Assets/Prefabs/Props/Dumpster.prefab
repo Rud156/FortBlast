@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 33097430497240468}
   - component: {fileID: 23562407669263096}
   - component: {fileID: 65195125444541280}
+  - component: {fileID: 65875283834000432}
   - component: {fileID: 114069952630886326}
   m_Layer: 0
   m_Name: Dumpster
@@ -120,7 +121,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1977509700430396}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.70710677}
-  m_LocalPosition: {x: 217.87863, y: 10.561798, z: -158.64127}
+  m_LocalPosition: {x: 220.75877, y: 10.561798, z: -159.64497}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 224879836336256168}
@@ -177,10 +178,22 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1977509700430396}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1, z: 0.73045737}
+  m_Center: {x: -0.000000059604645, y: -0.023109486, z: 0.36522868}
+--- !u!65 &65875283834000432
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1977509700430396}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.1353683, y: 0.71078306, z: 0.73045737}
   m_Center: {x: -0.000000059604645, y: -0.023109486, z: 0.36522868}
 --- !u!114 &114069952630886326
 MonoBehaviour:

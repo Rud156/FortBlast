@@ -242,6 +242,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4101067730754336}
   - component: {fileID: 65530811339194960}
+  - component: {fileID: 65944321725328088}
   - component: {fileID: 114136470484471230}
   m_Layer: 0
   m_Name: Prop_5
@@ -317,7 +318,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1920519078780668}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 215.69856, y: 10.561798, z: -158.71815}
+  m_LocalPosition: {x: 221.78302, y: 10.561798, z: -159.16035}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4708987245037292}
@@ -627,10 +628,22 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1920519078780668}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 3, y: 1, z: 3.5}
+  m_Center: {x: 0.25, y: 0.5, z: 0.5}
+--- !u!65 &65944321725328088
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1920519078780668}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 1, z: 2.7}
   m_Center: {x: 0.25, y: 0.5, z: 0.5}
 --- !u!114 &114084494329137476
 MonoBehaviour:

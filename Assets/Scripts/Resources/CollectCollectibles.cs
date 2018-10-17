@@ -87,7 +87,15 @@ namespace FortBlast.Resources
         private void CheckInteractionTime()
         {
             if (Input.GetKey(Controls.InteractionCode))
+            {
                 _currentInteractionTime += Time.deltaTime;
+                collectibleUiDisplay.SetActive(true);
+            }
+            else
+            {
+                _currentInteractionTime = 0;
+                collectibleUiDisplay.SetActive(false);
+            }
 
             if (_currentInteractionTime >= maxInteractionTime)
             {

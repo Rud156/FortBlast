@@ -37,6 +37,7 @@ namespace FortBlast.Resources
         /// </summary>
         void Start()
         {
+            items = new Dictionary<string, InventoryItemStats>();
             // TODO: Read initial resources from file
         }
 
