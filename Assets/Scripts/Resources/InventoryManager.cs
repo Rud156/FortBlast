@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using FortBlast.Common;
+using FortBlast.Enums;
 using FortBlast.Player.Movement;
 using FortBlast.Player.Shooter;
 using UnityEngine;
@@ -32,11 +33,20 @@ namespace FortBlast.Resources
         public GameObject inventory;
         public RectTransform contentContainer;
         public GameObject itemDisplayPrefab;
+        public ScrollRect scrollRect;
 
         [Header("UI Display Image States")]
         public Sprite defaultBorder;
         public Sprite selectedBorder;
         public Sprite notAvailableBorder;
+
+        [Header("Item Details")]
+        public Text itemDetailName;
+        public RawImage itemDetailImage;
+        public Text itemDetailDescription;
+        public Text itemDetailType;
+        public Button itemConfirmButton;
+        public GameObject itemDetail;
 
         // TODO: Switch these to GameManager later
         [Header("Player")]
@@ -61,8 +71,8 @@ namespace FortBlast.Resources
             get { return _itemSelected; }
             set
             {
-                UpdateUIWithItemSelected();
                 _itemSelected = value;
+                UpdateUIWithItemSelected();
             }
         }
 
@@ -79,6 +89,8 @@ namespace FortBlast.Resources
 
             ItemSelected = null;
             _inventoryOpen = false;
+
+            itemConfirmButton.onClick.AddListener(SpawnItemIfButtonPressed);
         }
 
         /// <summary>
@@ -91,11 +103,14 @@ namespace FortBlast.Resources
                 inventory.SetActive(true);
                 _inventoryOpen = true;
 
+                scrollRect.verticalNormalizedPosition = 1;
+
                 playerAbsorberController.DeActivateAbsorber();
                 playerLookAtController.DeActivateRotation();
             }
             else if (Input.GetKeyDown(Controls.CloseKey))
             {
+                itemDetail.SetActive(false);
                 inventory.SetActive(false);
                 _inventoryOpen = false;
 
@@ -109,15 +124,9 @@ namespace FortBlast.Resources
             foreach (var item in _itemsDisplay)
             {
                 if (ResourceManager.instance.HasResource(item.inventoryItem.displayName))
-                {
-                    item.itemButton.interactable = true;
                     item.itemBorder.sprite = defaultBorder;
-                }
                 else
-                {
-                    item.itemButton.interactable = false;
                     item.itemBorder.sprite = notAvailableBorder;
-                }
             }
         }
 
@@ -132,10 +141,53 @@ namespace FortBlast.Resources
                 if (item == ItemSelected)
                 {
                     item.itemBorder.sprite = selectedBorder;
-                    // TODO: Display and update the right part of the UI with data
+
+                    itemDetailName.text = ItemSelected.inventoryItem.displayName;
+                    itemDetailDescription.text = ItemSelected.inventoryItem.description;
+                    itemDetailImage.texture = ItemSelected.inventoryItem.image;
+
+                    switch (ItemSelected.inventoryItem.type)
+                    {
+                        case ItemType.Consumable:
+                            itemDetailType.text = "Can be <b>consumed</b>";
+                            itemConfirmButton.gameObject.SetActive(false);
+                            break;
+
+                        case ItemType.Spawnable:
+                            itemDetailType.text = "Can be used for <b>distraction</b>";
+                            itemConfirmButton.gameObject.SetActive(true);
+                            break;
+
+                        case ItemType.UpgradeHelper:
+                            itemDetailType.text = "Can be used for <b>upgrades</b>";
+                            itemConfirmButton.gameObject.SetActive(false);
+                            break;
+                    }
+
+                    itemDetail.SetActive(true);
+
+                    if (ResourceManager.instance.HasResource(ItemSelected.inventoryItem.displayName))
+                        itemConfirmButton.interactable = true;
+                    else
+                        itemConfirmButton.interactable = false;
+
                     break;
                 }
             }
+        }
+
+        private void SpawnItemIfButtonPressed()
+        {
+            if (ItemSelected == null)
+                return;
+
+            if (!ResourceManager.instance.HasResource(ItemSelected.inventoryItem.displayName))
+            {
+                Debug.Log("No Resource Available for Item. Not doing anything");
+                return;
+            }
+
+            // TODO: Else spawn the object
         }
 
         private void SelectItem(InventoryDisplay item) => ItemSelected = item;
@@ -147,8 +199,7 @@ namespace FortBlast.Resources
                 GameObject itemDisplayInstance = Instantiate(itemDisplayPrefab, contentContainer.position,
                     Quaternion.identity);
                 RectTransform itemDisplayTransform = itemDisplayInstance.GetComponent<RectTransform>();
-                itemDisplayTransform.SetParent(contentContainer);
-                itemDisplayTransform.localScale = Vector3.one;
+                itemDisplayTransform.SetParent(contentContainer, false);
 
                 InventoryDisplay inventoryDisplay = new InventoryDisplay();
                 inventoryDisplay.inventoryItem = item;
@@ -160,6 +211,7 @@ namespace FortBlast.Resources
 
                 inventoryDisplay.itemImage = itemDisplayInstance
                     .transform.GetChild(1).GetComponent<RawImage>();
+                inventoryDisplay.itemImage.texture = item.image;
                 inventoryDisplay.itemNameText = itemDisplayInstance.
                     transform.GetChild(2).GetComponent<Text>();
                 inventoryDisplay.itemNameText.text = item.displayName;
