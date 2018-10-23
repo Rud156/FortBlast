@@ -41,12 +41,15 @@ namespace FortBlast.Resources
         public Sprite notAvailableBorder;
 
         [Header("Item Details")]
+        public GameObject itemDetail;
         public Text itemDetailName;
         public RawImage itemDetailImage;
         public Text itemDetailDescription;
         public Text itemDetailType;
+
+        [Header("Interaction")]
         public Button itemConfirmButton;
-        public GameObject itemDetail;
+        public Text itemConfirmButtonText;
 
         // TODO: Switch these to GameManager later
         [Header("Player")]
@@ -150,12 +153,14 @@ namespace FortBlast.Resources
                     {
                         case ItemType.Consumable:
                             itemDetailType.text = "Can be <b>consumed</b>";
-                            itemConfirmButton.gameObject.SetActive(false);
+                            itemConfirmButton.gameObject.SetActive(true);
+                            itemConfirmButtonText.text = "Consume";
                             break;
 
                         case ItemType.Spawnable:
                             itemDetailType.text = "Can be used for <b>distraction</b>";
                             itemConfirmButton.gameObject.SetActive(true);
+                            itemConfirmButtonText.text = "Use";
                             break;
 
                         case ItemType.UpgradeHelper:
@@ -186,8 +191,10 @@ namespace FortBlast.Resources
                 Debug.Log("No Resource Available for Item. Not doing anything");
                 return;
             }
-
-            // TODO: Else spawn the object
+            else
+            {
+                // TODO: Else spawn the object
+            }
         }
 
         private void SelectItem(InventoryDisplay item) => ItemSelected = item;

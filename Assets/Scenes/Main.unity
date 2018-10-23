@@ -2825,12 +2825,13 @@ MonoBehaviour:
   defaultBorder: {fileID: 21300000, guid: fed5c59aaf8a73543972d5fffa4b2203, type: 3}
   selectedBorder: {fileID: 21300000, guid: a071c6fa36d70db47a85a14a95935c14, type: 3}
   notAvailableBorder: {fileID: 21300000, guid: 8e026be5df61a7d45bf9e73fc05682fd, type: 3}
+  itemDetail: {fileID: 1750881476}
   itemDetailName: {fileID: 1884297047}
   itemDetailImage: {fileID: 10559607}
   itemDetailDescription: {fileID: 1053406985}
   itemDetailType: {fileID: 1498472820}
   itemConfirmButton: {fileID: 851386040}
-  itemDetail: {fileID: 1750881476}
+  itemConfirmButtonText: {fileID: 926010434}
   playerAbsorberController: {fileID: 1856345415}
   playerLookAtController: {fileID: 1856345417}
 --- !u!4 &180151729
@@ -12237,7 +12238,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -170, y: 75}
-  m_SizeDelta: {x: 240, y: 45}
+  m_SizeDelta: {x: 240, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &851386040
 MonoBehaviour:
@@ -21878,7 +21879,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000030517578}
+  m_AnchoredPosition: {x: 0, y: -0.000000021595012}
   m_SizeDelta: {x: -1097.3972, y: -569.31586}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1460412301
