@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Bandage
   description: Somewhat dirty bandages. Helps to increase health in times of need
-  image: {fileID: 0}
+  image: {fileID: 2800000, guid: f81094832d834c64d93b198cb16b6a3e, type: 3}
   type: 2
   prefab: {fileID: 0}
   healthAmount: 0
