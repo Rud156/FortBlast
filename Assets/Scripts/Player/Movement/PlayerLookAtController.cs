@@ -12,6 +12,7 @@ namespace FortBlast.Player.Movement
         public bool lockCursor;
 
         private float _yaw;
+        private bool _rotationActive;
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -20,6 +21,7 @@ namespace FortBlast.Player.Movement
         void Start()
         {
             _yaw = transform.rotation.eulerAngles.y;
+            _rotationActive = true;
 
             if (lockCursor)
             {
@@ -33,8 +35,14 @@ namespace FortBlast.Player.Movement
         /// </summary>
         void Update() => RotatePlayerOnMouse();
 
+        public void ActivateRotation() => _rotationActive = true;
+        public void DeActivateRotation() => _rotationActive = false;
+
         private void RotatePlayerOnMouse()
         {
+            if (!_rotationActive)
+                return;
+
             float mouseX = Input.GetAxis(PlayerData.MouseX);
             _yaw += mouseX * rotationSpeed * Time.deltaTime;
             transform.eulerAngles = Vector3.up * _yaw;

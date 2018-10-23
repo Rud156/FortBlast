@@ -87,7 +87,7 @@ namespace FortBlast.Enemy.Tower
 
         private void CheckPlayerInteraction()
         {
-            if (Input.GetKey(Controls.InteractionCode) && _playerNearby && _inPlayerFOV)
+            if (Input.GetKey(Controls.InteractionKey) && _playerNearby && _inPlayerFOV)
             {
                 _currentInteractionTime += Time.deltaTime;
                 timerSlider.gameObject.SetActive(true);

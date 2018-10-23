@@ -5,8 +5,9 @@ namespace FortBlast.Common
     public static class Controls
     {
         // Keyboard Interaction
-        public const KeyCode InteractionCode = KeyCode.E;
-        public const KeyCode InventoryCode = KeyCode.Q;
+        public const KeyCode InteractionKey = KeyCode.E;
+        public const KeyCode InventoryKey = KeyCode.Q;
+        public const KeyCode CloseKey = KeyCode.Escape;
 
         // Animator Variables
         public const string UIDisplayTextTrigger = "FadeInOut";

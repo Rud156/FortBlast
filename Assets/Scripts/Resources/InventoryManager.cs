@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using FortBlast.Common;
+using FortBlast.Player.Movement;
+using FortBlast.Player.Shooter;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,6 +29,7 @@ namespace FortBlast.Resources
         public List<InventoryItem> inventoryItems;
 
         [Header("Inventory Display")]
+        public GameObject inventory;
         public RectTransform contentContainer;
         public GameObject itemDisplayPrefab;
 
@@ -33,6 +37,11 @@ namespace FortBlast.Resources
         public Sprite defaultBorder;
         public Sprite selectedBorder;
         public Sprite notAvailableBorder;
+
+        // TODO: Switch these to GameManager later
+        [Header("Player")]
+        public PlayerShooterAbsorbDamage playerAbsorberController;
+        public PlayerLookAtController playerLookAtController;
 
         private class InventoryDisplay
         {
@@ -44,6 +53,7 @@ namespace FortBlast.Resources
         }
 
         private List<InventoryDisplay> _itemsDisplay;
+        private bool _inventoryOpen;
 
         private InventoryDisplay _itemSelected;
         private InventoryDisplay ItemSelected
@@ -68,6 +78,30 @@ namespace FortBlast.Resources
             ResourceManager.instance.resourcesChanged += UpdateUIWithResources;
 
             ItemSelected = null;
+            _inventoryOpen = false;
+        }
+
+        /// <summary>
+        /// Update is called every frame, if the MonoBehaviour is enabled.
+        /// </summary>
+        void Update()
+        {
+            if (Input.GetKeyDown(Controls.InventoryKey))
+            {
+                inventory.SetActive(true);
+                _inventoryOpen = true;
+
+                playerAbsorberController.DeActivateAbsorber();
+                playerLookAtController.DeActivateRotation();
+            }
+            else if (Input.GetKeyDown(Controls.CloseKey))
+            {
+                inventory.SetActive(false);
+                _inventoryOpen = false;
+
+                playerAbsorberController.ActivateAbsorber();
+                playerLookAtController.ActivateRotation();
+            }
         }
 
         private void UpdateUIWithResources()

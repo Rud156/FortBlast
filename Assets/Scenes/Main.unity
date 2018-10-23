@@ -2749,12 +2749,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bd1d0f119cb517a4187b87d77983d792, type: 2}
   - {fileID: 11400000, guid: 57227ab29559b75439ae20f89aa3d975, type: 2}
   - {fileID: 11400000, guid: 7ed49874afd6d6b40a1f0dc8576cbc99, type: 2}
+  inventory: {fileID: 1241906953}
   contentContainer: {fileID: 1460412300}
   itemDisplayPrefab: {fileID: 1569484164274034, guid: acf6c88aa023c9b43b4ddc854933abea,
     type: 2}
   defaultBorder: {fileID: 21300000, guid: fed5c59aaf8a73543972d5fffa4b2203, type: 3}
   selectedBorder: {fileID: 21300000, guid: a071c6fa36d70db47a85a14a95935c14, type: 3}
   notAvailableBorder: {fileID: 21300000, guid: 8e026be5df61a7d45bf9e73fc05682fd, type: 3}
+  playerAbsorberController: {fileID: 1856345415}
+  playerLookAtController: {fileID: 1856345417}
 --- !u!4 &180151729
 Transform:
   m_ObjectHideFlags: 0
@@ -23666,11 +23669,6 @@ Prefab:
       propertyPath: healthFiller
       value: 
       objectReference: {fileID: 1400841411}
-    - target: {fileID: 114400013452624122, guid: 756e4075fb31f88439b7a2005e13bc3c,
-        type: 2}
-      propertyPath: lockCursor
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 756e4075fb31f88439b7a2005e13bc3c, type: 2}
   m_IsPrefabAsset: 0
@@ -28176,6 +28174,18 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4300304409759498, guid: c787741104e020e49b57d82cf333a37a,
     type: 2}
   m_PrefabInternal: {fileID: 1850477526}
+--- !u!114 &1856345415 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114046259173662578, guid: 756e4075fb31f88439b7a2005e13bc3c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1571591470}
+  m_Script: {fileID: 11500000, guid: 9c639741292e28846a6fb850b4f832ac, type: 3}
+--- !u!114 &1856345417 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114400013452624122, guid: 756e4075fb31f88439b7a2005e13bc3c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1571591470}
+  m_Script: {fileID: 11500000, guid: 384541c770c523c40af84ee59e521664, type: 3}
 --- !u!1001 &1857485926
 Prefab:
   m_ObjectHideFlags: 0
