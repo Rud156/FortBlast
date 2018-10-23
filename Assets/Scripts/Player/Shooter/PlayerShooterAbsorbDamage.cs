@@ -75,7 +75,6 @@ namespace FortBlast.Player.Shooter
                 _playerHealthSetter.TakeDamage(damageAmount);
         }
 
-
         public void ActivateAbsorber() => _absorberActive = true;
         public void DeActivateAbsorber() => _absorberActive = false;
 

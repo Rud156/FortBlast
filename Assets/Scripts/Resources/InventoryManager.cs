@@ -144,9 +144,11 @@ namespace FortBlast.Resources
         {
             foreach (var item in inventoryItems)
             {
-                GameObject itemDisplayInstance = Instantiate(itemDisplayPrefab, transform.position,
+                GameObject itemDisplayInstance = Instantiate(itemDisplayPrefab, contentContainer.position,
                     Quaternion.identity);
-                itemDisplayInstance.transform.SetParent(contentContainer);
+                RectTransform itemDisplayTransform = itemDisplayInstance.GetComponent<RectTransform>();
+                itemDisplayTransform.SetParent(contentContainer);
+                itemDisplayTransform.localScale = Vector3.one;
 
                 InventoryDisplay inventoryDisplay = new InventoryDisplay();
                 inventoryDisplay.inventoryItem = item;
@@ -160,6 +162,7 @@ namespace FortBlast.Resources
                     .transform.GetChild(1).GetComponent<RawImage>();
                 inventoryDisplay.itemNameText = itemDisplayInstance.
                     transform.GetChild(2).GetComponent<Text>();
+                inventoryDisplay.itemNameText.text = item.displayName;
 
 
                 inventoryDisplay.itemButton.onClick.AddListener(() =>
