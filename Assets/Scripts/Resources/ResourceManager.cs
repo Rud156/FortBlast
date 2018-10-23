@@ -29,6 +29,9 @@ namespace FortBlast.Resources
         public Text contentDisplay;
         public Animator contentDisplayAnimator;
 
+        public delegate void ResourcesChanged();
+        public ResourcesChanged resourcesChanged;
+
         private Dictionary<string, InventoryItemStats> items;
 
         /// <summary>
@@ -67,7 +70,7 @@ namespace FortBlast.Resources
             contentDisplay.text = sb.ToString();
             contentDisplayAnimator.SetTrigger(Controls.UIDisplayTextTrigger);
 
-            // TODO: Write this content to the disk
+            resourcesChanged?.Invoke();
         }
 
         public GameObject SpawnResource(string itemName)
@@ -83,11 +86,13 @@ namespace FortBlast.Resources
                     items.Remove(itemName);
 
                 items[itemName] = inventoryItemStats;
+
+                resourcesChanged?.Invoke();
                 return inventoryItemStats.inventoryItem.prefab;
             }
         }
 
-        public bool ResourceAvailable(string itemName)
+        public bool HasResource(string itemName)
         {
             if (items.ContainsKey(itemName))
                 return true;
