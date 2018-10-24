@@ -44,6 +44,23 @@ namespace FortBlast.Resources
             // TODO: Read initial resources from file
         }
 
+        public void AddResource(InventoryItem item, int count = 1)
+        {
+            if (items.ContainsKey(item.displayName))
+            {
+                InventoryItemStats inventoryItemStats = items[item.displayName];
+                inventoryItemStats.itemCount += count;
+                items[item.displayName] = inventoryItemStats;
+            }
+            else
+            {
+                InventoryItemStats inventoryItemStats = new InventoryItemStats();
+                inventoryItemStats.itemCount = count;
+                inventoryItemStats.inventoryItem = item;
+                items.Add(item.displayName, inventoryItemStats);
+            }
+        }
+
         public void AddResources(List<InventoryItemStats> itemStats, bool displayOnUI = true)
         {
             StringBuilder sb = new StringBuilder("Found ");
@@ -61,12 +78,13 @@ namespace FortBlast.Resources
                     InventoryItemStats inventoryItemStats = new InventoryItemStats();
                     inventoryItemStats.itemCount = item.itemCount;
                     inventoryItemStats.inventoryItem = item.inventoryItem;
-                    items[item.inventoryItem.displayName] = inventoryItemStats;
+                    items.Add(item.inventoryItem.displayName, inventoryItemStats);
                 }
 
                 sb.Append($"{item.itemCount} {item.inventoryItem.displayName}, ");
             }
 
+            sb.Length -= 2;
             contentDisplay.text = sb.ToString();
             contentDisplayAnimator.SetTrigger(Controls.UIDisplayTextTrigger);
 

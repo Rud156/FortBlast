@@ -9,6 +9,7 @@ namespace FortBlast.Player.Data
         public const string PlayerVertical = "Move V";
         public const string PlayerDead = "Dead";
         public const string PlayerShooting = "Shooting";
+        public const string PlayerSpawning = "Spawning";
 
 
         // Movement Params

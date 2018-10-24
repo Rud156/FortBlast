@@ -2834,6 +2834,7 @@ MonoBehaviour:
   itemConfirmButtonText: {fileID: 926010434}
   playerAbsorberController: {fileID: 1856345415}
   playerLookAtController: {fileID: 1856345417}
+  playerSpawnerController: {fileID: 838842325}
 --- !u!4 &180151729
 Transform:
   m_ObjectHideFlags: 0
@@ -5051,6 +5052,86 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 20.000002, y: 0.29999998, z: 20.000002}
   m_Center: {x: 0, y: 0.16179813, z: 0}
+--- !u!1001 &370518610
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 114069952630886326, guid: a4ae338a834cdef4c92194226edda99f,
+        type: 2}
+      propertyPath: collectibles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965406818288034, guid: a4ae338a834cdef4c92194226edda99f, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 220.75877
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965406818288034, guid: a4ae338a834cdef4c92194226edda99f, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 10.561798
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965406818288034, guid: a4ae338a834cdef4c92194226edda99f, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -159.64497
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965406818288034, guid: a4ae338a834cdef4c92194226edda99f, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071069
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965406818288034, guid: a4ae338a834cdef4c92194226edda99f, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965406818288034, guid: a4ae338a834cdef4c92194226edda99f, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965406818288034, guid: a4ae338a834cdef4c92194226edda99f, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965406818288034, guid: a4ae338a834cdef4c92194226edda99f, type: 2}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 114069952630886326, guid: a4ae338a834cdef4c92194226edda99f,
+        type: 2}
+      propertyPath: collectibles.Array.data[1].inventoryItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 091e34a28b3ecc64cb8109487a273d54,
+        type: 2}
+    - target: {fileID: 114069952630886326, guid: a4ae338a834cdef4c92194226edda99f,
+        type: 2}
+      propertyPath: collectibles.Array.data[1].itemCount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114069952630886326, guid: a4ae338a834cdef4c92194226edda99f,
+        type: 2}
+      propertyPath: collectibles.Array.data[2].inventoryItem
+      value: 
+      objectReference: {fileID: 11400000, guid: bd1d0f119cb517a4187b87d77983d792,
+        type: 2}
+    - target: {fileID: 114069952630886326, guid: a4ae338a834cdef4c92194226edda99f,
+        type: 2}
+      propertyPath: collectibles.Array.data[2].itemCount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114069952630886326, guid: a4ae338a834cdef4c92194226edda99f,
+        type: 2}
+      propertyPath: collectibles.Array.data[0].inventoryItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 9998c4ec1a867724287468528deb4259,
+        type: 2}
+    - target: {fileID: 114069952630886326, guid: a4ae338a834cdef4c92194226edda99f,
+        type: 2}
+      propertyPath: maxInteractionTime
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a4ae338a834cdef4c92194226edda99f, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1001 &373304716
 Prefab:
   m_ObjectHideFlags: 0
@@ -5468,7 +5549,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &403230016
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11952,6 +12033,12 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10.000005, y: 2.1745167, z: 18.000006}
   m_Center: {x: 4.000002, y: 0.08725792, z: 4}
+--- !u!114 &838842325 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114853501754367484, guid: 756e4075fb31f88439b7a2005e13bc3c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1571591470}
+  m_Script: {fileID: 11500000, guid: 811f4c6b6a7c7e14fba93a3d166b61b4, type: 3}
 --- !u!1001 &844131890
 Prefab:
   m_ObjectHideFlags: 0

@@ -55,6 +55,7 @@ namespace FortBlast.Resources
         [Header("Player")]
         public PlayerShooterAbsorbDamage playerAbsorberController;
         public PlayerLookAtController playerLookAtController;
+        public PlayerSpawner playerSpawnerController;
 
         private class InventoryDisplay
         {
@@ -94,7 +95,7 @@ namespace FortBlast.Resources
             ItemSelected = null;
             _inventoryOpen = false;
 
-            itemConfirmButton.onClick.AddListener(SpawnItemIfButtonPressed);
+            itemConfirmButton.onClick.AddListener(SpawnItemOnButtonPress);
         }
 
         /// <summary>
@@ -194,19 +195,23 @@ namespace FortBlast.Resources
             }
         }
 
-        private void SpawnItemIfButtonPressed()
+        private void SpawnItemOnButtonPress()
         {
             if (ItemSelected == null)
                 return;
 
-            if (!ResourceManager.instance.HasResource(ItemSelected.inventoryItem.displayName))
+            if (ResourceManager.instance.HasResource(ItemSelected.inventoryItem.displayName))
             {
-                Debug.Log("No Resource Available for Item. Not doing anything");
-                return;
-            }
-            else
-            {
-                // TODO: Else spawn the object
+                playerSpawnerController.SpawnItemDisplay(ItemSelected.inventoryItem);
+                ResourceManager.instance.SpawnResource(ItemSelected.inventoryItem.displayName);
+
+                itemDetail.SetActive(false);
+                inventory.SetActive(false);
+                _inventoryOpen = false;
+
+                ItemSelected = null;
+
+                playerLookAtController.ActivateRotation();
             }
         }
 
