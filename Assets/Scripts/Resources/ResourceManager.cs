@@ -99,5 +99,13 @@ namespace FortBlast.Resources
             else
                 return false;
         }
+
+        public int CountResource(string itemName)
+        {
+            if (items.ContainsKey(itemName))
+                return items[itemName].itemCount;
+            else
+                return 0;
+        }
     }
 }

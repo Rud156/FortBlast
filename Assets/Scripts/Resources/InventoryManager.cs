@@ -63,6 +63,7 @@ namespace FortBlast.Resources
             public Image itemBorder;
             public Text itemNameText;
             public RawImage itemImage;
+            public Text itemCountText;
         }
 
         private List<InventoryDisplay> _itemsDisplay;
@@ -117,6 +118,8 @@ namespace FortBlast.Resources
                 inventory.SetActive(false);
                 _inventoryOpen = false;
 
+                ItemSelected = null;
+
                 playerAbsorberController.ActivateAbsorber();
                 playerLookAtController.ActivateRotation();
             }
@@ -127,9 +130,16 @@ namespace FortBlast.Resources
             foreach (var item in _itemsDisplay)
             {
                 if (ResourceManager.instance.HasResource(item.inventoryItem.displayName))
+                {
+                    item.itemCountText.text =
+                        $"X {ResourceManager.instance.CountResource(item.inventoryItem.displayName)}";
                     item.itemBorder.sprite = defaultBorder;
+                }
                 else
+                {
+                    item.itemCountText.text = "X 0";
                     item.itemBorder.sprite = notAvailableBorder;
+                }
             }
         }
 
@@ -174,7 +184,10 @@ namespace FortBlast.Resources
                     if (ResourceManager.instance.HasResource(ItemSelected.inventoryItem.displayName))
                         itemConfirmButton.interactable = true;
                     else
+                    {
+                        itemConfirmButton.gameObject.SetActive(false);
                         itemConfirmButton.interactable = false;
+                    }
 
                     break;
                 }
@@ -222,6 +235,9 @@ namespace FortBlast.Resources
                 inventoryDisplay.itemNameText = itemDisplayInstance.
                     transform.GetChild(2).GetComponent<Text>();
                 inventoryDisplay.itemNameText.text = item.displayName;
+
+                inventoryDisplay.itemCountText = itemDisplayInstance
+                    .transform.GetChild(3).GetComponent<Text>();
 
 
                 inventoryDisplay.itemButton.onClick.AddListener(() =>
