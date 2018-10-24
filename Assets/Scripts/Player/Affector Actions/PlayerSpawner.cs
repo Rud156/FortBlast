@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FortBlast.Common;
 using FortBlast.Player.Data;
 using FortBlast.Resources;
+using FortBlast.Scenes.Main_Scene;
 using UnityEngine;
 
 namespace FortBlast.Player.Affecter_Actions
@@ -36,9 +37,6 @@ namespace FortBlast.Player.Affecter_Actions
         /// </summary>
         void Update()
         {
-            if (Input.GetKeyDown(Controls.CloseKey))
-                ClearItemIfNotSpawned();
-
             if (Input.GetMouseButtonDown(0))
                 SpawnItemWorld();
         }
@@ -57,11 +55,12 @@ namespace FortBlast.Player.Affecter_Actions
         {
             _itemInstance = Instantiate(item.prefab, spawnPoint.position, Quaternion.identity);
             _itemInstance.transform.SetParent(spawnPoint);
-            _itemRB = _itemInstance.GetComponent<Rigidbody>();
-            _itemRB.isKinematic = true;
-            _itemCollider = _itemInstance.GetComponent<BoxCollider>();
-            _itemCollider.enabled = false;
 
+            _itemRB = _itemInstance.GetComponent<Rigidbody>();
+            _itemCollider = _itemInstance.GetComponent<BoxCollider>();
+
+            _itemRB.isKinematic = true;
+            _itemCollider.enabled = false;
 
             _playerAnimator.SetBool(PlayerData.PlayerSpawning, true);
             _item = item;
@@ -72,15 +71,18 @@ namespace FortBlast.Player.Affecter_Actions
             if (_itemInstance == null)
                 return;
 
+            GameManager.instance.InventoryItemUsed();
+
             _itemRB.isKinematic = false;
             _itemRB.velocity = itemLaunchVelocity * transform.forward;
-            _itemCollider.enabled = true;
 
-            _itemInstance.transform.SetParent(null);
+            _itemCollider.enabled = true;
 
             Instantiate(launchEffect, spawnPoint.position, Quaternion.identity);
 
             _playerAnimator.SetBool(PlayerData.PlayerSpawning, false);
+
+            _itemInstance.transform.SetParent(null);
             _itemInstance = null;
         }
     }

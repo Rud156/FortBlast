@@ -3,6 +3,7 @@ using FortBlast.Common;
 using FortBlast.Enums;
 using FortBlast.Player.Affecter_Actions;
 using FortBlast.Player.Movement;
+using FortBlast.Scenes.Main_Scene;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,8 +27,8 @@ namespace FortBlast.Resources
         }
         #endregion Singleton
 
-
         public List<InventoryItem> inventoryItems;
+
 
         [Header("Inventory Display")]
         public GameObject inventory;
@@ -47,15 +48,9 @@ namespace FortBlast.Resources
         public Text itemDetailDescription;
         public Text itemDetailType;
 
-        [Header("Interaction")]
+        [Header("Item Use Interaction")]
         public Button itemConfirmButton;
         public Text itemConfirmButtonText;
-
-        // TODO: Switch these to GameManager later
-        [Header("Player")]
-        public PlayerShooterAbsorbDamage playerAbsorberController;
-        public PlayerLookAtController playerLookAtController;
-        public PlayerSpawner playerSpawnerController;
 
         private class InventoryDisplay
         {
@@ -68,7 +63,6 @@ namespace FortBlast.Resources
         }
 
         private List<InventoryDisplay> _itemsDisplay;
-        private bool _inventoryOpen;
 
         private InventoryDisplay _itemSelected;
         private InventoryDisplay ItemSelected
@@ -93,7 +87,6 @@ namespace FortBlast.Resources
             ResourceManager.instance.resourcesChanged += UpdateUIWithResources;
 
             ItemSelected = null;
-            _inventoryOpen = false;
 
             itemConfirmButton.onClick.AddListener(SpawnItemOnButtonPress);
         }
@@ -104,25 +97,42 @@ namespace FortBlast.Resources
         void Update()
         {
             if (Input.GetKeyDown(Controls.InventoryKey))
+                OpenInventory();
+        }
+
+        #region InventoryActions
+
+        public void OpenInventory()
+        {
+            inventory.SetActive(true);
+            scrollRect.verticalNormalizedPosition = 1;
+
+            GameManager.instance.InventoryOpened();
+        }
+
+        public void CloseInventory()
+        {
+            inventory.SetActive(false);
+            itemDetail.SetActive(false);
+
+            ClearItemSelection();
+        }
+
+        public void ClearItemSelection() => ItemSelected = null;
+
+        #endregion InventoryActions
+
+        private void SpawnItemOnButtonPress()
+        {
+            if (ItemSelected == null)
+                return;
+
+            if (ResourceManager.instance.HasResource(ItemSelected.inventoryItem.displayName))
             {
-                inventory.SetActive(true);
-                _inventoryOpen = true;
-
-                scrollRect.verticalNormalizedPosition = 1;
-
-                playerAbsorberController.DeActivateAbsorber();
-                playerLookAtController.DeActivateRotation();
-            }
-            else if (Input.GetKeyDown(Controls.CloseKey))
-            {
-                itemDetail.SetActive(false);
-                inventory.SetActive(false);
-                _inventoryOpen = false;
-
-                ItemSelected = null;
-
-                playerAbsorberController.ActivateAbsorber();
-                playerLookAtController.ActivateRotation();
+                GameManager.instance.InventoryItemSelected(ItemSelected.inventoryItem);
+                ResourceManager.instance.UseResource(ItemSelected.inventoryItem.displayName);
+                ClearItemSelection();
+                CloseInventory();
             }
         }
 
@@ -147,6 +157,7 @@ namespace FortBlast.Resources
         private void UpdateUIWithItemSelected()
         {
             UpdateUIWithResources();
+
             if (ItemSelected == null)
                 return;
 
@@ -192,26 +203,6 @@ namespace FortBlast.Resources
 
                     break;
                 }
-            }
-        }
-
-        private void SpawnItemOnButtonPress()
-        {
-            if (ItemSelected == null)
-                return;
-
-            if (ResourceManager.instance.HasResource(ItemSelected.inventoryItem.displayName))
-            {
-                playerSpawnerController.SpawnItemDisplay(ItemSelected.inventoryItem);
-                ResourceManager.instance.SpawnResource(ItemSelected.inventoryItem.displayName);
-
-                itemDetail.SetActive(false);
-                inventory.SetActive(false);
-                _inventoryOpen = false;
-
-                ItemSelected = null;
-
-                playerLookAtController.ActivateRotation();
             }
         }
 

@@ -59,6 +59,8 @@ namespace FortBlast.Resources
                 inventoryItemStats.inventoryItem = item;
                 items.Add(item.displayName, inventoryItemStats);
             }
+
+            resourcesChanged?.Invoke();
         }
 
         public void AddResources(List<InventoryItemStats> itemStats, bool displayOnUI = true)
@@ -91,7 +93,7 @@ namespace FortBlast.Resources
             resourcesChanged?.Invoke();
         }
 
-        public void SpawnResource(string itemName)
+        public void UseResource(string itemName)
         {
             if (items.ContainsKey(itemName))
             {

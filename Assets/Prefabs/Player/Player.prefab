@@ -1934,7 +1934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 4770809429133766}
-  itemLaunchVelocity: 10
+  itemLaunchVelocity: 25
   launchEffect: {fileID: 1164654482026490, guid: 98c11e4fb77cc974e85a08b52a0a4074,
     type: 2}
 --- !u!114 &114951996199681394
