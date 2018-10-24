@@ -91,22 +91,19 @@ namespace FortBlast.Resources
             resourcesChanged?.Invoke();
         }
 
-        public GameObject SpawnResource(string itemName)
+        public void SpawnResource(string itemName)
         {
-            if (!items.ContainsKey(itemName))
-                return null;
-            else
+            if (items.ContainsKey(itemName))
             {
                 InventoryItemStats inventoryItemStats = items[itemName];
                 inventoryItemStats.itemCount -= 1;
 
                 if (inventoryItemStats.itemCount <= 0)
                     items.Remove(itemName);
-
-                items[itemName] = inventoryItemStats;
+                else
+                    items[itemName] = inventoryItemStats;
 
                 resourcesChanged?.Invoke();
-                return inventoryItemStats.inventoryItem.prefab;
             }
         }
 

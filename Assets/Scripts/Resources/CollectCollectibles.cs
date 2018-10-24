@@ -111,7 +111,7 @@ namespace FortBlast.Resources
                     if (inventoryItemStats.itemCount <= 1)
                         randomValue = inventoryItemStats.itemCount;
                     if (randomValue <= 0)
-                        continue;
+                        randomValue = 1;
 
                     InventoryItemStats newCollectionItem = new InventoryItemStats();
                     newCollectionItem.itemCount = randomValue;

@@ -19,6 +19,7 @@ namespace FortBlast.Player.Affecter_Actions
         private InventoryItem _item;
         private GameObject _itemInstance;
         private Rigidbody _itemRB;
+        private BoxCollider _itemCollider;
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -58,6 +59,8 @@ namespace FortBlast.Player.Affecter_Actions
             _itemInstance.transform.SetParent(spawnPoint);
             _itemRB = _itemInstance.GetComponent<Rigidbody>();
             _itemRB.isKinematic = true;
+            _itemCollider = _itemInstance.GetComponent<BoxCollider>();
+            _itemCollider.enabled = false;
 
 
             _playerAnimator.SetBool(PlayerData.PlayerSpawning, true);
@@ -70,7 +73,9 @@ namespace FortBlast.Player.Affecter_Actions
                 return;
 
             _itemRB.isKinematic = false;
-            _itemRB.velocity = itemLaunchVelocity * spawnPoint.forward;
+            _itemRB.velocity = itemLaunchVelocity * transform.forward;
+            _itemCollider.enabled = true;
+
             _itemInstance.transform.SetParent(null);
 
             Instantiate(launchEffect, spawnPoint.position, Quaternion.identity);
