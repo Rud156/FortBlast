@@ -22,6 +22,8 @@ namespace FortBlast.Resources
         private bool _isPlayerNearby;
         private bool _isPlayerLooking;
 
+        private Transform _player;
+
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
         /// any of the Update methods is called the first time.
@@ -32,6 +34,8 @@ namespace FortBlast.Resources
             _collectibleCollected = false;
             _isPlayerNearby = false;
             _isPlayerLooking = false;
+
+            _player = GameObject.FindGameObjectWithTag(TagManager.Player)?.transform;
         }
 
         /// <summary>
@@ -42,6 +46,8 @@ namespace FortBlast.Resources
         {
             if (other.CompareTag(TagManager.Player))
                 _isPlayerNearby = true;
+            if (other.CompareTag(TagManager.VisibleCollider))
+                _isPlayerLooking = true;
         }
 
         /// <summary>
@@ -52,17 +58,9 @@ namespace FortBlast.Resources
         {
             if (other.CompareTag(TagManager.Player))
                 _isPlayerNearby = false;
+            else if (other.CompareTag(TagManager.VisibleCollider))
+                _isPlayerLooking = false;
         }
-
-        /// <summary>
-        /// OnBecameVisible is called when the renderer became visible by any camera.
-        /// </summary>
-        void OnBecameVisible() => _isPlayerLooking = true;
-
-        /// <summary>
-        /// OnBecameInvisible is called when the renderer is no longer visible by any camera.
-        /// </summary>
-        void OnBecameInvisible() => _isPlayerLooking = false;
 
         /// <summary>
         /// Update is called every frame, if the MonoBehaviour is enabled.
@@ -82,6 +80,25 @@ namespace FortBlast.Resources
 
             float interactionRatio = _currentInteractionTime / maxInteractionTime;
             uiSlider.value = interactionRatio;
+
+            RotateCanvasTowardsPlayer();
+        }
+
+        private void RotateCanvasTowardsPlayer()
+        {
+            if (_player == null)
+                return;
+
+            Vector3 lookDirection = _player.position - collectibleUiDisplay.transform.position;
+            lookDirection.y = 0;
+
+            if (lookDirection != Vector3.zero)
+            {
+                Quaternion rotation = Quaternion.LookRotation(-lookDirection);
+                collectibleUiDisplay.transform.rotation =
+                    Quaternion.Slerp(collectibleUiDisplay.transform.rotation, rotation,
+                        5 * Time.deltaTime);
+            }
         }
 
         private void CheckInteractionTime()
