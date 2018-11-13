@@ -1,17 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using FortBlast.Enums;
 using UnityEngine;
 
 namespace FortBlast.ProceduralTerrain.Generators
 {
     public static class NoiseGenerator
     {
-        public enum NormalizedMode
-        {
-            Local, // Single Chunk Mode
-            Global // Large Terrain System using multiple chunks Mode
-        }
-
         public static float[,] GenerateNoiseMap(int mapWidth, int mapHeight, NoiseSettings settings,
             Vector2 sampleCenter)
         {

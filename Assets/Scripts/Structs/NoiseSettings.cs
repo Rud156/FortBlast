@@ -1,10 +1,11 @@
+using FortBlast.Enums;
 using FortBlast.ProceduralTerrain.Generators;
 using UnityEngine;
 
 [System.Serializable]
 public class NoiseSettings
 {
-    public NoiseGenerator.NormalizedMode normalizedMode;
+    public NormalizedMode normalizedMode;
     public float scale = 50;
 
     [Header("Map Noise Data")]
