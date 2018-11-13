@@ -54,6 +54,8 @@
     },
     "workbench.colorTheme": "Dracula",
     "cSpell.words": [
-        "Structs"
+        "LODs",
+        "Structs",
+        "Verts"
     ]
 }
