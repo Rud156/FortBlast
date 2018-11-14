@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4290823715624552}
   - component: {fileID: 33914801949254680}
   - component: {fileID: 23514923984596384}
+  - component: {fileID: 65262279293165276}
   m_Layer: 0
   m_Name: TreeWinter11
   m_TagString: Untagged
@@ -85,3 +86,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1855511421696326}
   m_Mesh: {fileID: 4300106, guid: 2ad459b491a70ba4b9febbc47a27d881, type: 3}
+--- !u!65 &65262279293165276
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1855511421696326}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.9272828, y: 3.6022906, z: 1.8732098}
+  m_Center: {x: -0.00668779, y: 1.8162885, z: 0.011773288}

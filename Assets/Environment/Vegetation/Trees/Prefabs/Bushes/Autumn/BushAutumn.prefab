@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4000011795291366}
   - component: {fileID: 33000012867146606}
   - component: {fileID: 23000013823269210}
+  - component: {fileID: 65500191306711762}
   m_Layer: 0
   m_Name: BushAutumn
   m_TagString: Untagged
@@ -83,3 +84,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010009679556}
   m_Mesh: {fileID: 4300052, guid: 2ad459b491a70ba4b9febbc47a27d881, type: 3}
+--- !u!65 &65500191306711762
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010009679556}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.6446059, y: 1.2484345, z: 1.5376409}
+  m_Center: {x: 0.01938036, y: 0.5728357, z: 0.012744844}

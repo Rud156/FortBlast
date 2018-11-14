@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4000012461446478}
   - component: {fileID: 33000014227180856}
   - component: {fileID: 23000013192879760}
+  - component: {fileID: 65270848111411550}
   m_Layer: 0
   m_Name: Bush8
   m_TagString: Untagged
@@ -83,3 +84,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010730507840}
   m_Mesh: {fileID: 4300152, guid: 2ad459b491a70ba4b9febbc47a27d881, type: 3}
+--- !u!65 &65270848111411550
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010730507840}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2217941, y: 1.0281827, z: 1.2982609}
+  m_Center: {x: 0.17079726, y: 0.4686506, z: 0.021290869}

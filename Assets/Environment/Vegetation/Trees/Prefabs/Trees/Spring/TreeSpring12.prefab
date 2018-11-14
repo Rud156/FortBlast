@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4080608332509356}
   - component: {fileID: 33696660065475546}
   - component: {fileID: 23603483997127330}
+  - component: {fileID: 65723247493046208}
   m_Layer: 0
   m_Name: TreeSpring12
   m_TagString: Untagged
@@ -83,3 +84,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1004495395555250}
   m_Mesh: {fileID: 4300184, guid: 2ad459b491a70ba4b9febbc47a27d881, type: 3}
+--- !u!65 &65723247493046208
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1004495395555250}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.9163372, y: 4.047161, z: 0.8213252}
+  m_Center: {x: 0.053776175, y: 1.7915971, z: 0.0940593}

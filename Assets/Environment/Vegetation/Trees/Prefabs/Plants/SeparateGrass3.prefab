@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4105836151106500}
   - component: {fileID: 33143920725028032}
   - component: {fileID: 23296553859260234}
+  - component: {fileID: 65712497720810084}
   m_Layer: 0
   m_Name: SeparateGrass3
   m_TagString: Untagged
@@ -83,3 +84,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1202763152371764}
   m_Mesh: {fileID: 4300010, guid: ba75cc4146f942a4bbdbbbd22ed9611d, type: 3}
+--- !u!65 &65712497720810084
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1202763152371764}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.96809, y: 9.321282, z: 5.0700126}
+  m_Center: {x: -1.7081537, y: 4.5389256, z: 0.8689222}

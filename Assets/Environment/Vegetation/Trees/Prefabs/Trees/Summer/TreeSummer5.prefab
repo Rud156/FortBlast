@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4000010292764652}
   - component: {fileID: 33000012846662106}
   - component: {fileID: 23000010616377226}
+  - component: {fileID: 65681081825007004}
   m_Layer: 0
   m_Name: TreeSummer5
   m_TagString: Untagged
@@ -85,3 +86,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010440778128}
   m_Mesh: {fileID: 4300164, guid: 2ad459b491a70ba4b9febbc47a27d881, type: 3}
+--- !u!65 &65681081825007004
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010440778128}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.6250687, y: 3.4594, z: 1.87859}
+  m_Center: {x: -0.10358563, y: 1.7297002, z: -0.055350125}

@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4000013141603932}
   - component: {fileID: 33000010649067028}
   - component: {fileID: 23000011495060544}
+  - component: {fileID: 65267723503567886}
   m_Layer: 0
   m_Name: TreeAutumn9
   m_TagString: Untagged
@@ -84,3 +85,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012973982250}
   m_Mesh: {fileID: 4300180, guid: 2ad459b491a70ba4b9febbc47a27d881, type: 3}
+--- !u!65 &65267723503567886
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012973982250}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0424683, y: 3.8585527, z: 1.0961144}
+  m_Center: {x: 0.0016108453, y: 1.7556568, z: -0.00000023841858}

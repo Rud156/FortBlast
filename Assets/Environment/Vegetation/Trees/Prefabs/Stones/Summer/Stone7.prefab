@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4000012822108430}
   - component: {fileID: 33000012566037240}
   - component: {fileID: 23000014012894414}
+  - component: {fileID: 65285023659427528}
   m_Layer: 0
   m_Name: Stone7
   m_TagString: Untagged
@@ -83,3 +84,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010816859490}
   m_Mesh: {fileID: 4300150, guid: 2ad459b491a70ba4b9febbc47a27d881, type: 3}
+--- !u!65 &65285023659427528
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010816859490}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.95986795, y: 0.3812251, z: 0.9204768}
+  m_Center: {x: -0.016556978, y: 0.13402417, z: 0.10242371}

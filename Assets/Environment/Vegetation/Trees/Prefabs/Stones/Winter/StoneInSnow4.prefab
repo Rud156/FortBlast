@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4000013818718770}
   - component: {fileID: 33000010876502616}
   - component: {fileID: 23000012643416462}
+  - component: {fileID: 65072222619892716}
   m_Layer: 0
   m_Name: StoneInSnow4
   m_TagString: Untagged
@@ -84,3 +85,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011899262584}
   m_Mesh: {fileID: 4300006, guid: 2ad459b491a70ba4b9febbc47a27d881, type: 3}
+--- !u!65 &65072222619892716
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011899262584}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.43344018, y: 0.28352377, z: 0.39672846}
+  m_Center: {x: 0.00769943, y: 0.12116878, z: 0.003822185}
