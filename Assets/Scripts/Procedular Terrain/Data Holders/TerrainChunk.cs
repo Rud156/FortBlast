@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using FortBlast.Extras;
+﻿using FortBlast.Extras;
+using FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData;
 using FortBlast.ProceduralTerrain.Generators;
 using FortBlast.ProceduralTerrain.ProceduralTerrainCreators;
 using FortBlast.ProceduralTerrain.Settings;
-using FortBlast.Spawner;
-using Unity.Jobs;
 using UnityEngine;
 
 namespace FortBlast.ProceduralTerrain.DataHolders
@@ -38,6 +35,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
         private float _maxViewDistance;
 
         private Trees _chunkTrees;
+        private Collectibles _collectibles;
 
         private HeightMapSettings _heightMapSettings;
         private MeshSettings _meshSettings;
@@ -79,6 +77,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             _meshCollider = _meshObject.AddComponent<MeshCollider>();
 
             _chunkTrees = new Trees(position, treeSettings);
+            _collectibles = new Collectibles(position, _meshObject.transform);
 
             // Dividing by 10 as plane is 10 units by default
             // _meshObject.transform.localScale = Vector3.one * size / 10f;
@@ -214,7 +213,8 @@ namespace FortBlast.ProceduralTerrain.DataHolders
 
         private void RequestAndPlaceCollectibles(LODMesh lodMesh)
         {
-
+            if (!_collectibles.hasRequestedCollectiblePoints)
+                _collectibles.RequestCollectiblePoints(lodMesh.meshVertices);
         }
 
         private void OnHeightMapReceived(object heightMapObject)
@@ -223,115 +223,6 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             _heightMapReceived = true;
 
             UpdateTerrainChunk();
-        }
-    }
-
-    class LODMesh
-    {
-        public Mesh mesh;
-        public bool hasRequestedMesh;
-        public bool hasMesh;
-
-        public Vector3[] meshVertices;
-
-        public event System.Action updateCallback;
-
-        private int _lod;
-
-        public LODMesh(int lod)
-        {
-            _lod = lod;
-        }
-
-        public void RequestMesh(HeightMap heightMap, MeshSettings meshSettings)
-        {
-            hasRequestedMesh = true;
-            ThreadedDataRequester.RequestData(
-                () =>
-                    MeshGenerator.GenerateTerrainMesh(heightMap.values, _lod, meshSettings),
-                OnMeshDataReceived
-            );
-        }
-
-        private void OnMeshDataReceived(object meshDataObject)
-        {
-            MeshData meshData = (MeshData)meshDataObject;
-
-            mesh = meshData.CreateMesh();
-            hasMesh = true;
-            meshVertices = meshData.GetVertices();
-
-            updateCallback?.Invoke();
-        }
-    }
-
-    class Trees
-    {
-        public GameObject[] trees;
-        public Vector3[] treePoints;
-
-        public bool hasRequestedTreePoints;
-        public bool hasReceivedTreePoints;
-        public bool hasPlacedTrees;
-
-        private Vector3 _meshCenter;
-        private TreeSettings _treeSettings;
-
-        public Trees(Vector2 meshCenter, TreeSettings treeSettings)
-        {
-            _meshCenter = new Vector3(meshCenter.x, 0, meshCenter.y);
-            _treeSettings = treeSettings;
-
-            trees = new GameObject[0];
-            treePoints = new Vector3[0];
-        }
-
-        public void RequestTreePoints(Vector3[] meshVertices, int chunkSizeIndex)
-        {
-            hasRequestedTreePoints = true;
-            ThreadedDataRequester.RequestData(
-                () =>
-                    TreePointsGenerator.SelectTreePoints(meshVertices, chunkSizeIndex, _treeSettings),
-                OnTreePointsReceived
-            );
-        }
-
-        public void PlaceTreesOnPoints()
-        {
-            hasPlacedTrees = true;
-            float maxValue = float.MinValue;
-            for (int i = 0; i < treePoints.Length; i++)
-                if (treePoints[i].y > maxValue)
-                    maxValue = treePoints[i].y;
-
-            for (int i = 0; i < treePoints.Length; i++)
-            {
-                float normalizedPoint = ExtensionFunctions.Map(treePoints[i].y, 0, maxValue, 0, 1);
-                trees[i] = TreesManager.instance.RequestTree(normalizedPoint);
-
-                if (trees[i] != null)
-                {
-                    trees[i].transform.position = treePoints[i] + _meshCenter;
-                    trees[i].SetActive(true);
-                }
-            }
-        }
-
-        public void ClearTrees()
-        {
-            for (int i = 0; i < trees.Length; i++)
-                trees[i]?.SetActive(false);
-
-            hasPlacedTrees = false;
-        }
-
-        private void OnTreePointsReceived(object treePointsObject)
-        {
-            hasReceivedTreePoints = true;
-            treePoints = (Vector3[])treePointsObject;
-            trees = new GameObject[treePoints.Length];
-
-            PlaceTreesOnPoints();
         }
     }
 }

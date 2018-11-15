@@ -5,46 +5,41 @@ namespace FortBlast.Spawner
 {
     public class CollectiblesSpawner : MonoBehaviour
     {
-        public List<Transform> collectiblePoints;
-        public List<GameObject> collectiblePrefabs;
-        public Transform collectiblesParent;
-        public int maxCollectiblesToSpawn;
+        #region Singleton
 
-        [Header("Debug")]
-        public bool spawnOnStart;
+        public static CollectiblesSpawner instance;
 
         /// <summary>
-        /// Start is called on the frame when a script is enabled just before
-        /// any of the Update methods is called the first time.
+        /// Awake is called when the script instance is being loaded.
         /// </summary>
-        void Start()
+        void Awake()
         {
-            if (spawnOnStart)
-                StartSpawnCollectibles();
+            if (instance == null)
+                instance = this;
+
+            if (instance != this)
+                Destroy(gameObject);
         }
 
-        public void StartSpawnCollectibles()
+        #endregion Singleton
+
+        public List<GameObject> collectiblePrefabs;
+
+        public GameObject[] SpawnCollectibles(Vector3[] points, Transform parent)
         {
-            int totalCollectiblesToSpawn = Mathf.Min(maxCollectiblesToSpawn, collectiblePoints.Count);
-
-            for (int i = 0; i < collectiblePoints.Count; i++)
+            GameObject[] gameObjectInstances = new GameObject[points.Length];
+            for (int i = 0; i < points.Length; i++)
             {
-                float selectionProbability =
-                    (float)totalCollectiblesToSpawn / (collectiblePoints.Count - i);
-                float randomValue = Random.Range(0f, 1f);
-
-                if (selectionProbability >= randomValue)
-                {
-                    int randomRangeValue = Random.Range(0, 1000);
-                    int randomNumber = randomRangeValue % collectiblePrefabs.Count;
-
-                    GameObject droidInstance = Instantiate(collectiblePrefabs[randomNumber],
-                        collectiblePoints[i].position,
-                        collectiblePrefabs[randomNumber].transform.rotation);
-                    droidInstance.transform.SetParent(collectiblesParent);
-                    totalCollectiblesToSpawn -= 1;
-                }
+                int randomIndex = Random.Range(0, 1000) % collectiblePrefabs.Count;
+                gameObjectInstances[i] = Instantiate(
+                    collectiblePrefabs[randomIndex],
+                    points[i],
+                    collectiblePrefabs[randomIndex].transform.rotation
+                );
+                gameObjectInstances[i].transform.SetParent(parent);
             }
+
+            return gameObjectInstances;
         }
     }
 }
