@@ -4,6 +4,7 @@ using FortBlast.Extras;
 using FortBlast.ProceduralTerrain.Generators;
 using FortBlast.ProceduralTerrain.ProceduralTerrainCreators;
 using FortBlast.ProceduralTerrain.Settings;
+using FortBlast.Spawner;
 using Unity.Jobs;
 using UnityEngine;
 
@@ -146,15 +147,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
                         lodMesh.RequestMesh(_heightMap, _meshSettings);
 
                     if (lodIndex == 0 && lodMesh.hasMesh)
-                    {
-                        if (!_chunkTrees.hasRequestedTreePoints)
-                            _chunkTrees.RequestTreePoints(
-                                lodMesh.meshVertices,
-                                _meshSettings.chunkSizeIndex
-                            );
-                        else if (!_chunkTrees.hasPlacedTrees && _chunkTrees.hasReceivedTreePoints)
-                            _chunkTrees.PlaceTreesOnPoints();
-                    }
+                        LOD0ValidStateAvailable(lodMesh);
                     else if (lodIndex != 0)
                         _chunkTrees.ClearTrees();
                 }
@@ -200,6 +193,29 @@ namespace FortBlast.ProceduralTerrain.DataHolders
         }
 
         public bool IsVisible() => _meshObject.activeInHierarchy;
+
+        private void LOD0ValidStateAvailable(LODMesh lodMesh)
+        {
+            RequestAndPlaceCollectibles(lodMesh);
+            RequestAndPlaceTrees(lodMesh);
+        }
+
+        private void RequestAndPlaceTrees(LODMesh lodMesh)
+        {
+            if (!_chunkTrees.hasRequestedTreePoints)
+                _chunkTrees.RequestTreePoints(
+                    lodMesh.meshVertices,
+                    _meshSettings.chunkSizeIndex
+                );
+            else if (!_chunkTrees.hasPlacedTrees && _chunkTrees.hasReceivedTreePoints)
+                _chunkTrees.PlaceTreesOnPoints();
+
+        }
+
+        private void RequestAndPlaceCollectibles(LODMesh lodMesh)
+        {
+
+        }
 
         private void OnHeightMapReceived(object heightMapObject)
         {
