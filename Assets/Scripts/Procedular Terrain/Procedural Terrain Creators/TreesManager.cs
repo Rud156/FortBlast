@@ -70,7 +70,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
                 {
                     for (int j = 0; j < trees[i].maxInstanceCount; j++)
                     {
-                        if (!trees[i].instantiatedTrees[j].activeSelf)
+                        if (!trees[i].instantiatedTrees[j].activeInHierarchy)
                             return trees[i].instantiatedTrees[j];
                     }
 

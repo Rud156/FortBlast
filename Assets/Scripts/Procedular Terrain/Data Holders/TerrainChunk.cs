@@ -52,7 +52,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
         }
 
         public TerrainChunk(Vector2 coord, HeightMapSettings heightMapSettings,
-            MeshSettings meshSettings, LODInfo[] detailLevels,
+            MeshSettings meshSettings, TreeSettings treeSettings, LODInfo[] detailLevels,
             int colliderLODIndex, Transform parent, Transform viewer, Material material)
         {
             this.coord = coord;
@@ -77,7 +77,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             _meshFilter = _meshObject.AddComponent<MeshFilter>();
             _meshCollider = _meshObject.AddComponent<MeshCollider>();
 
-            _chunkTrees = new Trees(position);
+            _chunkTrees = new Trees(position, treeSettings);
 
             // Dividing by 10 as plane is 10 units by default
             // _meshObject.transform.localScale = Vector3.one * size / 10f;
@@ -199,7 +199,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             _meshObject.SetActive(visible);
         }
 
-        public bool IsVisible() => _meshObject.activeSelf;
+        public bool IsVisible() => _meshObject.activeInHierarchy;
 
         private void OnHeightMapReceived(object heightMapObject)
         {
@@ -259,10 +259,12 @@ namespace FortBlast.ProceduralTerrain.DataHolders
         public bool hasPlacedTrees;
 
         private Vector3 _meshCenter;
+        private TreeSettings _treeSettings;
 
-        public Trees(Vector2 meshCenter)
+        public Trees(Vector2 meshCenter, TreeSettings treeSettings)
         {
             _meshCenter = new Vector3(meshCenter.x, 0, meshCenter.y);
+            _treeSettings = treeSettings;
 
             trees = new GameObject[0];
             treePoints = new Vector3[0];
@@ -271,10 +273,9 @@ namespace FortBlast.ProceduralTerrain.DataHolders
         public void RequestTreePoints(Vector3[] meshVertices, int chunkSizeIndex)
         {
             hasRequestedTreePoints = true;
-
             ThreadedDataRequester.RequestData(
                 () =>
-                    TreePointsGenerator.SelectTreePoints(meshVertices, chunkSizeIndex),
+                    TreePointsGenerator.SelectTreePoints(meshVertices, chunkSizeIndex, _treeSettings),
                 OnTreePointsReceived
             );
         }
@@ -310,7 +311,6 @@ namespace FortBlast.ProceduralTerrain.DataHolders
 
         private void OnTreePointsReceived(object treePointsObject)
         {
-
             hasReceivedTreePoints = true;
             treePoints = (Vector3[])treePointsObject;
             trees = new GameObject[treePoints.Length];

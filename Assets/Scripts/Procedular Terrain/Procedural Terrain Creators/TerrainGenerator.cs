@@ -31,6 +31,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
         public MeshSettings meshSettings;
         public HeightMapSettings heightMapSettings;
         public TextureData textureData;
+        public TreeSettings treeSettings;
 
         [Header("Map Values")]
         public Transform viewer;
@@ -133,7 +134,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
                         else if (createNewChunks)
                         {
                             TerrainChunk newChunk = new TerrainChunk(viewChunkCoord,
-                                heightMapSettings, meshSettings,
+                                heightMapSettings, meshSettings, treeSettings,
                                 detailLevels, colliderLODIndex, transform, viewer, mapMaterial);
                             _terrainChunkDict.Add(viewChunkCoord, newChunk);
                             newChunk.onVisibilityChanged += OnTerrainChunkVisibilityChanged;
