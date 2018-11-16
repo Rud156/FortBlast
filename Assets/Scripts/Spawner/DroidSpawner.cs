@@ -6,25 +6,38 @@ namespace FortBlast.Spawner
 {
     public class DroidSpawner : MonoBehaviour
     {
-        public GameObject droidPrefab;
-        public int maxDroidsToSpawn;
-        public Transform droidParent;
+        #region Singleton
 
-        public void StartSpawnDroids()
+        public static DroidSpawner instance;
+
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
+        void Awake()
         {
-            int totalDroidsToSpawn = maxDroidsToSpawn;
+            if (instance == null)
+                instance = this;
 
-            for (int i = 0; i < maxDroidsToSpawn; i++)
+            if (instance != this)
+                Destroy(gameObject);
+        }
+
+        #endregion Singleton
+
+        public GameObject droidPrefab;
+
+        public GameObject[] SpawnDroids(Vector3[] meshVertices, Transform parent)
+        {
+            GameObject[] droids = new GameObject[meshVertices.Length];
+
+            for (int i = 0; i < meshVertices.Length; i++)
             {
-                float selectionProbability = (float)totalDroidsToSpawn / (totalDroidsToSpawn - i);
-                float randomValue = Random.Range(0f, 1f);
-
-                if (selectionProbability >= randomValue)
-                {
-                    // TODO: Implement Droid Spawning Logic Here...
-                    totalDroidsToSpawn -= 1;
-                }
+                droids[i] = Instantiate(droidPrefab, meshVertices[i],
+                    droidPrefab.transform.rotation);
+                droids[i].transform.SetParent(parent);
             }
+
+            return droids;
         }
     }
 }

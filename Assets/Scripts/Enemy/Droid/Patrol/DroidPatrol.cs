@@ -13,7 +13,6 @@ namespace FortBlast.Enemy.Droid.Patrol
     public class DroidPatrol : MonoBehaviour
     {
         [Header("Patrol Stats")]
-        public Transform patrolPointGroup;
         public float minimumDetectionDistance;
         public float lookRotationSpeed;
 
@@ -24,14 +23,12 @@ namespace FortBlast.Enemy.Droid.Patrol
         [Header("Attack")]
         public float waitTimeBetweenAttacks = 5f;
 
-
         private NavMeshAgent _droidAgent;
         private DroidLaze _droidLaze;
         private DroidAttack _droidAttack;
 
-        private List<Transform> _patrolPoints;
         private Transform _currentTarget;
-        private int _currentPatrolPointIndex;
+        private Vector3[] _terrainMeshVertices;
 
         private Transform _player;
         private bool _playerFound;
@@ -53,10 +50,7 @@ namespace FortBlast.Enemy.Droid.Patrol
             _player = GameObject.FindGameObjectWithTag(TagManager.Player)?.transform;
             _playerFound = true;
 
-            _patrolPoints = new List<Transform>();
-            for (int i = 0; i < patrolPointGroup.childCount; i++)
-                _patrolPoints.Add(patrolPointGroup.GetChild(i));
-
+            _terrainMeshVertices = transform.parent.GetComponent<MeshFilter>().mesh.vertices;
         }
 
         /// <summary>
@@ -65,14 +59,27 @@ namespace FortBlast.Enemy.Droid.Patrol
         void Update()
         {
             CheckAndSetNextTarget();
-            LookTowardsTarget();
-
-            SetAgentDestination();
             CheckPatrolPointTargetReached();
+        }
+
+        /// <summary>
+        /// OnTriggerEnter is called when the Collider other enters the trigger.
+        /// </summary>
+        /// <param name="other">The other Collider involved in this collision.</param>
+        void OnTriggerEnter(Collider other)
+        {
+            if (!other.CompareTag(TagManager.Terrain))
+                return;
+
+            _terrainMeshVertices = other.gameObject.GetComponent<MeshFilter>().mesh.vertices;
+            transform.SetParent(other.transform);
         }
 
         private void CheckPatrolPointTargetReached()
         {
+            if (!_droidAgent.isOnNavMesh)
+                return;
+
             if (!_droidAgent.pathPending)
             {
                 if (_droidAgent.remainingDistance <= _droidAgent.stoppingDistance)
@@ -94,12 +101,9 @@ namespace FortBlast.Enemy.Droid.Patrol
             }
         }
 
-        private void LookTowardsTarget()
+        private void LookTowardsTarget(Vector3 targetPosition)
         {
-            if (_currentTarget == null)
-                return;
-
-            Vector3 lookDirection = _currentTarget.position - transform.position;
+            Vector3 lookDirection = targetPosition - transform.position;
             lookDirection.y = 0;
 
             if (lookDirection != Vector3.zero)
@@ -110,38 +114,44 @@ namespace FortBlast.Enemy.Droid.Patrol
             }
         }
 
-        private void SetAgentDestination()
+        private void SetAgentDestination(Vector3 position)
         {
             if (!_droidAgent.isOnNavMesh || _currentTarget == null)
                 return;
 
-            _droidAgent.SetDestination(_currentTarget.position);
+            _droidAgent.SetDestination(position);
         }
 
         private void CheckAndSetNextTarget()
         {
             bool isPlayerNearby = DroidPatrolHelpers
                 .CheckPlayerInRange(_player, transform, minimumDetectionDistance);
+
             if (isPlayerNearby)
             {
                 _currentTarget = _player;
                 _playerFound = true;
                 _droidAgent.stoppingDistance = distanceToStopFromPlayer;
+
+                SetAgentDestination(_currentTarget.position);
+                LookTowardsTarget(_currentTarget.position);
                 ResetAnimationOnFindingPlayer();
             }
-            else
-            {
-                if (_playerFound)
-                {
-                    _currentPatrolPointIndex = DroidPatrolHelpers
-                        .GetClosestPatrolPoint(_currentTarget, _player, transform, _patrolPoints);
-                    _playerFound = false;
-                    _droidAgent.stoppingDistance = distanceToStopFromPatrolPoint;
-                }
+            // For Finding the Next Patrol Point Right After Player Left Range
+            else if (_playerFound)
+                SetAgentRandomPatrolPoint();
 
-                _currentTarget = _currentPatrolPointIndex == -1 ?
-                     null : _patrolPoints[_currentPatrolPointIndex];
-            }
+        }
+
+        private void SetAgentRandomPatrolPoint()
+        {
+            _playerFound = false;
+            _droidAgent.stoppingDistance = distanceToStopFromPatrolPoint;
+            Vector3 randomPatrolPoint = DroidPatrolHelpers.GetNextTarget(_terrainMeshVertices);
+            _currentTarget = transform.parent;
+
+            SetAgentDestination(randomPatrolPoint);
+            LookTowardsTarget(randomPatrolPoint);
         }
 
         private void ResetAnimationOnFindingPlayer()
@@ -154,7 +164,7 @@ namespace FortBlast.Enemy.Droid.Patrol
             }
         }
 
-        IEnumerator AttackPlayer()
+        private IEnumerator AttackPlayer()
         {
             _attackingPlayer = true;
             yield return StartCoroutine(_droidAttack.AttackPlayer(_player));
@@ -169,8 +179,7 @@ namespace FortBlast.Enemy.Droid.Patrol
             yield return new WaitForSeconds(lazeWaitTime);
             _droidLaze.StopLazingAbout();
 
-            _currentPatrolPointIndex = DroidPatrolHelpers
-                .GetNextSequentialPatrolPoint(_currentPatrolPointIndex, _patrolPoints.Count);
+            SetAgentRandomPatrolPoint();
             _lazingAround = false;
         }
     }

@@ -18,34 +18,7 @@ namespace FortBlast.Enemy.Droid.Helpers
             return false;
         }
 
-        public static int GetClosestPatrolPoint(Transform currentTarget, Transform player,
-            Transform currentPosition, List<Transform> patrolPoints)
-        {
-            if (currentTarget == player)
-                return -1;
-
-            float minDistance = float.MaxValue;
-            int currentPatrolPointIndex = -1;
-            for (int i = 0; i < patrolPoints.Count; i++)
-            {
-                float currentPointDistance = Vector3.Distance(patrolPoints[i].position, currentPosition.position);
-                if (currentPointDistance < minDistance)
-                {
-                    minDistance = currentPointDistance;
-                    currentPatrolPointIndex = i;
-                }
-            }
-
-            return currentPatrolPointIndex;
-        }
-
-        public static int GetNextSequentialPatrolPoint(int currentPatrolPointIndex, int patrolPointsCount)
-        {
-            currentPatrolPointIndex += 1;
-            if (currentPatrolPointIndex >= patrolPointsCount)
-                currentPatrolPointIndex = 0;
-
-            return currentPatrolPointIndex;
-        }
+        public static Vector3 GetNextTarget(Vector3[] meshVertices) =>
+            meshVertices[Random.Range(0, meshVertices.Length)];
     }
 }

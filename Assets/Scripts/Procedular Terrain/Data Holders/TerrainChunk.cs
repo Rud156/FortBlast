@@ -1,8 +1,11 @@
-﻿using FortBlast.Extras;
+﻿using System;
+using FortBlast.Enums;
+using FortBlast.Extras;
 using FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData;
 using FortBlast.ProceduralTerrain.Generators;
 using FortBlast.ProceduralTerrain.ProceduralTerrainCreators;
 using FortBlast.ProceduralTerrain.Settings;
+using FortBlast.Spawner;
 using UnityEngine;
 
 namespace FortBlast.ProceduralTerrain.DataHolders
@@ -28,14 +31,17 @@ namespace FortBlast.ProceduralTerrain.DataHolders
 
         private HeightMap _heightMap;
 
-        private bool _heightMapRequested;
         private bool _heightMapReceived;
         private int _prevLODIndex;
         private bool _hasSetCollider;
         private float _maxViewDistance;
 
         private Trees _chunkTrees;
-        private Collectibles _collectibles;
+
+        private TerrainInteractiblesCreator _terrainInteractibles;
+        private bool _collectiblesRequested;
+        private bool _droidsRequested;
+        private bool _towersRequested;
 
         private HeightMapSettings _heightMapSettings;
         private MeshSettings _meshSettings;
@@ -71,6 +77,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             _meshObject.transform.position = new Vector3(position.x, 0, position.y);
             _meshObject.transform.SetParent(parent);
             _meshObject.layer = 9;
+            _meshObject.tag = TagManager.Terrain;
 
             _meshRenderer = _meshObject.AddComponent<MeshRenderer>();
             _meshRenderer.material = material;
@@ -78,7 +85,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             _meshCollider = _meshObject.AddComponent<MeshCollider>();
 
             _chunkTrees = new Trees(position, treeSettings);
-            _collectibles = new Collectibles(position, _meshObject.transform);
+            _terrainInteractibles = new TerrainInteractiblesCreator(position, _meshObject.transform);
 
             // Dividing by 10 as plane is 10 units by default
             // _meshObject.transform.localScale = Vector3.one * size / 10f;
@@ -98,7 +105,6 @@ namespace FortBlast.ProceduralTerrain.DataHolders
 
         public void Load()
         {
-            _heightMapRequested = true;
             ThreadedDataRequester.RequestData(
                 () =>
                     HeightMapGenerator.GenerateHeightMap(
@@ -114,11 +120,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
         public void UpdateTerrainChunk()
         {
             if (!_heightMapReceived)
-            {
-                if (!_heightMapRequested)
-                    Load();
                 return;
-            }
 
             float viewerDistanceFromNearestEdge = Mathf.Sqrt(_bounds.SqrDistance(viewerPosition));
             bool wasVisible = IsVisible();
@@ -142,6 +144,9 @@ namespace FortBlast.ProceduralTerrain.DataHolders
                     {
                         _prevLODIndex = lodIndex;
                         _meshFilter.mesh = lodMesh.mesh;
+
+                        if (!_droidsRequested)
+                            CreateInitialDroids(lodMesh.meshVertices);
                     }
                     else if (!lodMesh.hasRequestedMesh)
                         lodMesh.RequestMesh(_heightMap, _meshSettings);
@@ -200,6 +205,12 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             RequestAndPlaceTrees(lodMesh);
         }
 
+        private void CreateInitialDroids(Vector3[] meshVertices)
+        {
+            _terrainInteractibles.RequestInteractiblesPoints(meshVertices, TerrainInteractibles.droids);
+            _droidsRequested = true;
+        }
+
         private void RequestAndPlaceTrees(LODMesh lodMesh)
         {
             if (!_chunkTrees.hasRequestedTreePoints)
@@ -213,8 +224,10 @@ namespace FortBlast.ProceduralTerrain.DataHolders
 
         private void RequestAndPlaceCollectibles(LODMesh lodMesh)
         {
-            if (!_collectibles.hasRequestedCollectiblePoints)
-                _collectibles.RequestCollectiblePoints(lodMesh.meshVertices);
+            if (!_collectiblesRequested)
+                _terrainInteractibles.RequestInteractiblesPoints(lodMesh.meshVertices,
+                    TerrainInteractibles.collectibles);
+            _collectiblesRequested = true;
         }
 
         private void OnHeightMapReceived(object heightMapObject)
