@@ -80,6 +80,7 @@ GameObject:
   - component: {fileID: 23049470898339910}
   - component: {fileID: 65212385707136546}
   - component: {fileID: 114590993749528558}
+  - component: {fileID: 95185826857495966}
   m_Layer: 0
   m_Name: Drone Body
   m_TagString: Untagged
@@ -417,6 +418,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &95185826857495966
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1852217704534978}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0f592cb02cf1b4b48baa6693befc92e5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114590993749528558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -443,8 +462,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864b8992ad92ab2488cead3c55d4180f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitForAnimationTime: 10
-  droidAnimator: {fileID: 0}
+  waitForAnimationTime: 5
+  droidAnimator: {fileID: 95185826857495966}
 --- !u!114 &114822917190883780
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -472,7 +491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fecbb8b2c3cfed4b8a754e39413d73c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  droidLaser: {fileID: 0}
+  droidLaser: {fileID: 1902695517810740, guid: b48b6b23523e2894d9399cfafed2b75a, type: 2}
   launchPoints:
   - {fileID: 4784432235597732}
   - {fileID: 4026660803494628}
@@ -488,7 +507,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 3
-  m_Speed: 7
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

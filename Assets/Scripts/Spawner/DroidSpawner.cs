@@ -24,7 +24,7 @@ namespace FortBlast.Spawner
 
         #endregion Singleton
 
-        public GameObject droidPrefab;
+        public GameObject[] droidPrefabs;
 
         public GameObject[] SpawnDroids(Vector3[] meshVertices, Transform parent)
         {
@@ -32,6 +32,14 @@ namespace FortBlast.Spawner
 
             for (int i = 0; i < meshVertices.Length; i++)
             {
+                GameObject droidPrefab;
+                int randomValue = Random.Range(0, 100);
+
+                if (randomValue < 10)
+                    droidPrefab = droidPrefabs[1];
+                else
+                    droidPrefab = droidPrefabs[0];
+
                 droids[i] = Instantiate(droidPrefab, meshVertices[i],
                     droidPrefab.transform.rotation);
                 droids[i].transform.SetParent(parent);
