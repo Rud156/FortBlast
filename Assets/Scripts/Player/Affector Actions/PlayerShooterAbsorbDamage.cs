@@ -4,7 +4,7 @@ using FortBlast.Extras;
 using UnityEngine;
 using FortBlast.Player.Data;
 
-namespace FortBlast.Player.Affecter_Actions
+namespace FortBlast.Player.AffecterActions
 {
     [RequireComponent(typeof(PlayerHealthSetter))]
     [RequireComponent(typeof(Animator))]

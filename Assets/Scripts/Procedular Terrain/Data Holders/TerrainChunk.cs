@@ -1,11 +1,8 @@
-﻿using System;
-using FortBlast.Enums;
+﻿using FortBlast.Enums;
 using FortBlast.Extras;
 using FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData;
 using FortBlast.ProceduralTerrain.Generators;
-using FortBlast.ProceduralTerrain.ProceduralTerrainCreators;
 using FortBlast.ProceduralTerrain.Settings;
-using FortBlast.Spawner;
 using UnityEngine;
 
 namespace FortBlast.ProceduralTerrain.DataHolders
@@ -101,6 +98,10 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             }
 
             _maxViewDistance = detailLevels[detailLevels.Length - 1].visibleDistanceThreshold;
+
+            bool willTerrainHaveTower = Random.Range(0, 100) < 10;
+            if (!willTerrainHaveTower)
+                _towersRequested = true;
         }
 
         public void Load()
@@ -147,6 +148,8 @@ namespace FortBlast.ProceduralTerrain.DataHolders
 
                         if (!_droidsRequested)
                             CreateInitialDroids(lodMesh.meshVertices);
+                        if (!_towersRequested)
+                            RequestTerrainTower(lodMesh.meshVertices);
                     }
                     else if (!lodMesh.hasRequestedMesh)
                         lodMesh.RequestMesh(_heightMap, _meshSettings);
@@ -209,6 +212,12 @@ namespace FortBlast.ProceduralTerrain.DataHolders
         {
             _terrainInteractibles.RequestInteractiblesPoints(meshVertices, TerrainInteractibles.droids);
             _droidsRequested = true;
+        }
+
+        private void RequestTerrainTower(Vector3[] meshVertices)
+        {
+            _terrainInteractibles.RequestInteractiblesPoints(meshVertices, TerrainInteractibles.towers);
+            _towersRequested = true;
         }
 
         private void RequestAndPlaceTrees(LODMesh lodMesh)

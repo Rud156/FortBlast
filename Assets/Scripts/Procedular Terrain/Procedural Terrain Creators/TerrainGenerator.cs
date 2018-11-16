@@ -128,9 +128,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
                     if (!alreadyUpdatedChunkCoords.Contains(viewChunkCoord))
                     {
                         if (_terrainChunkDict.ContainsKey(viewChunkCoord))
-                        {
                             _terrainChunkDict[viewChunkCoord].UpdateTerrainChunk();
-                        }
                         else if (createNewChunks)
                         {
                             TerrainChunk newChunk = new TerrainChunk(viewChunkCoord,

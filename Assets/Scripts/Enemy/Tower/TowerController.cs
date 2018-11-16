@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using FortBlast.Extras;
-using FortBlast.Player.Affecter_Actions;
+using FortBlast.Player.AffecterActions;
 using UnityEngine;
 
 namespace FortBlast.Enemy.Tower

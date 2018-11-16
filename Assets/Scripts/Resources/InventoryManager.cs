@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FortBlast.Common;
 using FortBlast.Enums;
-using FortBlast.Player.Affecter_Actions;
+using FortBlast.Player.AffecterActions;
 using FortBlast.Player.Movement;
 using FortBlast.Scenes.Main_Scene;
 using UnityEngine;

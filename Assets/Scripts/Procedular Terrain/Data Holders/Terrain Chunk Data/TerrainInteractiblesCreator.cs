@@ -30,6 +30,8 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
                             return FixedRandomPointsSpawner.GeneratePoints(meshVertices, 10);
                         case TerrainInteractibles.droids:
                             return FixedRandomPointsSpawner.GeneratePoints(meshVertices, 3);
+                        case TerrainInteractibles.towers:
+                            return FixedRandomPointsSpawner.GeneratePoints(meshVertices, 1);
                         default:
                             return FixedRandomPointsSpawner.GeneratePoints(meshVertices, 10);
                     }
@@ -54,6 +56,8 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
                     break;
                 case TerrainInteractibles.droids:
                     DroidSpawner.instance.SpawnDroids(rawPoints, _parent);
+                    break;
+                case TerrainInteractibles.towers:
                     break;
             }
         }

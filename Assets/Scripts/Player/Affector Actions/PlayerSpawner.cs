@@ -6,7 +6,7 @@ using FortBlast.Resources;
 using FortBlast.Scenes.Main_Scene;
 using UnityEngine;
 
-namespace FortBlast.Player.Affecter_Actions
+namespace FortBlast.Player.AffecterActions
 {
     [RequireComponent(typeof(Animator))]
     public class PlayerSpawner : MonoBehaviour
