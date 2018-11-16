@@ -21,7 +21,8 @@ GameObject:
   - component: {fileID: 4000014221369982}
   - component: {fileID: 33000012763527864}
   - component: {fileID: 23000012253394536}
-  - component: {fileID: 65696333780753400}
+  - component: {fileID: 64797332392073386}
+  - component: {fileID: 208471238350742686}
   m_Layer: 0
   m_Name: Palm2
   m_TagString: Untagged
@@ -35,9 +36,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010998238436}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 450.12616, y: 40.80706, z: 320.4836}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.17, z: 2.32}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -86,8 +87,8 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010998238436}
   m_Mesh: {fileID: 4300124, guid: 2ad459b491a70ba4b9febbc47a27d881, type: 3}
---- !u!65 &65696333780753400
-BoxCollider:
+--- !u!64 &64797332392073386
+MeshCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -95,6 +96,23 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.9375782, y: 3.1690912, z: 3.4106536}
-  m_Center: {x: -0.114246786, y: 1.430078, z: -0.07794225}
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300124, guid: 2ad459b491a70ba4b9febbc47a27d881, type: 3}
+--- !u!208 &208471238350742686
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010998238436}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 1.705, y: 1.585, z: 1.705}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.11400001, y: 1.4300001, z: -0.078}
+  m_TimeToStationary: 0.5

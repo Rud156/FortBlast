@@ -21,7 +21,8 @@ GameObject:
   - component: {fileID: 4000014044458738}
   - component: {fileID: 33000011712556384}
   - component: {fileID: 23000010370162536}
-  - component: {fileID: 65473973778121612}
+  - component: {fileID: 64878870050599934}
+  - component: {fileID: 208371849252670280}
   m_Layer: 0
   m_Name: TreeSummer7
   m_TagString: Untagged
@@ -36,8 +37,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000014204499452}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 489.55, y: 47.870033, z: 308.8181}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 9.4966755, y: 3.434102, z: 5.1266775}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -86,8 +87,8 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000014204499452}
   m_Mesh: {fileID: 4300166, guid: 2ad459b491a70ba4b9febbc47a27d881, type: 3}
---- !u!65 &65473973778121612
-BoxCollider:
+--- !u!64 &64878870050599934
+MeshCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -95,6 +96,23 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.3811097, y: 3.8703485, z: 2.310236}
-  m_Center: {x: -0.12165636, y: 1.9351745, z: 0.54395175}
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300166, guid: 2ad459b491a70ba4b9febbc47a27d881, type: 3}
+--- !u!208 &208371849252670280
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000014204499452}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 1.6910001, y: 1.9350001, z: 1.6910001}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.12200001, y: 1.9350001, z: 0.544}
+  m_TimeToStationary: 0.5

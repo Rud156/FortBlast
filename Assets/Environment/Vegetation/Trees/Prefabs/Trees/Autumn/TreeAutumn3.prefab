@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33000014165698650}
   - component: {fileID: 23000012855230116}
   - component: {fileID: 65187452842638842}
+  - component: {fileID: 208848279360276552}
   m_Layer: 0
   m_Name: TreeAutumn3
   m_TagString: Untagged
@@ -36,8 +37,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010820178534}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 440.55905, y: 45.483982, z: 326.76086}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 10.14975, y: 3.5485754, z: 6.7086987}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -97,3 +98,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.6396732, y: 3.844613, z: 2.1134946}
   m_Center: {x: 0.018716693, y: 1.6903231, z: -0.078252584}
+--- !u!208 &208848279360276552
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010820178534}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.82000005, y: 1.922, z: 1.057}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.019000001, y: 1.69, z: -0.078}
+  m_TimeToStationary: 0.5

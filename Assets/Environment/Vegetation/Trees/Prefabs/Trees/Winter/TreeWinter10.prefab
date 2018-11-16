@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33571225252472496}
   - component: {fileID: 23880091554237392}
   - component: {fileID: 65504104703588716}
+  - component: {fileID: 208959617284281594}
   m_Layer: 0
   m_Name: TreeWinter10
   m_TagString: Untagged
@@ -36,8 +37,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1418248808795844}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 42.10733, y: 0.073036835, z: 8.803456}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 12.0859585, y: 7.614714, z: 2.3864858}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -98,3 +99,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.9190688, y: 3.659356, z: 1.9402312}
   m_Center: {x: 0.000000029802322, y: 1.8448212, z: -0.021737456}
+--- !u!208 &208959617284281594
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1418248808795844}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.96000004, y: 1.83, z: 0.97}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1.845, z: -0.022000002}
+  m_TimeToStationary: 0.5
