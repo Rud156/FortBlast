@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 23562407669263096}
   - component: {fileID: 65195125444541280}
   - component: {fileID: 65875283834000432}
+  - component: {fileID: 208839538503928344}
   - component: {fileID: 114069952630886326}
   m_Layer: 0
   m_Name: Dumpster
@@ -121,7 +122,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1977509700430396}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.70710677}
-  m_LocalPosition: {x: 220.75877, y: 10.561798, z: -159.64497}
+  m_LocalPosition: {x: -6.492702, y: 1.2277439, z: -1.2509258}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 224879836336256168}
@@ -357,6 +358,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!208 &208839538503928344
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1977509700430396}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.568, y: 0.35500002, z: 0.365}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: -0.023000002, z: 0.365}
+  m_TimeToStationary: 0.5
 --- !u!222 &222407494018588968
 CanvasRenderer:
   m_ObjectHideFlags: 1

@@ -190,6 +190,7 @@ GameObject:
   - component: {fileID: 4119612165997784}
   - component: {fileID: 33897238169090502}
   - component: {fileID: 23684625795083424}
+  - component: {fileID: 208142990896662312}
   m_Layer: 0
   m_Name: Tower_Base
   m_TagString: Untagged
@@ -273,6 +274,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4513001009377946}
   - component: {fileID: 65384299681221302}
+  - component: {fileID: 208802988990787460}
   m_Layer: 0
   m_Name: Prefab_SmallCrate02_color01
   m_TagString: Untagged
@@ -1127,7 +1129,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1033258138677084}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 348.4417, y: -4.5241385, z: -308.69684}
+  m_LocalPosition: {x: -10.39, y: 0, z: -1.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224612179860368502}
@@ -3182,6 +3184,36 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &208142990896662312
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1282074755616468}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.624, y: 2.584, z: 3.0770001}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.020000001, y: -0.015000001, z: -3.1130002}
+  m_TimeToStationary: 0.5
+--- !u!208 &208802988990787460
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1346716275733224}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.325, y: 0.325, z: 0.325}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.32, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!222 &222171871960473062
 CanvasRenderer:
   m_ObjectHideFlags: 1
