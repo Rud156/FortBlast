@@ -112,7 +112,6 @@ GameObject:
   - component: {fileID: 33910174638412640}
   - component: {fileID: 23781140239474458}
   - component: {fileID: 65047705259997390}
-  - component: {fileID: 114055725970423936}
   m_Layer: 0
   m_Name: Abandoned Building
   m_TagString: Untagged
@@ -699,18 +698,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 50.800003, y: 1.0000021, z: 40.800003}
   m_Center: {x: -0.0000009536743, y: 3.5, z: -1.7500019}
---- !u!114 &114055725970423936
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1720550715062792}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5faaaa70c6cb8524e8823f38e6bbbad5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  degreesPerSecond: 15
-  amplitude: 2
-  frequency: 0.3
-  direction: 1

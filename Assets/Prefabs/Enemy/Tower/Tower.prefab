@@ -3002,7 +3002,7 @@ MonoBehaviour:
   attackTime: 1
   attackDamage: 50
   playerBaseOffset: 1.5
-  maxPlayerTargetRange: 30
+  maxPlayerTargetRange: 50
   towerTop: {fileID: 4503901319573816}
   laserShootingPoint: {fileID: 4936501318514022}
   laser: {fileID: 1328147906834994, guid: 3604f683a6d1f674bb4a310aa1eedb7c, type: 2}
