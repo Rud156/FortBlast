@@ -78,7 +78,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
             _chunksVisibleInViewDistance = Mathf.RoundToInt(maxViewDistance / _meshWorldSize);
             _updatingChunks = false;
 
-            StartCoroutine(UpdateVisibleChunks(true));
+            StartCoroutine(UpdateVisibleChunks(true, true));
         }
 
         /// <summary>
@@ -96,12 +96,12 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
             if ((_prevViewerPosition - _viewerPosition).sqrMagnitude > _sqrViewerMoveThresholdForChunkUpdate
                 && !_updatingChunks)
             {
-                StartCoroutine(UpdateVisibleChunks(!fixedTerrainSize));
+                StartCoroutine(UpdateVisibleChunks(!fixedTerrainSize, false));
                 _prevViewerPosition = _viewerPosition;
             }
         }
 
-        private IEnumerator UpdateVisibleChunks(bool createNewChunks)
+        private IEnumerator UpdateVisibleChunks(bool createNewChunks, bool cleanBuildNavMesh)
         {
             _updatingChunks = true;
             HashSet<Vector2> alreadyUpdatedChunkCoords = new HashSet<Vector2>();
@@ -144,6 +144,11 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
                     yield return null;
                 }
             }
+
+            if (cleanBuildNavMesh)
+                NavMeshBaker.instance.BuildInitialNavMesh();
+            else
+                NavMeshBaker.instance.ReBuildNavMesh();
             _updatingChunks = false;
         }
 

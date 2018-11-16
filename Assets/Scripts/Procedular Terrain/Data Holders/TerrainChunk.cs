@@ -70,6 +70,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             _meshObject = new GameObject("Terrain Chunk");
             _meshObject.transform.position = new Vector3(position.x, 0, position.y);
             _meshObject.transform.SetParent(parent);
+            _meshObject.layer = 9;
 
             _meshRenderer = _meshObject.AddComponent<MeshRenderer>();
             _meshRenderer.material = material;
@@ -208,7 +209,6 @@ namespace FortBlast.ProceduralTerrain.DataHolders
                 );
             else if (!_chunkTrees.hasPlacedTrees && _chunkTrees.hasReceivedTreePoints)
                 _chunkTrees.PlaceTreesOnPoints();
-
         }
 
         private void RequestAndPlaceCollectibles(LODMesh lodMesh)
