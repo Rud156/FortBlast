@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using FortBlast.Common;
+﻿using FortBlast.Extras;
 using FortBlast.Player.AffecterActions;
 using FortBlast.Player.Movement;
 using FortBlast.Resources;
 using UnityEngine;
 
-namespace FortBlast.Scenes.Main_Scene
+namespace FortBlast.Scenes.MainScene
 {
     public class GameManager : MonoBehaviour
     {

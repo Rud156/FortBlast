@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using FortBlast.Extras;
 using FortBlast.Player.AffecterActions;
+using FortBlast.Scenes.MainScene;
 using UnityEngine;
 
 namespace FortBlast.Enemy.Tower
@@ -98,7 +99,7 @@ namespace FortBlast.Enemy.Tower
                 return -1;
 
             float distanceToPlayer = Vector3.Distance(_player.position, towerTop.position);
-            if (distanceToPlayer > maxPlayerTargetRange)
+            if (distanceToPlayer > maxPlayerTargetRange || GlobalData.playerInBuilding)
                 return -1;
 
             Vector3 modifiedPlayerPosition = new Vector3(_player.position.x, 0, _player.position.z);
@@ -176,6 +177,7 @@ namespace FortBlast.Enemy.Tower
             int randomAngle = Random.Range(0, 360);
             _lazeLookRotation = Quaternion.Euler(0, randomAngle, 0);
             _lazingAround = true;
+
             yield return new WaitForSeconds(waitTimeBetweenLaze);
             _lazingAround = false;
         }

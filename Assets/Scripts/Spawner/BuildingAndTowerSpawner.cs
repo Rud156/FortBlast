@@ -24,9 +24,27 @@ namespace FortBlast.Spawner
 
         #endregion Singleton
 
+        public GameObject buildingPrefab;
+        public GameObject towerPrefab;
+        public int[] yRotation;
+
         public void CreateTowersAndBuildings(Vector3 meshVertex, Transform parent)
         {
-			
+            int randomNumber = Random.Range(0, 1000) % yRotation.Length;
+            GameObject buildingInstance = Instantiate(buildingPrefab, meshVertex,
+                buildingPrefab.transform.rotation);
+            buildingInstance.transform.SetParent(parent);
+
+            Transform towerPointsParent = buildingInstance.transform.GetChild(0);
+            Vector3 position = towerPointsParent.GetChild(randomNumber).position;
+
+            GameObject towerInstance = Instantiate(
+                towerPrefab,
+                position,
+                Quaternion.Euler(0, yRotation[randomNumber], 0)
+            );
+
+			towerInstance.transform.SetParent(buildingInstance.transform);
         }
     }
 }

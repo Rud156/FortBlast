@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
-using FortBlast.Common;
+using FortBlast.Extras;
 using FortBlast.Structs;
 using UnityEngine;
 using UnityEngine.UI;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using FortBlast.Enemy.Droid.Helpers;
 using FortBlast.Extras;
+using FortBlast.Scenes.MainScene;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -125,7 +126,8 @@ namespace FortBlast.Enemy.Droid.Patrol
         private void CheckAndSetNextTarget()
         {
             bool isPlayerNearby = DroidPatrolHelpers
-                .CheckPlayerInRange(_player, transform, minimumDetectionDistance);
+                .CheckPlayerInRange(_player, transform, minimumDetectionDistance) &&
+                !GlobalData.playerInBuilding;
 
             if (isPlayerNearby)
             {

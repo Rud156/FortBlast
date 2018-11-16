@@ -58,6 +58,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
                     DroidSpawner.instance.SpawnDroids(rawPoints, _parent);
                     break;
                 case TerrainInteractibles.towers:
+                    BuildingAndTowerSpawner.instance.CreateTowersAndBuildings(rawPoints[0], _parent);
                     break;
             }
         }

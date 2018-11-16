@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FortBlast.Common;
 using FortBlast.Player.Data;
 using FortBlast.Resources;
-using FortBlast.Scenes.Main_Scene;
+using FortBlast.Scenes.MainScene;
 using UnityEngine;
 
 namespace FortBlast.Player.AffecterActions
