@@ -110,8 +110,6 @@ namespace FortBlast.Scenes.MainScene
 
         private void LockCursor()
         {
-            Debug.Log("Locking Cursor");
-
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }

@@ -31,10 +31,7 @@ namespace FortBlast.Player.Movement
 
         private void RotatePlayerOnMouse()
         {
-            if (!_rotationActive)
-                return;
-
-            float mouseX = Input.GetAxis(PlayerData.MouseX);
+            float mouseX = _rotationActive ? Input.GetAxis(PlayerData.MouseX) : 0;
             _yaw += mouseX * rotationSpeed * Time.deltaTime;
             transform.eulerAngles = Vector3.up * _yaw;
         }
