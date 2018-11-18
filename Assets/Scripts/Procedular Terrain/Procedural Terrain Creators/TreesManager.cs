@@ -45,6 +45,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
         }
 
         public List<Tree> trees;
+        public List<GameObject> treeBases;
 
         private void GenerateTrees()
         {
@@ -53,9 +54,18 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
                 for (int j = 0; j < trees[i].maxInstanceCount; j++)
                 {
 
-                    GameObject treeInstance = Instantiate(trees[i].prefab, Vector3.zero, Quaternion.identity);
+                    GameObject treeInstance =
+                        Instantiate(trees[i].prefab, Vector3.zero, Quaternion.identity);
                     treeInstance.SetActive(false);
                     treeInstance.transform.SetParent(transform);
+
+                    GameObject treeBaseInstance =
+                        Instantiate(
+                            treeBases[Random.Range(0, 1000) % treeBases.Count],
+                            Vector3.zero,
+                            Quaternion.identity
+                        );
+                    treeBaseInstance.transform.SetParent(treeInstance.transform);
 
                     trees[i].instantiatedTrees.Add(treeInstance);
                 }
