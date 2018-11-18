@@ -1934,7 +1934,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 200
-  lockCursor: 1
 --- !u!114 &114466531837861134
 MonoBehaviour:
   m_ObjectHideFlags: 1
