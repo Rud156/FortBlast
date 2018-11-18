@@ -8,9 +8,6 @@ namespace FortBlast.Player.Movement
         [Header("Rotation")]
         public float rotationSpeed;
 
-        [Header("Debug")]
-        public bool lockCursor;
-
         private float _yaw;
         private bool _rotationActive;
 
@@ -22,12 +19,6 @@ namespace FortBlast.Player.Movement
         {
             _yaw = transform.rotation.eulerAngles.y;
             _rotationActive = true;
-
-            if (lockCursor)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            }
         }
 
         /// <summary>

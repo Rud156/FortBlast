@@ -509,7 +509,7 @@ MonoBehaviour:
   lookingPoint: {fileID: 4244582197181928}
   maxLookAngle: 150
   angleTolerance: 10
-  distanceToStopFromPlayer: 20
+  distanceToStopFromIntrestingTarget: 20
   distanceToStopFromPatrolPoint: 0
   waitTimeBetweenAttacks: 5
 --- !u!114 &114862074086533028

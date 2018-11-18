@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using FortBlast.Enums;
+﻿using FortBlast.Enums;
 using FortBlast.Extras;
+using FortBlast.ProceduralTerrain.Settings;
 using FortBlast.Spawner;
 using UnityEngine;
 

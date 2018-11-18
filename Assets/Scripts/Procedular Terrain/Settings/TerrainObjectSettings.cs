@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Terrain/TerrainObjectSettings", fileName = "TerrainObjectSettings")]
-public class TerrainObjectSettings : ScriptableObject
+namespace FortBlast.ProceduralTerrain.Settings
 {
-    [Header("Items Per Terrain Chunk")]
-    public int maxDroids;
-    public int maxTowers;
-    public int maxCollectibles;
+    [CreateAssetMenu(menuName = "Terrain/TerrainObjectSettings", fileName = "TerrainObjectSettings")]
+    public class TerrainObjectSettings : ScriptableObject
+    {
+        [Header("Items Per Terrain Chunk")]
+        public int maxDroids;
+        public int maxTowers;
+        public int maxCollectibles;
+    }
 }

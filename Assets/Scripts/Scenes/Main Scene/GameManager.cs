@@ -40,6 +40,8 @@ namespace FortBlast.Scenes.MainScene
         {
             _inventoryOpen = false;
             _itemSpawned = false;
+
+            LockCursor();
         }
 
         /// <summary>
@@ -64,6 +66,8 @@ namespace FortBlast.Scenes.MainScene
             _inventoryOpen = true;
             playerLookAtController.DeActivateRotation();
             playerAbsorbDamageController.DeActivateAbsorber();
+
+            UnlockCursor();
         }
 
         public void CloseInventory()
@@ -73,6 +77,7 @@ namespace FortBlast.Scenes.MainScene
             playerAbsorbDamageController.ActivateAbsorber();
 
             InventoryManager.instance.CloseInventory();
+            LockCursor();
         }
 
         #endregion Inventory
@@ -103,5 +108,18 @@ namespace FortBlast.Scenes.MainScene
 
         #endregion InventoryItem
 
+        private void LockCursor()
+        {
+            Debug.Log("Locking Cursor");
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
+        private void UnlockCursor()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 }

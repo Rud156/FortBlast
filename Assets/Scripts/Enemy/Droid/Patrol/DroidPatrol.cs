@@ -25,7 +25,7 @@ namespace FortBlast.Enemy.Droid.Patrol
         public float angleTolerance;
 
         [Header("Distances")]
-        public float distanceToStopFromPlayer;
+        public float distanceToStopFromIntrestingTarget;
         public float distanceToStopFromPatrolPoint;
 
         [Header("Attack")]
@@ -103,15 +103,21 @@ namespace FortBlast.Enemy.Droid.Patrol
                     {
                         if (_playerFound && !_attacking)
                         {
-                            if (IsAngleWithinToleranceLevel(_currentNormalizedLookAngle))
+                            if (DroidPatrolHelpers.
+                                IsAngleWithinToleranceLevel(_currentNormalizedLookAngle, angleTolerance))
+                            {
                                 // Attack Player
                                 _coroutine = StartCoroutine(AttackPlayer());
+                            }
                         }
                         else if (_distactorFound && !_attacking)
                         {
-                            if (IsAngleWithinToleranceLevel(_currentNormalizedLookAngle))
+                            if (DroidPatrolHelpers.
+                                IsAngleWithinToleranceLevel(_currentNormalizedLookAngle, angleTolerance))
+                            {
                                 // Attack Player
                                 _coroutine = StartCoroutine(AttackDistractor(_currentTarget));
+                            }
                         }
                         else if (!_playerFound && !_distactorFound && !_lazingAround)
                         {
@@ -125,7 +131,8 @@ namespace FortBlast.Enemy.Droid.Patrol
 
         private void CheckAndSetNextTarget()
         {
-            float angleWRTTarget = CheckTargetInsideFOV(_player);
+            float angleWRTTarget = DroidPatrolHelpers
+                .CheckTargetInsideFOV(_player, minimumDetectionDistance, maxLookAngle, lookingPoint);
             _currentNormalizedLookAngle = angleWRTTarget;
 
             if (angleWRTTarget != -1)
@@ -135,8 +142,13 @@ namespace FortBlast.Enemy.Droid.Patrol
             }
             else
             {
-                Transform closestDistractor = GetClosestDistractor();
-                angleWRTTarget = CheckTargetInsideFOV(closestDistractor, false);
+                Transform closestDistractor = DroidPatrolHelpers
+                    .GetClosestDistractor(_distactorHolder, transform);
+
+                angleWRTTarget = DroidPatrolHelpers
+                    .CheckTargetInsideFOV(closestDistractor,
+                    minimumDetectionDistance, maxLookAngle, lookingPoint, false);
+
                 _currentNormalizedLookAngle = angleWRTTarget;
 
                 if (angleWRTTarget != -1)
@@ -177,36 +189,11 @@ namespace FortBlast.Enemy.Droid.Patrol
         private void CheckAndSetIntrestingTarget(Transform target)
         {
             _currentTarget = target;
-            _droidAgent.stoppingDistance = distanceToStopFromPlayer;
+            _droidAgent.stoppingDistance = distanceToStopFromIntrestingTarget;
 
             SetAgentDestination(_currentTarget.position);
             LookTowardsTarget(_currentTarget.position);
             ResetAnimationOnFindingIntrestingTarget();
-        }
-
-        private float CheckTargetInsideFOV(Transform target, bool checkPlayerInBuildingStatus = true)
-        {
-            if (target == null)
-                return -1;
-
-            float distanceToPlayer = Vector3.Distance(target.position, lookingPoint.position);
-            if (distanceToPlayer > minimumDetectionDistance)
-                return -1;
-            if (checkPlayerInBuildingStatus && GlobalData.playerInBuilding)
-                return -1;
-
-            Vector3 modifiedPlayerPosition = new Vector3(target.position.x, 0, target.position.z);
-            Vector3 modifiedLookingPosition =
-                new Vector3(lookingPoint.position.x, 0, lookingPoint.position.z);
-
-            Vector3 lookDirection = modifiedPlayerPosition - modifiedLookingPosition;
-            float angleToPlayer = Vector3.Angle(lookDirection, lookingPoint.forward);
-            float normalizedAngle = ExtensionFunctions.To360Angle(angleToPlayer);
-
-            if (normalizedAngle <= maxLookAngle)
-                return normalizedAngle;
-            else
-                return -1;
         }
 
         private void SetAgentRandomPatrolPoint()
@@ -230,37 +217,6 @@ namespace FortBlast.Enemy.Droid.Patrol
             _droidLaze.StopLazingAbout();
             StopCoroutine(_coroutine);
             _lazingAround = false;
-        }
-
-        private Transform GetClosestDistractor()
-        {
-            float minDistance = float.MaxValue;
-            Transform targetObject = null;
-
-            for (int i = 0; i < _distactorHolder.childCount; i++)
-            {
-                float distance = Vector3.Distance(_distactorHolder.GetChild(i).position,
-                    transform.position);
-
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    targetObject = _distactorHolder.GetChild(i);
-                }
-            }
-
-            return targetObject;
-        }
-
-        private bool IsAngleWithinToleranceLevel(float normalizedAngle)
-        {
-            if (normalizedAngle < 0)
-                return false;
-
-            if (normalizedAngle <= angleTolerance)
-                return true;
-
-            return false;
         }
 
         private IEnumerator AttackPlayer()
