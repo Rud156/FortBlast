@@ -43,6 +43,7 @@ namespace FortBlast.Enemy.Droid.Patrol
 
         private Coroutine _coroutine;
         private bool _lazingAround;
+        // Used Only When The Player Is Found
         private float _currentNormalizedLookAngle;
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using FortBlast.Common;
+using FortBlast.Extras;
 using FortBlast.Player.Data;
 using FortBlast.Resources;
 using FortBlast.Scenes.MainScene;
@@ -22,6 +23,8 @@ namespace FortBlast.Player.AffecterActions
         private Rigidbody _itemRB;
         private BoxCollider _itemCollider;
 
+        private Transform _itemHolder;
+
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
         /// any of the Update methods is called the first time.
@@ -30,6 +33,8 @@ namespace FortBlast.Player.AffecterActions
         {
             _playerAnimator = GetComponent<Animator>();
             _itemInstance = null;
+
+            _itemHolder = GameObject.FindGameObjectWithTag(TagManager.DistractorHolder)?.transform;
         }
 
         /// <summary>
@@ -82,7 +87,7 @@ namespace FortBlast.Player.AffecterActions
 
             _playerAnimator.SetBool(PlayerData.PlayerSpawning, false);
 
-            _itemInstance.transform.SetParent(null);
+            _itemInstance.transform.SetParent(_itemHolder);
             _itemInstance = null;
         }
     }

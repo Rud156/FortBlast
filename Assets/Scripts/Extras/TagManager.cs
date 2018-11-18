@@ -4,7 +4,7 @@ namespace FortBlast.Extras
     {
         public const string Player = "Player";
         public const string VisibleCollider = "VisibleCollider";
-        public const string Distractor = "Distractor";
+        public const string DistractorHolder = "DistractorHolder";
         public const string Terrain = "Terrain";
     }
 }

@@ -29,8 +29,10 @@ namespace FortBlast.Enemy.Tower
 
         private Transform _player;
         private Renderer _laserRenderer;
-        private bool _attackingPlayer;
+        private bool _attacking;
         private bool _laserCreated;
+
+        private Transform _distactorHolder;
 
         private Quaternion _lazeLookRotation;
         private bool _lazingAround;
@@ -45,8 +47,9 @@ namespace FortBlast.Enemy.Tower
         void Start()
         {
             _player = GameObject.FindGameObjectWithTag(TagManager.Player)?.transform;
+            _distactorHolder = GameObject.FindGameObjectWithTag(TagManager.DistractorHolder)?.transform;
 
-            _attackingPlayer = false;
+            _attacking = false;
             _lazingAround = false;
             _laserCreated = false;
             _deactivateTower = false;
@@ -60,29 +63,20 @@ namespace FortBlast.Enemy.Tower
             if (_deactivateTower)
                 return;
 
-            if (!_attackingPlayer)
+            if (!_attacking)
             {
-                float normalizedAngle = CheckPlayerInsideFOV();
+                float normalizedAngle = CheckTargetInsideFOV(_player);
                 if (normalizedAngle != -1)
-                {
-                    if (_lazingAround)
-                    {
-                        StopCoroutine(_coroutine);
-                        _lazingAround = false;
-                    }
-
-                    LookAtPlayer();
-
-                    if (IsAngleWithinToleranceLevel(normalizedAngle))
-                        _coroutine = StartCoroutine(AttackPlayer());
-                }
+                    CheckAndAttackPlayer(normalizedAngle);
                 else
                 {
-                    if (!_lazingAround)
-                        _coroutine = StartCoroutine(LazilyLookAround());
+                    Transform closestDistractor = GetClosestDistractor();
+                    normalizedAngle = CheckTargetInsideFOV(closestDistractor);
+
+                    if (normalizedAngle != -1)
+                        CheckAndAttackDistractor(closestDistractor, normalizedAngle);
                     else
-                        towerTop.rotation = Quaternion.Slerp(towerTop.rotation, _lazeLookRotation,
-                            rotationSpeed * Time.deltaTime);
+                        LazeAndLookAround();
                 }
             }
             else if (_laserCreated)
@@ -93,16 +87,87 @@ namespace FortBlast.Enemy.Tower
 
         public void DeactivateTower() => _deactivateTower = true;
 
-        private float CheckPlayerInsideFOV()
+        private void LookAtTarget(Transform target)
         {
-            if (_player == null)
+            if (target == null)
+                return;
+
+            Vector3 lookDirection = target.position - towerTop.position;
+            lookDirection.y = 0;
+
+            if (lookDirection != Vector3.zero)
+            {
+                Quaternion lookRotation = Quaternion.LookRotation(lookDirection);
+                towerTop.rotation = Quaternion.Slerp(towerTop.rotation, lookRotation,
+                    rotationSpeed * Time.deltaTime);
+            }
+        }
+
+        private void CheckAndAttackPlayer(float normalizedAngle)
+        {
+            if (_lazingAround)
+            {
+                StopCoroutine(_coroutine);
+                _lazingAround = false;
+            }
+
+            LookAtTarget(_player);
+
+            if (IsAngleWithinToleranceLevel(normalizedAngle))
+                _coroutine = StartCoroutine(AttackPlayer());
+        }
+
+        private void CheckAndAttackDistractor(Transform closestDistractor, float normalizedAngle)
+        {
+            if (_lazingAround)
+            {
+                StopCoroutine(_coroutine);
+                _lazingAround = false;
+            }
+
+            LookAtTarget(closestDistractor);
+            if (IsAngleWithinToleranceLevel(normalizedAngle))
+                _coroutine = StartCoroutine(AttackDistractor(closestDistractor));
+        }
+
+        private void LazeAndLookAround()
+        {
+            if (!_lazingAround)
+                _coroutine = StartCoroutine(LazilyLookAround());
+            else
+                towerTop.rotation = Quaternion.Slerp(towerTop.rotation, _lazeLookRotation,
+                    rotationSpeed * Time.deltaTime);
+        }
+
+        private Transform GetClosestDistractor()
+        {
+            float minDistance = float.MaxValue;
+            Transform targetObject = null;
+
+            for (int i = 0; i < _distactorHolder.childCount; i++)
+            {
+                float distance = Vector3.Distance(_distactorHolder.GetChild(i).position, towerTop.position);
+
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    targetObject = _distactorHolder.GetChild(i);
+                }
+            }
+
+            return targetObject;
+        }
+
+        private float CheckTargetInsideFOV(Transform target)
+        {
+            if (target == null)
                 return -1;
 
-            float distanceToPlayer = Vector3.Distance(_player.position, towerTop.position);
+            float distanceToPlayer = Vector3.Distance(target.position, towerTop.position);
             if (distanceToPlayer > maxPlayerTargetRange || GlobalData.playerInBuilding)
                 return -1;
 
-            Vector3 modifiedPlayerPosition = new Vector3(_player.position.x, 0, _player.position.z);
+            Vector3 modifiedPlayerPosition = new Vector3(target.position.x, 0, target.position.z);
             Vector3 modifiedTowerTopPosition =
                 new Vector3(towerTop.position.x, 0, towerTop.position.z);
 
@@ -127,22 +192,6 @@ namespace FortBlast.Enemy.Tower
             return false;
         }
 
-        private void LookAtPlayer()
-        {
-            if (_player == null)
-                return;
-
-            Vector3 lookDirection = _player.position - towerTop.position;
-            lookDirection.y = 0;
-
-            if (lookDirection != Vector3.zero)
-            {
-                Quaternion lookRotation = Quaternion.LookRotation(lookDirection);
-                towerTop.rotation = Quaternion.Slerp(towerTop.rotation, lookRotation,
-                    rotationSpeed * Time.deltaTime);
-            }
-        }
-
         private void TileLaserTexture()
         {
             float textureTilling = Mathf.Sin(Time.time) * 4f + 1;
@@ -159,7 +208,7 @@ namespace FortBlast.Enemy.Tower
             lineRenderer.SetPosition(1, _player.position + Vector3.up * playerBaseOffset);
 
             _laserRenderer = lineRenderer.GetComponent<Renderer>();
-            _attackingPlayer = true;
+            _attacking = true;
             _laserCreated = true;
 
             _player.GetComponent<PlayerShooterAbsorbDamage>().DamagePlayerAndDecreaseHealth(attackDamage);
@@ -169,7 +218,33 @@ namespace FortBlast.Enemy.Tower
             Destroy(laserInstance);
 
             yield return new WaitForSeconds(waitTimeBetweenAttack - attackTime);
-            _attackingPlayer = false;
+            _attacking = false;
+        }
+
+        private IEnumerator AttackDistractor(Transform closestDistractor)
+        {
+            if (closestDistractor == null)
+                yield break;
+
+            Quaternion rotation = Quaternion.LookRotation(closestDistractor.position -
+                laserShootingPoint.position);
+            GameObject laserInstance = Instantiate(laser, laserShootingPoint.position, rotation);
+
+            LineRenderer lineRenderer = laserInstance.GetComponentInChildren<LineRenderer>();
+            lineRenderer.SetPosition(0, laserShootingPoint.position);
+            lineRenderer.SetPosition(1, closestDistractor.position);
+
+            _laserRenderer = lineRenderer.GetComponent<Renderer>();
+            _attacking = true;
+            _laserCreated = true;
+
+            yield return new WaitForSeconds(attackTime);
+            _laserCreated = false;
+            Destroy(laserInstance);
+            Destroy(closestDistractor?.gameObject);
+
+            yield return new WaitForSeconds(waitTimeBetweenAttack - attackTime);
+            _attacking = false;
         }
 
         private IEnumerator LazilyLookAround()
