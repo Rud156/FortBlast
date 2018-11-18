@@ -54,7 +54,8 @@ namespace FortBlast.ProceduralTerrain.DataHolders
         }
 
         public TerrainChunk(Vector2 coord, HeightMapSettings heightMapSettings,
-            MeshSettings meshSettings, TreeSettings treeSettings, LODInfo[] detailLevels,
+            MeshSettings meshSettings, TreeSettings treeSettings,
+            TerrainObjectSettings terrainObjectSettings, LODInfo[] detailLevels,
             int colliderLODIndex, Transform parent, Transform viewer, Material material)
         {
             this.coord = coord;
@@ -82,7 +83,8 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             _meshCollider = _meshObject.AddComponent<MeshCollider>();
 
             _chunkTrees = new Trees(position, treeSettings);
-            _terrainInteractibles = new TerrainInteractiblesCreator(position, _meshObject.transform);
+            _terrainInteractibles = new TerrainInteractiblesCreator(position, _meshObject.transform,
+                terrainObjectSettings);
 
             // Dividing by 10 as plane is 10 units by default
             // _meshObject.transform.localScale = Vector3.one * size / 10f;

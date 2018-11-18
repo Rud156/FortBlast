@@ -17,6 +17,12 @@ namespace FortBlast.Enemy.Droid.Patrol
         public float minimumDetectionDistance;
         public float lookRotationSpeed;
 
+        [Header("Droid FOV")]
+        public Transform lookingPoint;
+        [Range(0, 360)]
+        public float maxLookAngle;
+        public float angleTolerance;
+
         [Header("Distances")]
         public float distanceToStopFromPlayer;
         public float distanceToStopFromPatrolPoint;
@@ -37,6 +43,7 @@ namespace FortBlast.Enemy.Droid.Patrol
 
         private Coroutine _coroutine;
         private bool _lazingAround;
+        private float _currentNormalizedLookAngle;
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -89,8 +96,9 @@ namespace FortBlast.Enemy.Droid.Patrol
                     {
                         if (_playerFound && !_attackingPlayer)
                         {
-                            // Attack Player
-                            _coroutine = StartCoroutine(AttackPlayer());
+                            if (IsAngleWithinToleranceLevel(_currentNormalizedLookAngle))
+                                // Attack Player
+                                _coroutine = StartCoroutine(AttackPlayer());
                         }
                         else if (!_playerFound && !_lazingAround)
                         {
@@ -125,11 +133,9 @@ namespace FortBlast.Enemy.Droid.Patrol
 
         private void CheckAndSetNextTarget()
         {
-            bool isPlayerNearby = DroidPatrolHelpers
-                .CheckPlayerInRange(_player, transform, minimumDetectionDistance) &&
-                !GlobalData.playerInBuilding;
-
-            if (isPlayerNearby)
+            float angleWRTPlayer = IsPlayerInsideFOV();
+            _currentNormalizedLookAngle = angleWRTPlayer;
+            if (angleWRTPlayer != -1)
             {
                 _currentTarget = _player;
                 _playerFound = true;
@@ -142,7 +148,29 @@ namespace FortBlast.Enemy.Droid.Patrol
             // For Finding the Next Patrol Point Right After Player Left Range
             else if (_playerFound)
                 SetAgentRandomPatrolPoint();
+        }
 
+        private float IsPlayerInsideFOV()
+        {
+            if (_player == null)
+                return -1;
+
+            float distanceToPlayer = Vector3.Distance(_player.position, lookingPoint.position);
+            if (distanceToPlayer > minimumDetectionDistance || GlobalData.playerInBuilding)
+                return -1;
+
+            Vector3 modifiedPlayerPosition = new Vector3(_player.position.x, 0, _player.position.z);
+            Vector3 modifiedLookingPosition =
+                new Vector3(lookingPoint.position.x, 0, lookingPoint.position.z);
+
+            Vector3 lookDirection = modifiedPlayerPosition - modifiedLookingPosition;
+            float angleToPlayer = Vector3.Angle(lookDirection, lookingPoint.forward);
+            float normalizedAngle = ExtensionFunctions.To360Angle(angleToPlayer);
+
+            if (normalizedAngle <= maxLookAngle)
+                return normalizedAngle;
+            else
+                return -1;
         }
 
         private void SetAgentRandomPatrolPoint()
@@ -164,6 +192,17 @@ namespace FortBlast.Enemy.Droid.Patrol
                 StopCoroutine(_coroutine);
                 _lazingAround = false;
             }
+        }
+
+        private bool IsAngleWithinToleranceLevel(float normalizedAngle)
+        {
+            if (normalizedAngle < 0)
+                return false;
+
+            if (normalizedAngle <= angleTolerance)
+                return true;
+
+            return false;
         }
 
         private IEnumerator AttackPlayer()

@@ -11,11 +11,14 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
     {
         private Transform _parent;
         private Vector3 _meshCenter;
+        private TerrainObjectSettings _terrainObjectSettings;
 
-        public TerrainInteractiblesCreator(Vector2 meshCenter, Transform parent)
+        public TerrainInteractiblesCreator(Vector2 meshCenter, Transform parent,
+            TerrainObjectSettings terrainObjectSettings)
         {
             _meshCenter = new Vector3(meshCenter.x, 0, meshCenter.y);
             _parent = parent;
+            _terrainObjectSettings = terrainObjectSettings;
         }
 
         public void RequestInteractiblesPoints(Vector3[] meshVertices,
@@ -27,13 +30,17 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
                     switch (interactiblesType)
                     {
                         case TerrainInteractibles.collectibles:
-                            return FixedRandomPointsSpawner.GeneratePoints(meshVertices, 10);
+                            return FixedRandomPointsSpawner.GeneratePoints(meshVertices,
+                                _terrainObjectSettings.maxCollectibles);
                         case TerrainInteractibles.droids:
-                            return FixedRandomPointsSpawner.GeneratePoints(meshVertices, 3);
+                            return FixedRandomPointsSpawner.GeneratePoints(meshVertices,
+                                _terrainObjectSettings.maxDroids);
                         case TerrainInteractibles.towers:
-                            return FixedRandomPointsSpawner.GeneratePoints(meshVertices, 1);
+                            return FixedRandomPointsSpawner.GeneratePoints(meshVertices,
+                                _terrainObjectSettings.maxTowers);
                         default:
-                            return FixedRandomPointsSpawner.GeneratePoints(meshVertices, 10);
+                            return FixedRandomPointsSpawner.GeneratePoints(meshVertices,
+                                _terrainObjectSettings.maxCollectibles);
                     }
                 },
                 (points) =>
