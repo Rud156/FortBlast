@@ -63,13 +63,41 @@ namespace FortBlast.Enemy.Droid.Patrol
             }
 
             _laserCreated = true;
-            player.GetComponent<PlayerShooterAbsorbDamage>().DamagePlayerAndDecreaseHealth(attackDamage * 2);
+            player.GetComponent<PlayerShooterAbsorbDamage>()
+                .DamagePlayerAndDecreaseHealth(attackDamage * 2);
 
             yield return new WaitForSeconds(0.5f);
 
             _laserCreated = false;
             for (int i = 0; i < _laserRenderers.Length; i++)
                 Destroy(_droidLaserInstance[i]);
+        }
+
+        public IEnumerator AttackDistractor(Transform closestDistractor)
+        {
+            if (closestDistractor == null)
+                yield break;
+
+            for (int i = 0; i < launchPoints.Length; i++)
+            {
+                Quaternion rotation = Quaternion.LookRotation(closestDistractor.position -
+                    launchPoints[i].position);
+                _droidLaserInstance[i] = Instantiate(droidLaser, launchPoints[i].position, rotation);
+
+                LineRenderer line = _droidLaserInstance[i].GetComponentInChildren<LineRenderer>();
+                line.SetPosition(0, launchPoints[i].position);
+                line.SetPosition(1, closestDistractor.position);
+                _laserRenderers[i] = line.GetComponent<Renderer>();
+            }
+
+            _laserCreated = true;
+
+            yield return new WaitForSeconds(0.5f);
+
+            _laserCreated = false;
+            for (int i = 0; i < _laserRenderers.Length; i++)
+                Destroy(_droidLaserInstance[i]);
+            Destroy(closestDistractor?.gameObject);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using FortBlast.Enemy.Droid.Helpers;
@@ -39,7 +40,10 @@ namespace FortBlast.Enemy.Droid.Patrol
 
         private Transform _player;
         private bool _playerFound;
-        private bool _attackingPlayer;
+        private bool _attacking;
+
+        private Transform _distactorHolder;
+        private bool _distactorFound;
 
         private Coroutine _coroutine;
         private bool _lazingAround;
@@ -57,9 +61,11 @@ namespace FortBlast.Enemy.Droid.Patrol
             _droidAttack = GetComponent<DroidAttack>();
 
             _player = GameObject.FindGameObjectWithTag(TagManager.Player)?.transform;
-            _playerFound = true;
+            _distactorHolder = GameObject.FindGameObjectWithTag(TagManager.DistractorHolder)?.transform;
 
             _terrainMeshVertices = transform.parent.GetComponent<MeshFilter>().mesh.vertices;
+
+            SetAgentRandomPatrolPoint();
         }
 
         /// <summary>
@@ -95,18 +101,54 @@ namespace FortBlast.Enemy.Droid.Patrol
                 {
                     if (!_droidAgent.hasPath || _droidAgent.velocity.sqrMagnitude == 0f)
                     {
-                        if (_playerFound && !_attackingPlayer)
+                        if (_playerFound && !_attacking)
                         {
                             if (IsAngleWithinToleranceLevel(_currentNormalizedLookAngle))
                                 // Attack Player
                                 _coroutine = StartCoroutine(AttackPlayer());
                         }
-                        else if (!_playerFound && !_lazingAround)
+                        else if (_distactorFound && !_attacking)
+                        {
+                            if (IsAngleWithinToleranceLevel(_currentNormalizedLookAngle))
+                                // Attack Player
+                                _coroutine = StartCoroutine(AttackDistractor(_currentTarget));
+                        }
+                        else if (!_playerFound && !_distactorFound && !_lazingAround)
                         {
                             // Laze Then Move to Next Patrol Point
                             _coroutine = StartCoroutine(LazePatrolPoint());
                         }
                     }
+                }
+            }
+        }
+
+        private void CheckAndSetNextTarget()
+        {
+            float angleWRTTarget = CheckTargetInsideFOV(_player);
+            _currentNormalizedLookAngle = angleWRTTarget;
+
+            if (angleWRTTarget != -1)
+            {
+                _playerFound = true;
+                CheckAndSetIntrestingTarget(_player);
+            }
+            else
+            {
+                Transform closestDistractor = GetClosestDistractor();
+                angleWRTTarget = CheckTargetInsideFOV(closestDistractor, false);
+                _currentNormalizedLookAngle = angleWRTTarget;
+
+                if (angleWRTTarget != -1)
+                {
+                    _distactorFound = true;
+                    CheckAndSetIntrestingTarget(closestDistractor);
+                }
+                else if (_playerFound || _distactorFound)
+                {
+                    _playerFound = false;
+                    _distactorFound = false;
+                    SetAgentRandomPatrolPoint();
                 }
             }
         }
@@ -132,35 +174,28 @@ namespace FortBlast.Enemy.Droid.Patrol
             _droidAgent.SetDestination(position);
         }
 
-        private void CheckAndSetNextTarget()
+        private void CheckAndSetIntrestingTarget(Transform target)
         {
-            float angleWRTPlayer = IsPlayerInsideFOV();
-            _currentNormalizedLookAngle = angleWRTPlayer;
-            if (angleWRTPlayer != -1)
-            {
-                _currentTarget = _player;
-                _playerFound = true;
-                _droidAgent.stoppingDistance = distanceToStopFromPlayer;
+            _currentTarget = target;
+            _droidAgent.stoppingDistance = distanceToStopFromPlayer;
 
-                SetAgentDestination(_currentTarget.position);
-                LookTowardsTarget(_currentTarget.position);
-                ResetAnimationOnFindingPlayer();
-            }
-            // For Finding the Next Patrol Point Right After Player Left Range
-            else if (_playerFound)
-                SetAgentRandomPatrolPoint();
+            SetAgentDestination(_currentTarget.position);
+            LookTowardsTarget(_currentTarget.position);
+            ResetAnimationOnFindingIntrestingTarget();
         }
 
-        private float IsPlayerInsideFOV()
+        private float CheckTargetInsideFOV(Transform target, bool checkPlayerInBuildingStatus = true)
         {
-            if (_player == null)
+            if (target == null)
                 return -1;
 
-            float distanceToPlayer = Vector3.Distance(_player.position, lookingPoint.position);
-            if (distanceToPlayer > minimumDetectionDistance || GlobalData.playerInBuilding)
+            float distanceToPlayer = Vector3.Distance(target.position, lookingPoint.position);
+            if (distanceToPlayer > minimumDetectionDistance)
+                return -1;
+            if (checkPlayerInBuildingStatus && GlobalData.playerInBuilding)
                 return -1;
 
-            Vector3 modifiedPlayerPosition = new Vector3(_player.position.x, 0, _player.position.z);
+            Vector3 modifiedPlayerPosition = new Vector3(target.position.x, 0, target.position.z);
             Vector3 modifiedLookingPosition =
                 new Vector3(lookingPoint.position.x, 0, lookingPoint.position.z);
 
@@ -176,7 +211,9 @@ namespace FortBlast.Enemy.Droid.Patrol
 
         private void SetAgentRandomPatrolPoint()
         {
-            _playerFound = false;
+            if (_lazingAround)
+                return;
+
             _droidAgent.stoppingDistance = distanceToStopFromPatrolPoint;
             Vector3 randomPatrolPoint = DroidPatrolHelpers.GetNextTarget(_terrainMeshVertices);
             _currentTarget = transform.parent;
@@ -185,14 +222,34 @@ namespace FortBlast.Enemy.Droid.Patrol
             LookTowardsTarget(randomPatrolPoint);
         }
 
-        private void ResetAnimationOnFindingPlayer()
+        private void ResetAnimationOnFindingIntrestingTarget()
         {
-            if (_lazingAround)
+            if (!_lazingAround)
+                return;
+
+            _droidLaze.StopLazingAbout();
+            StopCoroutine(_coroutine);
+            _lazingAround = false;
+        }
+
+        private Transform GetClosestDistractor()
+        {
+            float minDistance = float.MaxValue;
+            Transform targetObject = null;
+
+            for (int i = 0; i < _distactorHolder.childCount; i++)
             {
-                _droidLaze.StopLazingAbout();
-                StopCoroutine(_coroutine);
-                _lazingAround = false;
+                float distance = Vector3.Distance(_distactorHolder.GetChild(i).position,
+                    transform.position);
+
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    targetObject = _distactorHolder.GetChild(i);
+                }
             }
+
+            return targetObject;
         }
 
         private bool IsAngleWithinToleranceLevel(float normalizedAngle)
@@ -208,10 +265,18 @@ namespace FortBlast.Enemy.Droid.Patrol
 
         private IEnumerator AttackPlayer()
         {
-            _attackingPlayer = true;
+            _attacking = true;
             yield return StartCoroutine(_droidAttack.AttackPlayer(_player));
             yield return new WaitForSeconds(waitTimeBetweenAttacks);
-            _attackingPlayer = false;
+            _attacking = false;
+        }
+
+        private IEnumerator AttackDistractor(Transform closestDistractor)
+        {
+            _attacking = true;
+            yield return StartCoroutine(_droidAttack.AttackDistractor(closestDistractor));
+            yield return new WaitForSeconds(waitTimeBetweenAttacks);
+            _attacking = false;
         }
 
         private IEnumerator LazePatrolPoint()
@@ -221,8 +286,8 @@ namespace FortBlast.Enemy.Droid.Patrol
             yield return new WaitForSeconds(lazeWaitTime);
             _droidLaze.StopLazingAbout();
 
-            SetAgentRandomPatrolPoint();
             _lazingAround = false;
+            SetAgentRandomPatrolPoint();
         }
     }
 }

@@ -37,7 +37,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
 
         private TerrainInteractiblesCreator _terrainInteractibles;
         private bool _collectiblesRequested;
-        private bool _droidsRequested = true; // TODO: Change this later on
+        private bool _droidsRequested;
         private bool _towersRequested;
 
         private HeightMapSettings _heightMapSettings;

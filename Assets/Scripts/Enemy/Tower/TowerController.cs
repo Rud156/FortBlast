@@ -71,7 +71,7 @@ namespace FortBlast.Enemy.Tower
                 else
                 {
                     Transform closestDistractor = GetClosestDistractor();
-                    normalizedAngle = CheckTargetInsideFOV(closestDistractor);
+                    normalizedAngle = CheckTargetInsideFOV(closestDistractor, false);
 
                     if (normalizedAngle != -1)
                         CheckAndAttackDistractor(closestDistractor, normalizedAngle);
@@ -146,7 +146,8 @@ namespace FortBlast.Enemy.Tower
 
             for (int i = 0; i < _distactorHolder.childCount; i++)
             {
-                float distance = Vector3.Distance(_distactorHolder.GetChild(i).position, towerTop.position);
+                float distance = Vector3.Distance(_distactorHolder.GetChild(i).position,
+                    towerTop.position);
 
                 if (distance < minDistance)
                 {
@@ -158,13 +159,15 @@ namespace FortBlast.Enemy.Tower
             return targetObject;
         }
 
-        private float CheckTargetInsideFOV(Transform target)
+        private float CheckTargetInsideFOV(Transform target, bool checkPlayerInBuildingStatus = true)
         {
             if (target == null)
                 return -1;
 
             float distanceToPlayer = Vector3.Distance(target.position, towerTop.position);
-            if (distanceToPlayer > maxPlayerTargetRange || GlobalData.playerInBuilding)
+            if (distanceToPlayer > maxPlayerTargetRange)
+                return -1;
+            if (checkPlayerInBuildingStatus && GlobalData.playerInBuilding)
                 return -1;
 
             Vector3 modifiedPlayerPosition = new Vector3(target.position.x, 0, target.position.z);
