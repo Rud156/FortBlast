@@ -1770,12 +1770,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fecbb8b2c3cfed4b8a754e39413d73c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  droidLaser: {fileID: 1328147906834994, guid: 763121fccfbe6bc408f653525d3235aa, type: 2}
+  droidBullet: {fileID: 1617784716460962, guid: 9d71be3023fb4b34e82be61832d10e97,
+    type: 2}
   launchPoints:
   - {fileID: 4176482766350094}
   - {fileID: 4968946058520152}
   playerBaseOffset: 1.5
-  attackDamage: 15
+  launchSpeed: 20
 --- !u!114 &114617386871510974
 MonoBehaviour:
   m_ObjectHideFlags: 1

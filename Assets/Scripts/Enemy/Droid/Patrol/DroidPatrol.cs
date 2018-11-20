@@ -107,7 +107,7 @@ namespace FortBlast.Enemy.Droid.Patrol
                                 IsAngleWithinToleranceLevel(_currentNormalizedLookAngle, angleTolerance))
                             {
                                 // Attack Player
-                                _coroutine = StartCoroutine(AttackPlayer());
+                                _coroutine = StartCoroutine(AttackTarget(_player, true));
                             }
                         }
                         else if (_distactorFound && !_attacking)
@@ -116,7 +116,7 @@ namespace FortBlast.Enemy.Droid.Patrol
                                 IsAngleWithinToleranceLevel(_currentNormalizedLookAngle, angleTolerance))
                             {
                                 // Attack Player
-                                _coroutine = StartCoroutine(AttackDistractor(_currentTarget));
+                                _coroutine = StartCoroutine(AttackTarget(_currentTarget));
                             }
                         }
                         else if (!_playerFound && !_distactorFound && !_lazingAround)
@@ -219,18 +219,10 @@ namespace FortBlast.Enemy.Droid.Patrol
             _lazingAround = false;
         }
 
-        private IEnumerator AttackPlayer()
+        private IEnumerator AttackTarget(Transform targetPosition, bool usePlayerOffset = false)
         {
             _attacking = true;
-            yield return StartCoroutine(_droidAttack.AttackPlayer(_player));
-            yield return new WaitForSeconds(waitTimeBetweenAttacks);
-            _attacking = false;
-        }
-
-        private IEnumerator AttackDistractor(Transform closestDistractor)
-        {
-            _attacking = true;
-            yield return StartCoroutine(_droidAttack.AttackDistractor(closestDistractor));
+            yield return StartCoroutine(_droidAttack.Attack(targetPosition, usePlayerOffset));
             yield return new WaitForSeconds(waitTimeBetweenAttacks);
             _attacking = false;
         }
