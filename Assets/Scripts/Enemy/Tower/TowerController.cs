@@ -18,22 +18,18 @@ namespace FortBlast.Enemy.Tower
         [Header("Attack")]
         public float attackAngleTolerance;
         public float waitTimeBetweenAttack;
-        public float attackTime;
-        public float attackDamage;
-        public float playerBaseOffset;
         public float maxTargetRange;
+        public float launchSpeed;
 
         [Header("Prefabs And Movement Points")]
         public Transform towerTop;
-        public Transform laserShootingPoint;
-        public GameObject laser;
+        public Transform shootingPoint;
+        public GameObject bombPrefab;
+        public GameObject bombLaunchEffect;
 
         private Transform _player;
-        private Renderer _laserRenderer;
-        private bool _attacking;
-        private bool _laserCreated;
-
         private Transform _distactorHolder;
+        private bool _attacking;
 
         private Quaternion _lazeLookRotation;
         private bool _lazingAround;
@@ -52,7 +48,6 @@ namespace FortBlast.Enemy.Tower
 
             _attacking = false;
             _lazingAround = false;
-            _laserCreated = false;
             _deactivateTower = false;
         }
 
@@ -87,8 +82,6 @@ namespace FortBlast.Enemy.Tower
                         LazeAndLookAround();
                 }
             }
-            else if (_laserCreated)
-                TileLaserTexture();
         }
 
         public void ActivateTower() => _deactivateTower = false;
@@ -122,7 +115,7 @@ namespace FortBlast.Enemy.Tower
             LookAtTarget(_player);
 
             if (TowerControllerHelpers.IsAngleWithinToleranceLevel(normalizedAngle, attackAngleTolerance))
-                _coroutine = StartCoroutine(AttackPlayer());
+                _coroutine = StartCoroutine(AttackTarget(_player));
         }
 
         private void CheckAndAttackDistractor(Transform closestDistractor, float normalizedAngle)
@@ -135,7 +128,7 @@ namespace FortBlast.Enemy.Tower
 
             LookAtTarget(closestDistractor);
             if (TowerControllerHelpers.IsAngleWithinToleranceLevel(normalizedAngle, attackAngleTolerance))
-                _coroutine = StartCoroutine(AttackDistractor(closestDistractor));
+                _coroutine = StartCoroutine(AttackTarget(closestDistractor));
         }
 
         private void LazeAndLookAround()
@@ -147,58 +140,19 @@ namespace FortBlast.Enemy.Tower
                     rotationSpeed * Time.deltaTime);
         }
 
-        private void TileLaserTexture()
+        private IEnumerator AttackTarget(Transform target)
         {
-            float textureTilling = Mathf.Sin(Time.time) * 4f + 1;
-            _laserRenderer.material.mainTextureScale = new Vector2(textureTilling, 1);
-        }
+            Quaternion lookRotation = Quaternion.LookRotation(target.position - shootingPoint.position);
+            shootingPoint.transform.rotation = lookRotation;
 
-        private IEnumerator AttackPlayer()
-        {
-            Quaternion rotation = Quaternion.LookRotation(_player.position - laserShootingPoint.position);
-            GameObject laserInstance = Instantiate(laser, laserShootingPoint.position, rotation);
+            Instantiate(bombLaunchEffect, shootingPoint.position, Quaternion.identity);
 
-            LineRenderer lineRenderer = laserInstance.GetComponentInChildren<LineRenderer>();
-            lineRenderer.SetPosition(0, laserShootingPoint.position);
-            lineRenderer.SetPosition(1, _player.position + Vector3.up * playerBaseOffset);
+            GameObject bombInstance = Instantiate(bombPrefab, shootingPoint.position, Quaternion.identity);
+            bombInstance.GetComponent<Rigidbody>().velocity = shootingPoint.transform.forward * launchSpeed;
 
-            _laserRenderer = lineRenderer.GetComponent<Renderer>();
             _attacking = true;
-            _laserCreated = true;
 
-            _player.GetComponent<PlayerShooterAbsorbDamage>().DamagePlayerAndDecreaseHealth(attackDamage);
-
-            yield return new WaitForSeconds(attackTime);
-            _laserCreated = false;
-            Destroy(laserInstance);
-
-            yield return new WaitForSeconds(waitTimeBetweenAttack - attackTime);
-            _attacking = false;
-        }
-
-        private IEnumerator AttackDistractor(Transform closestDistractor)
-        {
-            if (closestDistractor == null)
-                yield break;
-
-            Quaternion rotation = Quaternion.LookRotation(closestDistractor.position -
-                laserShootingPoint.position);
-            GameObject laserInstance = Instantiate(laser, laserShootingPoint.position, rotation);
-
-            LineRenderer lineRenderer = laserInstance.GetComponentInChildren<LineRenderer>();
-            lineRenderer.SetPosition(0, laserShootingPoint.position);
-            lineRenderer.SetPosition(1, closestDistractor.position);
-
-            _laserRenderer = lineRenderer.GetComponent<Renderer>();
-            _attacking = true;
-            _laserCreated = true;
-
-            yield return new WaitForSeconds(attackTime);
-            _laserCreated = false;
-            Destroy(laserInstance);
-            Destroy(closestDistractor?.gameObject);
-
-            yield return new WaitForSeconds(waitTimeBetweenAttack - attackTime);
+            yield return new WaitForSeconds(waitTimeBetweenAttack);
             _attacking = false;
         }
 

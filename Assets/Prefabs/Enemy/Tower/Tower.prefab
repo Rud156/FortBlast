@@ -625,7 +625,7 @@ GameObject:
   - component: {fileID: 23662024404293028}
   - component: {fileID: 135949861939156208}
   m_Layer: 0
-  m_Name: Laser Spawn Point
+  m_Name: Bomb Shooting Point
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -2999,13 +2999,13 @@ MonoBehaviour:
   waitTimeBetweenLaze: 7
   attackAngleTolerance: 10
   waitTimeBetweenAttack: 5
-  attackTime: 1
-  attackDamage: 50
-  playerBaseOffset: 1.5
   maxTargetRange: 50
+  launchSpeed: 20
   towerTop: {fileID: 4503901319573816}
-  laserShootingPoint: {fileID: 4936501318514022}
-  laser: {fileID: 1328147906834994, guid: 3604f683a6d1f674bb4a310aa1eedb7c, type: 2}
+  shootingPoint: {fileID: 4936501318514022}
+  bombPrefab: {fileID: 1666487944359656, guid: 50a22536be5fbef43963c7f16b9066b7, type: 2}
+  bombLaunchEffect: {fileID: 1190525163191134, guid: ade65a8e5d674e848ba4532b204ed6f5,
+    type: 2}
 --- !u!114 &114242439845042478
 MonoBehaviour:
   m_ObjectHideFlags: 1
