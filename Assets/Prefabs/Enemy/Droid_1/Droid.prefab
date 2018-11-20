@@ -1772,11 +1772,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   droidBullet: {fileID: 1617784716460962, guid: 9d71be3023fb4b34e82be61832d10e97,
     type: 2}
+  bulletLaunchEffect: {fileID: 1858378260457884, guid: c1ba6c703ce20a642bde61fcd1ebcc67,
+    type: 2}
   launchPoints:
   - {fileID: 4176482766350094}
   - {fileID: 4968946058520152}
   playerBaseOffset: 1.5
-  launchSpeed: 20
+  launchSpeed: 25
 --- !u!114 &114617386871510974
 MonoBehaviour:
   m_ObjectHideFlags: 1
