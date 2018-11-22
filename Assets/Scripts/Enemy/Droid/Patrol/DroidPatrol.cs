@@ -95,37 +95,28 @@ namespace FortBlast.Enemy.Droid.Patrol
             if (!_droidAgent.isOnNavMesh)
                 return;
 
-            if (!_droidAgent.pathPending)
+            if (_playerFound && !_attacking)
             {
-                if (_droidAgent.remainingDistance <= _droidAgent.stoppingDistance)
+                if (DroidPatrolHelpers.
+                    IsAngleWithinToleranceLevel(_currentNormalizedLookAngle, angleTolerance))
                 {
-                    if (!_droidAgent.hasPath || _droidAgent.velocity.sqrMagnitude == 0f)
-                    {
-                        if (_playerFound && !_attacking)
-                        {
-                            if (DroidPatrolHelpers.
-                                IsAngleWithinToleranceLevel(_currentNormalizedLookAngle, angleTolerance))
-                            {
-                                // Attack Player
-                                _coroutine = StartCoroutine(AttackTarget(_player, true));
-                            }
-                        }
-                        else if (_distactorFound && !_attacking)
-                        {
-                            if (DroidPatrolHelpers.
-                                IsAngleWithinToleranceLevel(_currentNormalizedLookAngle, angleTolerance))
-                            {
-                                // Attack Player
-                                _coroutine = StartCoroutine(AttackTarget(_currentTarget));
-                            }
-                        }
-                        else if (!_playerFound && !_distactorFound && !_lazingAround)
-                        {
-                            // Laze Then Move to Next Patrol Point
-                            _coroutine = StartCoroutine(LazePatrolPoint());
-                        }
-                    }
+                    // Attack Player
+                    _coroutine = StartCoroutine(AttackTarget(_player, true));
                 }
+            }
+            else if (_distactorFound && !_attacking)
+            {
+                if (DroidPatrolHelpers.
+                    IsAngleWithinToleranceLevel(_currentNormalizedLookAngle, angleTolerance))
+                {
+                    // Attack Player
+                    _coroutine = StartCoroutine(AttackTarget(_currentTarget));
+                }
+            }
+            else if (!_playerFound && !_distactorFound && !_lazingAround)
+            {
+                // Laze Then Move to Next Patrol Point
+                _coroutine = StartCoroutine(LazePatrolPoint());
             }
         }
 

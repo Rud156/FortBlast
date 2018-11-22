@@ -86,8 +86,6 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             _terrainInteractibles = new TerrainInteractiblesCreator(position, _meshObject.transform,
                 terrainObjectSettings);
 
-            // Dividing by 10 as plane is 10 units by default
-            // _meshObject.transform.localScale = Vector3.one * size / 10f;
             SetVisible(false);
 
             _lodMeshes = new LODMesh[detailLevels.Length];

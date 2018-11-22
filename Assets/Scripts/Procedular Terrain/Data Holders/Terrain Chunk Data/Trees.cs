@@ -61,7 +61,10 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
         public void ClearTrees()
         {
             for (int i = 0; i < trees.Length; i++)
+            {
                 trees[i]?.SetActive(false);
+                trees[i] = null;
+            }
 
             hasPlacedTrees = false;
         }
