@@ -87,6 +87,9 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
         /// </summary>
         void Update()
         {
+            if (viewer == null)
+                return;
+
             _viewerPosition =
                 new Vector2(viewer.position.x, viewer.position.z);
             if (_viewerPosition != _prevViewerPosition)

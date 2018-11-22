@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 54187914179796892}
   - component: {fileID: 96234056592790698}
   - component: {fileID: 114615549417910574}
-  - component: {fileID: 114686587706841704}
+  - component: {fileID: 114852450528549594}
   m_Layer: 0
   m_Name: Droid Bullet 1
   m_TagString: Bullet
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 20
---- !u!114 &114686587706841704
+--- !u!114 &114852450528549594
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -236,7 +236,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1617784716460962}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0218ddf874a4b844f899e29f0be0e56d, type: 3}
+  m_Script: {fileID: 11500000, guid: a2e6553763ca0b444abc740062a8b00c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destoryOthersOnTrigger: 0
+  destoryAfterTime: 5

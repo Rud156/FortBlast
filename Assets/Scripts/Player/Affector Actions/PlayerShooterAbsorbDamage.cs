@@ -1,17 +1,31 @@
 using FortBlast.Player.StatusSetters;
 using UnityEngine;
 using FortBlast.Player.Data;
+using FortBlast.Extras;
+using FortBlast.Common;
 
 namespace FortBlast.Player.AffecterActions
 {
     [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(HealthSetter))]
     public class PlayerShooterAbsorbDamage : MonoBehaviour
     {
+        private enum AbsorberState
+        {
+            Reflect,
+            Absorb,
+            ShutOff
+        }
+
         [Header("Absorber System")]
         public GameObject absorber;
+        public AbsorberTriggerEventCreator absorberTrigger;
 
         private Animator _playerAnimator;
-        private bool _absorberActive;
+        private bool _absorberMechanismActive;
+        private AbsorberState _absorberState;
+
+        private HealthSetter _healthSetter;
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -20,8 +34,12 @@ namespace FortBlast.Player.AffecterActions
         void Start()
         {
             _playerAnimator = GetComponent<Animator>();
+            _absorberMechanismActive = true;
 
-            _absorberActive = true;
+            _healthSetter = GetComponent<HealthSetter>();
+
+            absorberTrigger.onBulletCollided += OnBulletCollided;
+            _absorberState = AbsorberState.ShutOff;
         }
 
         /// <summary>
@@ -29,30 +47,54 @@ namespace FortBlast.Player.AffecterActions
         /// </summary>
         void Update() => DisplayAbsorberOnInput();
 
-        public void ReflectBullet()
-        {
+        public void ActivateAbsorber() => _absorberMechanismActive = true;
+        public void DeActivateAbsorber() => _absorberMechanismActive = false;
 
+        private void OnBulletCollided(GameObject bullet)
+        {
+            switch (_absorberState)
+            {
+                case AbsorberState.Reflect:
+                    ReflectBullet(bullet);
+                    break;
+
+                case AbsorberState.Absorb:
+                    AbsorbBullet(bullet);
+                    break;
+            }
         }
 
-        public void AbsorbBullet()
+        private void ReflectBullet(GameObject bullet)
         {
-
+            Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
+            bulletRB.velocity *= -1;
         }
 
-        public void ActivateAbsorber() => _absorberActive = true;
-        public void DeActivateAbsorber() => _absorberActive = false;
+        private void AbsorbBullet(GameObject bullet)
+        {
+            Debug.Log("Absorbed Bullet");
+        }
 
         private void DisplayAbsorberOnInput()
         {
-            if (!_absorberActive)
+            if (!_absorberMechanismActive)
                 return;
 
             bool mouseLeftPressed = Input.GetMouseButton(0);
             bool mouseRightPressed = Input.GetMouseButton(1);
             bool mousePressed = mouseLeftPressed || mouseRightPressed;
 
+            if (mouseLeftPressed)
+                _absorberState = AbsorberState.Reflect;
+            else if (mouseRightPressed)
+                _absorberState = AbsorberState.Absorb;
+            else if (!mousePressed)
+                _absorberState = AbsorberState.ShutOff;
+
             _playerAnimator.SetBool(PlayerData.PlayerShooting, mousePressed);
-            absorber.SetActive(mouseLeftPressed);
+            absorber.SetActive(mousePressed); // TODO: Change Based on Left or Right Click
+
+            // _healthSetter.externalController = mousePressed; // TODO: Check External Controller
         }
     }
 }

@@ -87,7 +87,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4585263924205962}
-  - component: {fileID: 65606224877518002}
   - component: {fileID: 95131265877404368}
   - component: {fileID: 114617386871510974}
   m_Layer: 0
@@ -209,7 +208,6 @@ GameObject:
   - component: {fileID: 4968946058520152}
   - component: {fileID: 33972876613387146}
   - component: {fileID: 23117106057473076}
-  - component: {fileID: 135992867025051152}
   m_Layer: 0
   m_Name: Laser Point 2
   m_TagString: Untagged
@@ -242,7 +240,6 @@ GameObject:
   - component: {fileID: 4176482766350094}
   - component: {fileID: 33112075432234948}
   - component: {fileID: 23802918566371560}
-  - component: {fileID: 135298920159820416}
   m_Layer: 0
   m_Name: Laser Point 1
   m_TagString: Untagged
@@ -393,7 +390,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4603479195103720}
   - component: {fileID: 54101926505714682}
-  - component: {fileID: 65817440350454778}
   - component: {fileID: 195144221700897854}
   - component: {fileID: 114412171716654544}
   - component: {fileID: 114311919863941628}
@@ -691,7 +687,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1931653104319292}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 96.61364, y: 43.286983, z: -58.204487}
+  m_LocalPosition: {x: 95.2707, y: 52.880466, z: -45.942974}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4585263924205962}
@@ -1687,30 +1683,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65606224877518002
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1192704455769896}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 7, y: 2.7, z: 2.7}
-  m_Center: {x: 0, y: 0, z: 0.3}
---- !u!65 &65817440350454778
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1931653104319292}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5, y: 10, z: 5}
-  m_Center: {x: 0, y: 2.5, z: 0}
 --- !u!95 &95131265877404368
 Animator:
   serializedVersion: 3
@@ -1762,6 +1734,7 @@ MonoBehaviour:
   maxHealthAmount: 100
   deathEffect: {fileID: 1081440733256164, guid: 5e31f2231517d07499e4818f033bd04b,
     type: 2}
+  effectInstantiatePoint: {fileID: 4909496256789676}
   useSkinnedMesh: 0
 --- !u!114 &114311919863941628
 MonoBehaviour:
@@ -1825,30 +1798,6 @@ MonoBehaviour:
   smokeEffect: {fileID: 1755557267898934, guid: 81aafefe5fa134c44b24eca501fe5505,
     type: 2}
   instancePoint: {fileID: 4909496256789676}
---- !u!135 &135298920159820416
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1496697996850548}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &135992867025051152
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1427205748720170}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &195144221700897854
 NavMeshAgent:
   m_ObjectHideFlags: 1

@@ -14,6 +14,13 @@ namespace FortBlast.Enemy.Droid.Patrol
     [RequireComponent(typeof(DroidLaze))]
     public class DroidPatrol : MonoBehaviour
     {
+        private enum DroidAttackTarget
+        {
+            Player,
+            Distractor,
+            None
+        }
+
         [Header("Patrol Stats")]
         public float minimumDetectionDistance;
         public float lookRotationSpeed;
@@ -39,11 +46,9 @@ namespace FortBlast.Enemy.Droid.Patrol
         private Vector3[] _terrainMeshVertices;
 
         private Transform _player;
-        private bool _playerFound;
         private bool _attacking;
-
         private Transform _distactorHolder;
-        private bool _distactorFound;
+        private DroidAttackTarget _droidAttackTarget;
 
         private Coroutine _coroutine;
         private bool _lazingAround;
@@ -64,6 +69,7 @@ namespace FortBlast.Enemy.Droid.Patrol
             _distactorHolder = GameObject.FindGameObjectWithTag(TagManager.DistractorHolder)?.transform;
 
             _terrainMeshVertices = transform.parent.GetComponent<MeshFilter>().mesh.vertices;
+            _droidAttackTarget = DroidAttackTarget.None;
 
             SetAgentRandomPatrolPoint();
         }
@@ -95,28 +101,28 @@ namespace FortBlast.Enemy.Droid.Patrol
             if (!_droidAgent.isOnNavMesh)
                 return;
 
-            if (_playerFound && !_attacking)
+            switch (_droidAttackTarget)
             {
-                if (DroidPatrolHelpers.
-                    IsAngleWithinToleranceLevel(_currentNormalizedLookAngle, angleTolerance))
-                {
-                    // Attack Player
-                    _coroutine = StartCoroutine(AttackTarget(_player, true));
-                }
-            }
-            else if (_distactorFound && !_attacking)
-            {
-                if (DroidPatrolHelpers.
-                    IsAngleWithinToleranceLevel(_currentNormalizedLookAngle, angleTolerance))
-                {
-                    // Attack Player
-                    _coroutine = StartCoroutine(AttackTarget(_currentTarget));
-                }
-            }
-            else if (!_playerFound && !_distactorFound && !_lazingAround)
-            {
-                // Laze Then Move to Next Patrol Point
-                _coroutine = StartCoroutine(LazePatrolPoint());
+                case DroidAttackTarget.Player:
+                    if (!_attacking && DroidPatrolHelpers.
+                            IsAngleWithinToleranceLevel(_currentNormalizedLookAngle, angleTolerance))
+                    {
+                        _coroutine = StartCoroutine(AttackTarget(_player, true));
+                    }
+                    break;
+
+                case DroidAttackTarget.Distractor:
+                    if (!_attacking && DroidPatrolHelpers.
+                            IsAngleWithinToleranceLevel(_currentNormalizedLookAngle, angleTolerance))
+                    {
+                        _coroutine = StartCoroutine(AttackTarget(_currentTarget));
+                    }
+                    break;
+
+                case DroidAttackTarget.None:
+                    if (!_lazingAround)
+                        _coroutine = StartCoroutine(LazePatrolPoint());
+                    break;
             }
         }
 
@@ -128,7 +134,7 @@ namespace FortBlast.Enemy.Droid.Patrol
 
             if (angleWRTTarget != -1)
             {
-                _playerFound = true;
+                _droidAttackTarget = DroidAttackTarget.Player;
                 CheckAndSetIntrestingTarget(_player);
             }
             else
@@ -144,13 +150,12 @@ namespace FortBlast.Enemy.Droid.Patrol
 
                 if (angleWRTTarget != -1)
                 {
-                    _distactorFound = true;
+                    _droidAttackTarget = DroidAttackTarget.Distractor;
                     CheckAndSetIntrestingTarget(closestDistractor);
                 }
-                else if (_playerFound || _distactorFound)
+                else if (_droidAttackTarget != DroidAttackTarget.None)
                 {
-                    _playerFound = false;
-                    _distactorFound = false;
+                    _droidAttackTarget = DroidAttackTarget.None;
                     SetAgentRandomPatrolPoint();
                 }
             }

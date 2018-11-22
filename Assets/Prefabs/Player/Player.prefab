@@ -526,6 +526,8 @@ GameObject:
   - component: {fileID: 33035994007574928}
   - component: {fileID: 23512809279361114}
   - component: {fileID: 108732951435347504}
+  - component: {fileID: 65814287641287904}
+  - component: {fileID: 114349024953332368}
   m_Layer: 0
   m_Name: Absorber
   m_TagString: Untagged
@@ -1767,6 +1769,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65814287641287904
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1550520216612126}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 1, z: 3}
+  m_Center: {x: 0.00000008940697, y: -0.00000011920929, z: -0.83}
 --- !u!81 &81417229822461544
 AudioListener:
   m_ObjectHideFlags: 1
@@ -1841,6 +1855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   absorber: {fileID: 1550520216612126}
+  absorberTrigger: {fileID: 114349024953332368}
 --- !u!114 &114237446513485100
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1914,6 +1929,17 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &114349024953332368
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1550520216612126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6935d267afc985442b5dbd3c5cbf414d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114400013452624122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1970,7 +1996,9 @@ MonoBehaviour:
   maxHealthAmount: 100
   deathEffect: {fileID: 1081440733256164, guid: 4bb6ff73808d40a4184f0bb816a4a9b1,
     type: 2}
+  effectInstantiatePoint: {fileID: 4439032615456392}
   useSkinnedMesh: 1
+  externalController: 0
 --- !u!114 &114750780187453992
 MonoBehaviour:
   m_ObjectHideFlags: 1

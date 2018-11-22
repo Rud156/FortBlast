@@ -11,7 +11,11 @@ namespace FortBlast.Common
 
         public float maxHealthAmount;
         public GameObject deathEffect;
+        public Transform effectInstantiatePoint;
         public bool useSkinnedMesh;
+
+        [Header("Controller")]
+        public bool externalController;
 
         private float _currentHealthAmount;
 
@@ -34,7 +38,10 @@ namespace FortBlast.Common
         {
             DamageAmountSetter damageAmountSetter = other.GetComponent<DamageAmountSetter>();
             if (damageAmountSetter != null)
-                ReduceHealth(damageAmountSetter.damageAmount);
+            {
+                if (!externalController)
+                    ReduceHealth(damageAmountSetter.damageAmount);
+            }
         }
 
         public float GetCurrentHealth() => _currentHealthAmount;
@@ -63,12 +70,16 @@ namespace FortBlast.Common
         {
             SkinnedMeshRenderer skinnedMesh = GetComponent<SkinnedMeshRenderer>();
             GameObject particleEffect = Instantiate(deathEffect, transform.position, Quaternion.identity);
+            particleEffect.transform.position = effectInstantiatePoint.position;
 
             ParticleSystem.ShapeModule shape = particleEffect.GetComponent<ParticleSystem>().shape;
             shape.skinnedMeshRenderer = skinnedMesh;
         }
 
-        private void SpawnNormalEffect() =>
-            Instantiate(deathEffect, transform.position, Quaternion.identity);
+        private void SpawnNormalEffect()
+        {
+            GameObject particleEffect = Instantiate(deathEffect, transform.position, Quaternion.identity);
+            particleEffect.transform.position = effectInstantiatePoint.position;
+        }
     }
 }
