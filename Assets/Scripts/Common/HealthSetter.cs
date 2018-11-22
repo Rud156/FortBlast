@@ -40,7 +40,10 @@ namespace FortBlast.Common
             if (damageAmountSetter != null)
             {
                 if (!externalController)
+                {
+                    Destroy(other.gameObject);
                     ReduceHealth(damageAmountSetter.damageAmount);
+                }
             }
         }
 

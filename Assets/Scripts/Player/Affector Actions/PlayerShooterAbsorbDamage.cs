@@ -94,7 +94,7 @@ namespace FortBlast.Player.AffecterActions
             _playerAnimator.SetBool(PlayerData.PlayerShooting, mousePressed);
             absorber.SetActive(mousePressed); // TODO: Change Based on Left or Right Click
 
-            // _healthSetter.externalController = mousePressed; // TODO: Check External Controller
+            _healthSetter.externalController = mousePressed; // TODO: Check External Controller
         }
     }
 }

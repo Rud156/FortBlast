@@ -53,6 +53,7 @@ GameObject:
   - component: {fileID: 4664112886306428}
   - component: {fileID: 54888605197071254}
   - component: {fileID: 195764272849609192}
+  - component: {fileID: 135704512360051522}
   - component: {fileID: 114862074086533028}
   - component: {fileID: 114770503633770290}
   - component: {fileID: 114822917190883780}
@@ -418,6 +419,7 @@ MonoBehaviour:
     type: 2}
   effectInstantiatePoint: {fileID: 4244582197181928}
   useSkinnedMesh: 0
+  externalController: 0
 --- !u!114 &114339572832452712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -500,6 +502,18 @@ MonoBehaviour:
   - {fileID: 4078675699521966}
   playerBaseOffset: 1.5
   launchSpeed: 25
+--- !u!135 &135704512360051522
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1652492500842696}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3
+  m_Center: {x: 0, y: 7, z: 0}
 --- !u!195 &195764272849609192
 NavMeshAgent:
   m_ObjectHideFlags: 1

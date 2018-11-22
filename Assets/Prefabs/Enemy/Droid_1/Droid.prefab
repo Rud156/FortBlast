@@ -391,6 +391,7 @@ GameObject:
   - component: {fileID: 4603479195103720}
   - component: {fileID: 54101926505714682}
   - component: {fileID: 195144221700897854}
+  - component: {fileID: 135443654211923958}
   - component: {fileID: 114412171716654544}
   - component: {fileID: 114311919863941628}
   - component: {fileID: 114082489230489744}
@@ -1736,6 +1737,7 @@ MonoBehaviour:
     type: 2}
   effectInstantiatePoint: {fileID: 4909496256789676}
   useSkinnedMesh: 0
+  externalController: 0
 --- !u!114 &114311919863941628
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1798,6 +1800,18 @@ MonoBehaviour:
   smokeEffect: {fileID: 1755557267898934, guid: 81aafefe5fa134c44b24eca501fe5505,
     type: 2}
   instancePoint: {fileID: 4909496256789676}
+--- !u!135 &135443654211923958
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1931653104319292}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3
+  m_Center: {x: 0, y: 7, z: 0}
 --- !u!195 &195144221700897854
 NavMeshAgent:
   m_ObjectHideFlags: 1
