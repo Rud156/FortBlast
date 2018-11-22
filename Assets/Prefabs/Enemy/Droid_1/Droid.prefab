@@ -398,6 +398,8 @@ GameObject:
   - component: {fileID: 114412171716654544}
   - component: {fileID: 114311919863941628}
   - component: {fileID: 114082489230489744}
+  - component: {fileID: 114299984623045276}
+  - component: {fileID: 114956537016864060}
   m_Layer: 0
   m_Name: Droid
   m_TagString: Untagged
@@ -1746,6 +1748,19 @@ MonoBehaviour:
   distanceToStopFromIntrestingTarget: 20
   distanceToStopFromPatrolPoint: 0
   waitTimeBetweenAttacks: 2
+--- !u!114 &114299984623045276
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1931653104319292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e522a48989abef4bb3b9f2b58a72d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealthAmount: 100
+  deathEffect: {fileID: 0}
 --- !u!114 &114311919863941628
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1794,6 +1809,20 @@ MonoBehaviour:
   amplitude: 0.5
   frequency: 0.5
   direction: 1
+--- !u!114 &114956537016864060
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1931653104319292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f0c09bb926e6f34d82be37047e4d669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeEffect: {fileID: 1755557267898934, guid: 81aafefe5fa134c44b24eca501fe5505,
+    type: 2}
+  instancePoint: {fileID: 4909496256789676}
 --- !u!135 &135298920159820416
 SphereCollider:
   m_ObjectHideFlags: 1

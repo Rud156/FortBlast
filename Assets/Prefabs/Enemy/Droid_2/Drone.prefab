@@ -58,6 +58,8 @@ GameObject:
   - component: {fileID: 114862074086533028}
   - component: {fileID: 114770503633770290}
   - component: {fileID: 114822917190883780}
+  - component: {fileID: 114091300275219882}
+  - component: {fileID: 114339572832452712}
   m_Layer: 0
   m_Name: Drone
   m_TagString: Untagged
@@ -465,6 +467,33 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114091300275219882
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1652492500842696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e522a48989abef4bb3b9f2b58a72d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealthAmount: 100
+  deathEffect: {fileID: 0}
+--- !u!114 &114339572832452712
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1652492500842696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f0c09bb926e6f34d82be37047e4d669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeEffect: {fileID: 1755557267898934, guid: 81aafefe5fa134c44b24eca501fe5505,
+    type: 2}
+  instancePoint: {fileID: 4244582197181928}
 --- !u!114 &114590993749528558
 MonoBehaviour:
   m_ObjectHideFlags: 1

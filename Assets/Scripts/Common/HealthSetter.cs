@@ -21,6 +21,11 @@ namespace FortBlast.Common
         void Start() => _currentHealthAmount = maxHealthAmount;
 
         /// <summary>
+        /// Update is called every frame, if the MonoBehaviour is enabled.
+        /// </summary>
+        void Update() => CheckIfPlayerDead();
+
+        /// <summary>
         /// OnTriggerEnter is called when the Collider other enters the trigger.
         /// </summary>
         /// <param name="other">The other Collider involved in this collision.</param>
