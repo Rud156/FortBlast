@@ -1760,7 +1760,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealthAmount: 100
-  deathEffect: {fileID: 0}
+  deathEffect: {fileID: 1081440733256164, guid: 5e31f2231517d07499e4818f033bd04b,
+    type: 2}
+  useSkinnedMesh: 0
 --- !u!114 &114311919863941628
 MonoBehaviour:
   m_ObjectHideFlags: 1

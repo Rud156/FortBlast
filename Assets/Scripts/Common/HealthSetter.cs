@@ -11,6 +11,7 @@ namespace FortBlast.Common
 
         public float maxHealthAmount;
         public GameObject deathEffect;
+        public bool useSkinnedMesh;
 
         private float _currentHealthAmount;
 
@@ -36,16 +37,6 @@ namespace FortBlast.Common
                 ReduceHealth(damageAmountSetter.damageAmount);
         }
 
-        private void CheckIfPlayerDead()
-        {
-            if (_currentHealthAmount <= 0)
-            {
-                healthZero?.Invoke();
-                Instantiate(deathEffect, transform.position, Quaternion.identity);
-                Destroy(gameObject);
-            }
-        }
-
         public float GetCurrentHealth() => _currentHealthAmount;
 
         public void AddHealth(float healthAmount) => _currentHealthAmount =
@@ -53,5 +44,31 @@ namespace FortBlast.Common
                 maxHealthAmount : _currentHealthAmount + healthAmount;
 
         public void ReduceHealth(float healthAmount) => _currentHealthAmount -= healthAmount;
+
+        private void CheckIfPlayerDead()
+        {
+            if (_currentHealthAmount <= 0)
+            {
+                if (useSkinnedMesh)
+                    SpawnSkinnedMeshEffect();
+                else
+                    SpawnNormalEffect();
+
+                healthZero?.Invoke();
+                Destroy(gameObject);
+            }
+        }
+
+        private void SpawnSkinnedMeshEffect()
+        {
+            SkinnedMeshRenderer skinnedMesh = GetComponent<SkinnedMeshRenderer>();
+            GameObject particleEffect = Instantiate(deathEffect, transform.position, Quaternion.identity);
+
+            ParticleSystem.ShapeModule shape = particleEffect.GetComponent<ParticleSystem>().shape;
+            shape.skinnedMeshRenderer = skinnedMesh;
+        }
+
+        private void SpawnNormalEffect() =>
+            Instantiate(deathEffect, transform.position, Quaternion.identity);
     }
 }
