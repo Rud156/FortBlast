@@ -818,8 +818,9 @@ GameObject:
   - component: {fileID: 114466531837861134}
   - component: {fileID: 114400013452624122}
   - component: {fileID: 114046259173662578}
-  - component: {fileID: 114951996199681394}
   - component: {fileID: 114853501754367484}
+  - component: {fileID: 114746290639539722}
+  - component: {fileID: 114750780187453992}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1840,15 +1841,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   absorber: {fileID: 1550520216612126}
-  absorberParticles: {fileID: 198493254814685420}
-  absorberLight: {fileID: 108732951435347504}
-  minParticleCount: 100
-  maxParticleCount: 500
-  minLightIntensity: 3
-  maxLightIntensity: 7
-  maxShieldSize: 5
-  sizeIncreaseRate: 0.3
-  maxHealthDecreaseRate: 1
 --- !u!114 &114237446513485100
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1964,6 +1956,36 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   priority: 0
+--- !u!114 &114746290639539722
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1962741146697706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e522a48989abef4bb3b9f2b58a72d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealthAmount: 100
+  deathEffect: {fileID: 0}
+--- !u!114 &114750780187453992
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1962741146697706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfbae992e7c0ab14cb4e7ede79e73826, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCameraHolder: {fileID: 4507392369619842}
+  healthSlider: {fileID: 0}
+  healthFiller: {fileID: 0}
+  minHealthColor: {r: 1, g: 0, b: 0, a: 1}
+  halfHealthColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  maxHealthColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &114853501754367484
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1979,25 +2001,6 @@ MonoBehaviour:
   itemLaunchVelocity: 25
   launchEffect: {fileID: 1164654482026490, guid: 98c11e4fb77cc974e85a08b52a0a4074,
     type: 2}
---- !u!114 &114951996199681394
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1962741146697706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 283e5a58efb9c1b4a84e34d452db150e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  deathEffect: {fileID: 0}
-  mainCameraHolder: {fileID: 4507392369619842}
-  healthSlider: {fileID: 0}
-  healthFiller: {fileID: 0}
-  maxHealthAmount: 500
-  minHealthColor: {r: 1, g: 0, b: 0, a: 1}
-  halfHealthColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  maxHealthColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!136 &136249318000097126
 CapsuleCollider:
   m_ObjectHideFlags: 1

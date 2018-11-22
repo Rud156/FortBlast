@@ -24,9 +24,10 @@ GameObject:
   - component: {fileID: 65461531315762832}
   - component: {fileID: 54602250652752366}
   - component: {fileID: 96120021787023038}
+  - component: {fileID: 114350434197058916}
   m_Layer: 0
   m_Name: Droid Bullet 2
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -214,3 +215,15 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &114350434197058916
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1547305948816502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3fb4590fbbd8054eaac20eae61267e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 20

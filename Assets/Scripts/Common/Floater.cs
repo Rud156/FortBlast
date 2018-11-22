@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace FortBlast.Common
 {
-
     public class Floater : MonoBehaviour
     {
         public float degreesPerSecond = 15.0f;

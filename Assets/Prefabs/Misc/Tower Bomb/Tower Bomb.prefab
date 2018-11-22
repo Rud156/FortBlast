@@ -24,6 +24,8 @@ GameObject:
   - component: {fileID: 65088694778595010}
   - component: {fileID: 54375253178346760}
   - component: {fileID: 114172607107470660}
+  - component: {fileID: 114175502771401032}
+  - component: {fileID: 114516158209479906}
   m_Layer: 0
   m_Name: Tower Bomb
   m_TagString: Untagged
@@ -121,10 +123,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 1666487944359656}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7193be3edb59a5045a1f494d4a9439ce, type: 3}
+  m_Script: {fileID: 11500000, guid: f6643a00998a88f45ac562d1760f9e3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startFlickerRate: 0.5
   maxFlickerTimes: 6
   emissionStrength: 3
   emissionColor: {r: 0.72156864, g: 5.992157, b: 0, a: 1}
+--- !u!114 &114175502771401032
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1666487944359656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3fb4590fbbd8054eaac20eae61267e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 50
+--- !u!114 &114516158209479906
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1666487944359656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5953c1a600e666540b63db29b822163b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bombExplosion: {fileID: 1310206456828762, guid: cb2d8e9005e2855419e94fd8d723c057,
+    type: 2}
+  explosionRadius: 9
