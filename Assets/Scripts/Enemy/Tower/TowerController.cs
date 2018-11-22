@@ -145,7 +145,9 @@ namespace FortBlast.Enemy.Tower
             Quaternion lookRotation = Quaternion.LookRotation(target.position - shootingPoint.position);
             shootingPoint.transform.rotation = lookRotation;
 
-            Instantiate(bombLaunchEffect, shootingPoint.position, Quaternion.identity);
+            GameObject bombLaunchEffectInstance =
+                Instantiate(bombLaunchEffect, shootingPoint.position, Quaternion.identity);
+            bombLaunchEffectInstance.transform.SetParent(shootingPoint.transform);
 
             GameObject bombInstance = Instantiate(bombPrefab, shootingPoint.position, Quaternion.identity);
             bombInstance.GetComponent<Rigidbody>().velocity = shootingPoint.transform.forward * launchSpeed;

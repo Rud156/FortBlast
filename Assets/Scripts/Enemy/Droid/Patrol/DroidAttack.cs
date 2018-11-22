@@ -31,8 +31,10 @@ namespace FortBlast.Enemy.Droid.Patrol
                 Quaternion lookRotation = Quaternion.LookRotation(position - launchPoints[i].position);
                 launchPoints[i].transform.rotation = lookRotation;
 
-                Instantiate(bulletLaunchEffect, launchPoints[i].transform.position,
+                GameObject bulletLaunchEffectInstance =
+                    Instantiate(bulletLaunchEffect, launchPoints[i].transform.position,
                     Quaternion.identity);
+                bulletLaunchEffectInstance.transform.SetParent(launchPoints[i].transform);
 
                 GameObject bulletInstance = Instantiate(droidBullet, launchPoints[i].transform.position,
                     Quaternion.identity);

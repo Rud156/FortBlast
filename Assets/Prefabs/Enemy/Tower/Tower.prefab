@@ -2994,9 +2994,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4723ff887dc7d3d45b7431f917ab6da7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLookAngle: 60
+  maxLookAngle: 150
   rotationSpeed: 5
-  waitTimeBetweenLaze: 7
+  waitTimeBetweenLaze: 3
   attackAngleTolerance: 10
   waitTimeBetweenAttack: 5
   maxTargetRange: 50

@@ -511,7 +511,7 @@ MonoBehaviour:
   angleTolerance: 10
   distanceToStopFromIntrestingTarget: 20
   distanceToStopFromPatrolPoint: 0
-  waitTimeBetweenAttacks: 5
+  waitTimeBetweenAttacks: 2
 --- !u!114 &114862074086533028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -525,7 +525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   droidBullet: {fileID: 1547305948816502, guid: afe27421d325e6a4e9d77361888f9c09,
     type: 2}
-  bulletLaunchEffect: {fileID: 1451664991451998, guid: c89e916ca065db64e875ef1d4deeeeb8,
+  bulletLaunchEffect: {fileID: 1145514852916492, guid: c89e916ca065db64e875ef1d4deeeeb8,
     type: 2}
   launchPoints:
   - {fileID: 4784432235597732}
