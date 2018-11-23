@@ -26,7 +26,7 @@ namespace FortBlast.Common
         /// <summary>
         /// Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
-        void Update() => CheckIfPlayerDead();
+        void Update() => CheckIfHealthZero();
 
         /// <summary>
         /// OnTriggerEnter is called when the Collider other enters the trigger.
@@ -50,7 +50,7 @@ namespace FortBlast.Common
 
         public void ReduceHealth(float healthAmount) => _currentHealthAmount -= healthAmount;
 
-        private void CheckIfPlayerDead()
+        private void CheckIfHealthZero()
         {
             if (_currentHealthAmount <= 0)
             {
