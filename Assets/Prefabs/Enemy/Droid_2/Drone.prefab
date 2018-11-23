@@ -419,7 +419,6 @@ MonoBehaviour:
     type: 2}
   effectInstantiatePoint: {fileID: 4244582197181928}
   useSkinnedMesh: 0
-  externalController: 0
 --- !u!114 &114339572832452712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -510,7 +509,7 @@ SphereCollider:
   m_GameObject: {fileID: 1652492500842696}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 3
   m_Center: {x: 0, y: 7, z: 0}

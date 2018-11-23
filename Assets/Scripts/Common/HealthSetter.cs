@@ -14,9 +14,6 @@ namespace FortBlast.Common
         public Transform effectInstantiatePoint;
         public bool useSkinnedMesh;
 
-        [Header("Controller")]
-        public bool externalController;
-
         private float _currentHealthAmount;
 
         /// <summary>
@@ -39,11 +36,8 @@ namespace FortBlast.Common
             DamageAmountSetter damageAmountSetter = other.GetComponent<DamageAmountSetter>();
             if (damageAmountSetter != null)
             {
-                if (!externalController)
-                {
-                    Destroy(other.gameObject);
-                    ReduceHealth(damageAmountSetter.damageAmount);
-                }
+                Destroy(other.gameObject);
+                ReduceHealth(damageAmountSetter.damageAmount);
             }
         }
 

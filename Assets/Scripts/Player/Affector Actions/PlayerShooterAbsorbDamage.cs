@@ -7,7 +7,6 @@ using FortBlast.Common;
 namespace FortBlast.Player.AffecterActions
 {
     [RequireComponent(typeof(Animator))]
-    [RequireComponent(typeof(HealthSetter))]
     public class PlayerShooterAbsorbDamage : MonoBehaviour
     {
         private enum AbsorberState
@@ -25,8 +24,6 @@ namespace FortBlast.Player.AffecterActions
         private bool _absorberMechanismActive;
         private AbsorberState _absorberState;
 
-        private HealthSetter _healthSetter;
-
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
         /// any of the Update methods is called the first time.
@@ -36,8 +33,6 @@ namespace FortBlast.Player.AffecterActions
             _playerAnimator = GetComponent<Animator>();
             _absorberMechanismActive = true;
 
-            _healthSetter = GetComponent<HealthSetter>();
-
             absorberTrigger.onBulletCollided += OnBulletCollided;
             _absorberState = AbsorberState.ShutOff;
         }
@@ -45,7 +40,13 @@ namespace FortBlast.Player.AffecterActions
         /// <summary>
         /// Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
-        void Update() => DisplayAbsorberOnInput();
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+                Debug.Break();
+
+            DisplayAbsorberOnInput();
+        }
 
         public void ActivateAbsorber() => _absorberMechanismActive = true;
         public void DeActivateAbsorber() => _absorberMechanismActive = false;
@@ -93,8 +94,6 @@ namespace FortBlast.Player.AffecterActions
 
             _playerAnimator.SetBool(PlayerData.PlayerShooting, mousePressed);
             absorber.SetActive(mousePressed); // TODO: Change Based on Left or Right Click
-
-            _healthSetter.externalController = mousePressed; // TODO: Check External Controller
         }
     }
 }
