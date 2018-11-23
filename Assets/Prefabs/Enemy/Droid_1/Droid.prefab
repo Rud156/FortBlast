@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4414056783977040}
   - component: {fileID: 33912656291420714}
   - component: {fileID: 23488564719667626}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4487273299913708}
   - component: {fileID: 33994275943347576}
   - component: {fileID: 23797602233979592}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object017
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 4954963521450166}
   - component: {fileID: 33557785113157908}
   - component: {fileID: 23550646927745060}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object010
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 4759920197117750}
   - component: {fileID: 33533685767166680}
   - component: {fileID: 23859683877317354}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object024
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 4585263924205962}
   - component: {fileID: 95131265877404368}
   - component: {fileID: 114617386871510974}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Droid Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 4275000098023328}
   - component: {fileID: 33241144542036014}
   - component: {fileID: 23544259222688236}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object021
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 4780246050679346}
   - component: {fileID: 33142196072241332}
   - component: {fileID: 23651083719753798}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object009
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 4070255675959042}
   - component: {fileID: 33579555097825776}
   - component: {fileID: 23105138276466100}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object018
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,7 +157,7 @@ GameObject:
   - component: {fileID: 4572477072173394}
   - component: {fileID: 33812426200611836}
   - component: {fileID: 23188772664942338}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Box175
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 4164912026835750}
   - component: {fileID: 33857347484165998}
   - component: {fileID: 23916366638576042}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object012
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 4253595586814206}
   - component: {fileID: 33830206719347126}
   - component: {fileID: 23873587392278468}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object022
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 4968946058520152}
   - component: {fileID: 33972876613387146}
   - component: {fileID: 23117106057473076}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Laser Point 2
   m_TagString: Untagged
   m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
@@ -223,7 +223,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4256712176022098}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Laser Points
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 4176482766350094}
   - component: {fileID: 33112075432234948}
   - component: {fileID: 23802918566371560}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Laser Point 1
   m_TagString: Untagged
   m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
@@ -257,7 +257,7 @@ GameObject:
   - component: {fileID: 4439994732462076}
   - component: {fileID: 33718652671804794}
   - component: {fileID: 23520073839085786}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object017 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -274,7 +274,7 @@ GameObject:
   - component: {fileID: 4908086306547996}
   - component: {fileID: 33632779257206786}
   - component: {fileID: 23232981940084796}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object019
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -291,7 +291,7 @@ GameObject:
   - component: {fileID: 4132609833766936}
   - component: {fileID: 33263810033563272}
   - component: {fileID: 23775881136947752}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object023
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -306,7 +306,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4909496256789676}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Look Point
   m_TagString: Untagged
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 4141338720784790}
   - component: {fileID: 33632188193328168}
   - component: {fileID: 23291852379026594}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: 4527264992317846}
   - component: {fileID: 33772824774086768}
   - component: {fileID: 23728711976379590}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 4658877762558208}
   - component: {fileID: 33172564878173718}
   - component: {fileID: 23804567027394268}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Box005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 4061762310203382}
   - component: {fileID: 33931855809728272}
   - component: {fileID: 23928764479260878}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Box004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -391,13 +391,13 @@ GameObject:
   - component: {fileID: 4603479195103720}
   - component: {fileID: 54101926505714682}
   - component: {fileID: 195144221700897854}
-  - component: {fileID: 135443654211923958}
+  - component: {fileID: 65240738306301940}
   - component: {fileID: 114412171716654544}
   - component: {fileID: 114311919863941628}
   - component: {fileID: 114082489230489744}
   - component: {fileID: 114299984623045276}
   - component: {fileID: 114956537016864060}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Droid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -414,7 +414,7 @@ GameObject:
   - component: {fileID: 4177476340891830}
   - component: {fileID: 33647185030341838}
   - component: {fileID: 23105915763683872}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object020
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -431,7 +431,7 @@ GameObject:
   - component: {fileID: 4309766544795108}
   - component: {fileID: 33839969971247420}
   - component: {fileID: 23304886124666460}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Object008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1684,6 +1684,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &65240738306301940
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1931653104319292}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 7, y: 2.5, z: 3}
+  m_Center: {x: 0, y: 7.5, z: -1}
 --- !u!95 &95131265877404368
 Animator:
   serializedVersion: 3
@@ -1799,18 +1811,6 @@ MonoBehaviour:
   smokeEffect: {fileID: 1755557267898934, guid: 81aafefe5fa134c44b24eca501fe5505,
     type: 2}
   instancePoint: {fileID: 4909496256789676}
---- !u!135 &135443654211923958
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1931653104319292}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 3
-  m_Center: {x: 0, y: 7, z: 0}
 --- !u!195 &195144221700897854
 NavMeshAgent:
   m_ObjectHideFlags: 1

@@ -67,6 +67,7 @@ namespace FortBlast.Player.AffecterActions
 
         private void ReflectBullet(GameObject bullet)
         {
+            bullet.layer = 9; // Put it in the Droid Layer to enable collision
             Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
             bulletRB.velocity *= -1;
         }

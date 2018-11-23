@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 namespace FortBlast.Common
 {
+    [RequireComponent(typeof(Collider))]
     public class HealthSetter : MonoBehaviour
     {
         public delegate void HealthZero();

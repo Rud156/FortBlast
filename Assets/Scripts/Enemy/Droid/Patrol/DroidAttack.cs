@@ -41,6 +41,7 @@ namespace FortBlast.Enemy.Droid.Patrol
                 bulletInstance.transform.rotation = lookRotation;
                 bulletInstance.GetComponent<Rigidbody>().velocity = launchPoints[i].transform.forward *
                     launchSpeed;
+                bulletInstance.layer = 10; // Put it in the Initial Bullet Layer
             }
 
 
