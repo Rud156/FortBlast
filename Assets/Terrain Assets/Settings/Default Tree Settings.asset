@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: Default Tree Settings
   m_EditorClassIdentifier: 
   treePointSelectionProbability: 0.005
-  minTreesInMaxChunkSize: 100
-  maxTreesInMaxChunkSize: 150
+  minTreesInMaxChunkSize: 150
+  maxTreesInMaxChunkSize: 300

@@ -1995,8 +1995,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 552792754ed0e33498fba2935b73e5c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 200
-  runningSpeed: 500
+  movementSpeed: 100
+  runningSpeed: 300
   animatorLerpRate: 7
 --- !u!114 &114668971885987348
 MonoBehaviour:
