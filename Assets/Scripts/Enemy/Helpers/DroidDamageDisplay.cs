@@ -10,6 +10,8 @@ namespace FortBlast.Enemy.Helpers
     public class DroidDamageDisplay : MonoBehaviour
     {
         public GameObject smokeEffect;
+        public float minSmokeParticles;
+        public float maxSmokeParticles;
         public Transform instancePoint;
 
         private HealthSetter _healthSetter;
@@ -50,7 +52,8 @@ namespace FortBlast.Enemy.Helpers
 
             if (smokeInstantiated)
             {
-                float emissionRate = ExtensionFunctions.Map(currentHealth, 0, _oneThirdHealth, 10, 2);
+                float emissionRate = ExtensionFunctions.Map(currentHealth, 0, _oneThirdHealth,
+                    maxSmokeParticles, minSmokeParticles);
                 _smokeEmission.rateOverTime = emissionRate;
             }
         }
