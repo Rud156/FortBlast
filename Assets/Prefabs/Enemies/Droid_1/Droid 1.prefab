@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 4638966883067608}
   - component: {fileID: 95057068561008478}
   m_Layer: 0
-  m_Name: Creature
+  m_Name: Droid 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
