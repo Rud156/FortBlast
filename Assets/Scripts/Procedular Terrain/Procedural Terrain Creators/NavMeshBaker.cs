@@ -1,14 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
 {
-    [RequireComponent(typeof(NavMeshSurface))]
     public class NavMeshBaker : MonoBehaviour
     {
-
         #region Singleton
 
         public static NavMeshBaker instance;
@@ -16,7 +12,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
         /// <summary>
         /// Awake is called when the script instance is being loaded.
         /// </summary>
-        void Awake()
+        private void Awake()
         {
             if (instance == null)
                 instance = this;
@@ -27,18 +23,19 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
 
         #endregion Singleton
 
-        private NavMeshSurface _navMeshSurface;
+        public NavMeshSurface botSurface;
+        public NavMeshSurface creatureSurface;
 
-        /// <summary>
-        /// Start is called on the frame when a script is enabled just before
-        /// any of the Update methods is called the first time.
-        /// </summary>
-        void Start() => _navMeshSurface = GetComponent<NavMeshSurface>();
+        public void ReBuildNavMesh()
+        {
+            botSurface.UpdateNavMesh(botSurface.navMeshData);
+            creatureSurface.UpdateNavMesh(creatureSurface.navMeshData);
+        }
 
-        public void ReBuildNavMesh() =>
-            _navMeshSurface.UpdateNavMesh(_navMeshSurface.navMeshData);
-
-        public void BuildInitialNavMesh() =>
-            _navMeshSurface.BuildNavMesh();
+        public void BuildInitialNavMesh()
+        {
+            botSurface.BuildNavMesh();
+            creatureSurface.BuildNavMesh();
+        }
     }
 }
