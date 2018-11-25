@@ -27,7 +27,7 @@ AnimatorState:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: breathing
+  m_Name: Breathing
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -56,15 +56,15 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 110200000}
-    m_Position: {x: 288, y: 132, z: 0}
+    m_Position: {x: 288, y: 144, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 72, y: -36, z: 0}
+  m_AnyStatePosition: {x: 48, y: 36, z: 0}
   m_EntryPosition: {x: 48, y: 144, z: 0}
-  m_ExitPosition: {x: 408, y: 48, z: 0}
+  m_ExitPosition: {x: 552, y: 144, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 110200000}
 --- !u!1107 &110777526
