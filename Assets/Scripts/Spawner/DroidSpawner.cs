@@ -24,6 +24,8 @@ namespace FortBlast.Spawner
 
         #endregion Singleton
 
+        [Range(10, 90)]
+        public int secondDroidSpawnProbability;
         public GameObject[] droidPrefabs;
 
         public GameObject[] SpawnDroids(Vector3[] meshVertices, Transform parent)
@@ -35,7 +37,7 @@ namespace FortBlast.Spawner
                 GameObject droidPrefab;
                 int randomValue = Random.Range(0, 100);
 
-                if (randomValue < 10)
+                if (randomValue <= secondDroidSpawnProbability)
                     droidPrefab = droidPrefabs[1];
                 else
                     droidPrefab = droidPrefabs[0];
