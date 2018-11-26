@@ -909,7 +909,7 @@ Transform:
   m_GameObject: {fileID: 1409173281802442}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 4739889052330592}
   - {fileID: 4346714060524948}
@@ -977,7 +977,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1538650345747510}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.6, y: 24.366, z: -1.55}
+  m_LocalPosition: {x: 0, y: 20, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4581166864664336}
@@ -1189,10 +1189,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53aefa576411f904fa4b8d7019fa8c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minimumDetectionDistance: 15
+  minimumDetectionDistance: 30
   lookRotationSpeed: 7
   lookingPoint: {fileID: 4825375985518622}
-  maxLookAngle: 180
+  maxLookAngle: 270
   angleTolerance: 20
   distanceToStopFromIntrestingTarget: 7
   distanceToStopFromPatrolPoint: 0
@@ -1242,7 +1242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca415037092c6f468d80c63563ad0c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitForAnimationTime: 20
+  waitForAnimationTime: 7
 --- !u!114 &114370763093776184
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1378,6 +1378,6 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 5
-  m_BaseOffset: -0.02
+  m_BaseOffset: -1.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4

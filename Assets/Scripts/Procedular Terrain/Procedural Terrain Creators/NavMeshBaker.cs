@@ -31,13 +31,13 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
 
         public void BuildInitialNavMesh()
         {
-            // botSurface.BuildNavMesh();
+            botSurface.BuildNavMesh();
             creatureSurface.BuildNavMesh();
         }
 
         private IEnumerator BuildNavMeshes()
         {
-            // botSurface.UpdateNavMesh(botSurface.navMeshData);
+            botSurface.UpdateNavMesh(botSurface.navMeshData);
             yield return null;
             creatureSurface.UpdateNavMesh(creatureSurface.navMeshData);
         }

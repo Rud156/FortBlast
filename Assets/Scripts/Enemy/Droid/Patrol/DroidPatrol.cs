@@ -217,6 +217,8 @@ namespace FortBlast.Enemy.Droid.Patrol
 
         private IEnumerator AttackTarget(Transform targetPosition, bool usePlayerOffset = false)
         {
+            Debug.Log("Attacking Player");
+
             _attacking = true;
             float attackTime = _droidAttack.Attack(targetPosition, usePlayerOffset);
             yield return new WaitForSeconds(attackTime);

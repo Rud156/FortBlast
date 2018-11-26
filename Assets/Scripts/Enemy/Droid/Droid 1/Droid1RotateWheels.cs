@@ -32,8 +32,8 @@ namespace FortBlast.Enemy.Droid.Droid1
             float rotationSpeed = ExtensionFunctions.Map(currentVelocity, 0, maxVelocity,
                 0, rotationSpeedMaxVelocity);
 
-            leftWheel.transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime, Space.World);
-            rightWheel.transform.Rotate(Vector3.right * rotationSpeed * Time.deltaTime, Space.World);
+            leftWheel.transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime, Space.Self);
+            rightWheel.transform.Rotate(Vector3.down * rotationSpeed * Time.deltaTime, Space.Self);
         }
     }
 }
