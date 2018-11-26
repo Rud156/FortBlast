@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4000725242822578}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shoot Point 2
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -34,7 +34,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4904770720572072}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shoot Point 1
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -51,7 +51,7 @@ GameObject:
   - component: {fileID: 4181730827661378}
   - component: {fileID: 33925113011918394}
   - component: {fileID: 23959513125691000}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Axle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 4475160873901952}
   - component: {fileID: 33515139403918264}
   - component: {fileID: 23189201452364798}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Left Wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 33066074598380264}
   - component: {fileID: 23610260887442570}
   - component: {fileID: 95130964496609644}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bot Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4295247924510168}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Look Point
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 4090859264359412}
   - component: {fileID: 33439765121029492}
   - component: {fileID: 23248859764802526}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Guns
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 4586905087406618}
   - component: {fileID: 33186805291251066}
   - component: {fileID: 23673426164018506}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Right Wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 4861340934331250}
   - component: {fileID: 65809255615703872}
   - component: {fileID: 114547803519423166}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +167,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4799802517012996}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Droid 1 Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 114477082570338962}
   - component: {fileID: 114556778290206630}
   - component: {fileID: 114169808481215364}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Droid 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -614,8 +614,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smokeEffect: {fileID: 1755557267898934, guid: 81aafefe5fa134c44b24eca501fe5505,
     type: 2}
-  minSmokeParticles: 2
-  maxSmokeParticles: 7
   instancePoint: {fileID: 4295247924510168}
 --- !u!114 &114477082570338962
 MonoBehaviour:
