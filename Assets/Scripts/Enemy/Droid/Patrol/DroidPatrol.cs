@@ -115,11 +115,15 @@ namespace FortBlast.Enemy.Droid.Patrol
                         _coroutine = StartCoroutine(AttackTarget(_currentTarget));
                     }
                     break;
+            }
 
-                case DroidAttackTarget.None:
-                    if (!_lazingAround)
+            if (!_droidAgent.pathPending && !_lazingAround && _droidAttackTarget == DroidAttackTarget.None)
+            {
+                if (_droidAgent.remainingDistance <= _droidAgent.stoppingDistance)
+                {
+                    if (!_droidAgent.hasPath || _droidAgent.velocity.sqrMagnitude == 0f)
                         _coroutine = StartCoroutine(LazePatrolPoint());
-                    break;
+                }
             }
         }
 
@@ -216,7 +220,9 @@ namespace FortBlast.Enemy.Droid.Patrol
             _attacking = true;
             float attackTime = _droidAttack.Attack(targetPosition, usePlayerOffset);
             yield return new WaitForSeconds(attackTime);
+
             _attacking = false;
+            _droidAttack.EndAttack();
         }
 
         private IEnumerator LazePatrolPoint()

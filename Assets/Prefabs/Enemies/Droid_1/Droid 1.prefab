@@ -641,7 +641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53aefa576411f904fa4b8d7019fa8c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minimumDetectionDistance: 30
+  minimumDetectionDistance: 10
   lookRotationSpeed: 7
   lookingPoint: {fileID: 4295247924510168}
   maxLookAngle: 90

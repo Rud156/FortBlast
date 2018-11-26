@@ -19,5 +19,7 @@ namespace FortBlast.Enemy.Droid.Base
         public float launchSpeed;
 
         public abstract float Attack(Transform target, bool usePlayerOffset = false);
+
+        public virtual void EndAttack() { }
     }
 }

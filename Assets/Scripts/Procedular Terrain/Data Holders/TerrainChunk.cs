@@ -36,9 +36,9 @@ namespace FortBlast.ProceduralTerrain.DataHolders
         private Trees _chunkTrees;
 
         private TerrainInteractiblesCreator _terrainInteractibles;
-        private bool _collectiblesRequested;
+        private bool _collectiblesRequested = true;
         private bool _droidsRequested;
-        private bool _towersRequested;
+        private bool _towersRequested = true;
 
         private HeightMapSettings _heightMapSettings;
         private MeshSettings _meshSettings;
@@ -82,7 +82,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             _meshFilter = _meshObject.AddComponent<MeshFilter>();
             _meshCollider = _meshObject.AddComponent<MeshCollider>();
 
-            _chunkTrees = new Trees(position, treeSettings);
+            // _chunkTrees = new Trees(position, treeSettings);
             _terrainInteractibles = new TerrainInteractiblesCreator(position, _meshObject.transform,
                 terrainObjectSettings);
 
@@ -156,8 +156,8 @@ namespace FortBlast.ProceduralTerrain.DataHolders
 
                     if (lodIndex == 0 && lodMesh.hasMesh)
                         LOD0ValidStateAvailable(lodMesh);
-                    else if (lodIndex != 0)
-                        _chunkTrees.ClearTrees();
+                    // else if (lodIndex != 0)
+                    //     _chunkTrees.ClearTrees();
                 }
 
             }
@@ -194,8 +194,8 @@ namespace FortBlast.ProceduralTerrain.DataHolders
 
         public void SetVisible(bool visible)
         {
-            if (!visible)
-                _chunkTrees.ClearTrees();
+            // if (!visible)
+            //     _chunkTrees.ClearTrees();
 
             _meshObject.SetActive(visible);
         }
@@ -205,7 +205,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
         private void LOD0ValidStateAvailable(LODMesh lodMesh)
         {
             RequestAndPlaceCollectibles(lodMesh);
-            RequestAndPlaceTrees(lodMesh);
+            // RequestAndPlaceTrees(lodMesh);
         }
 
         private void CreateInitialDroids(Vector3[] meshVertices)

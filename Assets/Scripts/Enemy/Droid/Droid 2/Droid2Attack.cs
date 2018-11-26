@@ -10,16 +10,23 @@ namespace FortBlast.Enemy.Droid.Droid2
         [Header("Attack Animations")]
         public float timeDiffSameAttack;
         public float totalAttackTimes;
+        public Animator droidAnimator;
 
         private Transform _target;
         private bool _usePlayerOffset;
+
+        private const string attackAnimationParam = "Attacking";
 
         public override float Attack(Transform target, bool usePlayerOffset = false)
         {
             _target = target;
             _usePlayerOffset = usePlayerOffset;
+            droidAnimator.SetBool(attackAnimationParam, true);
+
             return base.attackTime;
         }
+
+        public override void EndAttack() => droidAnimator.SetBool(attackAnimationParam, false);
 
         public void AttackTarget()
         {
