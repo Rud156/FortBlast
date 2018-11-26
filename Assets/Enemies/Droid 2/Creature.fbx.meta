@@ -306,28 +306,21 @@ ModelImporter:
       curves: []
       events:
       - time: 0.23795179
-        functionName: Attack
+        functionName: AttackTarget
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.3614458
-        functionName: Attack
+        functionName: AttackTarget
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.53313255
-        functionName: NewEvent
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.53313255
-        functionName: Attack
+      - time: 0.56979924
+        functionName: AttackTarget
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

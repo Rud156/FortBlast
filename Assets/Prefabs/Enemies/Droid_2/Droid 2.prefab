@@ -232,6 +232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4552275069635648}
   - component: {fileID: 65720280438283510}
+  - component: {fileID: 114846867241602416}
   m_Layer: 0
   m_Name: Shield
   m_TagString: Untagged
@@ -264,6 +265,11 @@ GameObject:
   - component: {fileID: 4848996673704098}
   - component: {fileID: 65060988425375530}
   - component: {fileID: 195044520587394216}
+  - component: {fileID: 114229874375191916}
+  - component: {fileID: 114261565297928334}
+  - component: {fileID: 114050410708961008}
+  - component: {fileID: 114381120500236182}
+  - component: {fileID: 114103604845125024}
   m_Layer: 0
   m_Name: Droid 2
   m_TagString: Untagged
@@ -1158,6 +1164,100 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114050410708961008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1538650345747510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53aefa576411f904fa4b8d7019fa8c2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimumDetectionDistance: 40
+  lookRotationSpeed: 7
+  lookingPoint: {fileID: 4825375985518622}
+  maxLookAngle: 180
+  angleTolerance: 20
+  distanceToStopFromIntrestingTarget: 7
+  distanceToStopFromPatrolPoint: 0
+--- !u!114 &114103604845125024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1538650345747510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f0c09bb926e6f34d82be37047e4d669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeEffect: {fileID: 1755557267898934, guid: 81aafefe5fa134c44b24eca501fe5505,
+    type: 2}
+  instancePoint: {fileID: 4825375985518622}
+--- !u!114 &114229874375191916
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1538650345747510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2717029e7cce9044b4e8ac54b5541d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  droidBullet: {fileID: 1225614328374406, guid: f0fe0666e939bae43b1dc28fa5dc9496,
+    type: 2}
+  launchPoints:
+  - {fileID: 4317516942183504}
+  attackTime: 2
+  playerBaseOffset: 1.5
+  launchSpeed: 20
+  timeDiffSameAttack: 0.15
+  totalAttackTimes: 3
+--- !u!114 &114261565297928334
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1538650345747510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ca415037092c6f468d80c63563ad0c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waitForAnimationTime: 2
+--- !u!114 &114381120500236182
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1538650345747510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e522a48989abef4bb3b9f2b58a72d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealthAmount: 120
+  deathEffect: {fileID: 1081440733256164, guid: 53ec675063f3afa478f1ae8372b8cd05,
+    type: 2}
+  effectInstantiatePoint: {fileID: 4825375985518622}
+  useSkinnedMesh: 0
+--- !u!114 &114846867241602416
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1456591753397292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a674ed0d8bb7b94ba3bf46ae9fdb404, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shieldEffect: {fileID: 1748593451257544, guid: 496429513c0c9a24ab0e5699f67c1959,
+    type: 2}
+  selectionProbability: 0.4
 --- !u!137 &137689303823888684
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

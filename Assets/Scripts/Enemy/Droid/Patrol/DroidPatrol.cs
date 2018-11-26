@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using FortBlast.Enemy.Droid.Base;
 using FortBlast.Enemy.Droid.Helpers;
 using FortBlast.Extras;
 using FortBlast.Scenes.MainScene;
@@ -35,9 +36,6 @@ namespace FortBlast.Enemy.Droid.Patrol
         public float distanceToStopFromIntrestingTarget;
         public float distanceToStopFromPatrolPoint;
 
-        [Header("Attack")]
-        public float waitTimeBetweenAttacks = 5f;
-
         private NavMeshAgent _droidAgent;
         private DroidLaze _droidLaze;
         private DroidAttack _droidAttack;
@@ -52,7 +50,6 @@ namespace FortBlast.Enemy.Droid.Patrol
 
         private Coroutine _coroutine;
         private bool _lazingAround;
-        // Used Only When The Player Is Found
         private float _currentNormalizedLookAngle;
 
         /// <summary>
@@ -210,7 +207,6 @@ namespace FortBlast.Enemy.Droid.Patrol
             if (!_lazingAround)
                 return;
 
-            _droidLaze.StopLazingAbout();
             StopCoroutine(_coroutine);
             _lazingAround = false;
         }
@@ -218,8 +214,8 @@ namespace FortBlast.Enemy.Droid.Patrol
         private IEnumerator AttackTarget(Transform targetPosition, bool usePlayerOffset = false)
         {
             _attacking = true;
-            yield return StartCoroutine(_droidAttack.Attack(targetPosition, usePlayerOffset));
-            yield return new WaitForSeconds(waitTimeBetweenAttacks);
+            float attackTime = _droidAttack.Attack(targetPosition, usePlayerOffset);
+            yield return new WaitForSeconds(attackTime);
             _attacking = false;
         }
 
@@ -228,7 +224,6 @@ namespace FortBlast.Enemy.Droid.Patrol
             _lazingAround = true;
             float lazeWaitTime = _droidLaze.LazeAroundSpot();
             yield return new WaitForSeconds(lazeWaitTime);
-            _droidLaze.StopLazingAbout();
 
             _lazingAround = false;
             SetAgentRandomPatrolPoint();

@@ -1,0 +1,31 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using FortBlast.Enemy.Droid.Base;
+using UnityEngine;
+
+namespace FortBlast.Enemy.Droid.Droid1
+{
+    public class Droid1Attack : DroidAttack
+    {
+        public override float Attack(Transform target, bool usePlayerOffset = false)
+        {
+            for (int i = 0; i < base.launchPoints.Length; i++)
+            {
+                Vector3 position = usePlayerOffset ? target.position + Vector3.up * base.playerBaseOffset :
+                     target.position;
+
+                Quaternion lookRotation = Quaternion.LookRotation(position - base.launchPoints[i].position);
+                base.launchPoints[i].transform.rotation = lookRotation;
+
+                GameObject bulletInstance = Instantiate(base.droidBullet,
+                    base.launchPoints[i].transform.position, Quaternion.identity);
+                bulletInstance.transform.rotation = lookRotation;
+                bulletInstance.GetComponent<Rigidbody>().velocity = base.launchPoints[i].transform.forward *
+                    base.launchSpeed;
+                bulletInstance.layer = 10; // Put it in the Initial Bullet Layer
+            }
+
+            return base.attackTime;
+        }
+    }
+}
