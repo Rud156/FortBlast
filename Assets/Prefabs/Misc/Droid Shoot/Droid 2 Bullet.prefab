@@ -25,9 +25,10 @@ GameObject:
   - component: {fileID: 54411090453034216}
   - component: {fileID: 96125464433654898}
   - component: {fileID: 114026278175727248}
+  - component: {fileID: 114672579826932412}
   m_Layer: 10
   m_Name: Droid 2 Bullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -215,6 +216,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 5
+--- !u!114 &114672579826932412
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1225614328374406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2e6553763ca0b444abc740062a8b00c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destoryAfterTime: 5
 --- !u!135 &135486987397273406
 SphereCollider:
   m_ObjectHideFlags: 1
