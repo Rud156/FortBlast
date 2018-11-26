@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
@@ -26,16 +27,19 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
         public NavMeshSurface botSurface;
         public NavMeshSurface creatureSurface;
 
-        public void ReBuildNavMesh()
-        {
-            botSurface.UpdateNavMesh(botSurface.navMeshData);
-            creatureSurface.UpdateNavMesh(creatureSurface.navMeshData);
-        }
+        public void ReBuildNavMesh() => StartCoroutine(BuildNavMeshes());
 
         public void BuildInitialNavMesh()
         {
             botSurface.BuildNavMesh();
             creatureSurface.BuildNavMesh();
+        }
+
+        private IEnumerator BuildNavMeshes()
+        {
+            botSurface.UpdateNavMesh(botSurface.navMeshData);
+            yield return null;
+            creatureSurface.UpdateNavMesh(creatureSurface.navMeshData);
         }
     }
 }

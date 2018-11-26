@@ -189,6 +189,7 @@ GameObject:
   - component: {fileID: 114477082570338962}
   - component: {fileID: 114556778290206630}
   - component: {fileID: 114169808481215364}
+  - component: {fileID: 114263869247619602}
   m_Layer: 9
   m_Name: Droid 1
   m_TagString: Untagged
@@ -296,7 +297,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1835318003711388}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 55, y: 55, z: 55}
   m_Children:
@@ -307,7 +308,7 @@ Transform:
   - {fileID: 4586905087406618}
   m_Father: {fileID: 4839191035273790}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!4 &4839191035273790
 Transform:
   m_ObjectHideFlags: 1
@@ -615,6 +616,20 @@ MonoBehaviour:
   smokeEffect: {fileID: 1755557267898934, guid: 81aafefe5fa134c44b24eca501fe5505,
     type: 2}
   instancePoint: {fileID: 4295247924510168}
+--- !u!114 &114263869247619602
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1905706013943208}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d00dc2b866f5f24c8e7ed7b352e2ea7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftWheel: {fileID: 4475160873901952}
+  rightWheel: {fileID: 4586905087406618}
+  rotationSpeedMaxVelocity: 10
 --- !u!114 &114477082570338962
 MonoBehaviour:
   m_ObjectHideFlags: 1

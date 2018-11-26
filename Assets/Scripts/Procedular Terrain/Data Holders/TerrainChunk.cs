@@ -74,7 +74,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             _meshObject = new GameObject("Terrain Chunk");
             _meshObject.transform.position = new Vector3(position.x, 0, position.y);
             _meshObject.transform.SetParent(parent);
-            _meshObject.layer = 9;
+            _meshObject.layer = 11;
             _meshObject.tag = TagManager.Terrain;
 
             _meshRenderer = _meshObject.AddComponent<MeshRenderer>();

@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a74ca73b58352d64db9b82920124d4ab, type: 3}
   m_Name: Level 1
   m_EditorClassIdentifier: 
-  maxDroids: 1
+  maxDroids: 2
   maxTowers: 1
   maxCollectibles: 10
