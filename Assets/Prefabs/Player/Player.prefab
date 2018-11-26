@@ -1888,6 +1888,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   absorber: {fileID: 1550520216612126}
   absorberTrigger: {fileID: 114349024953332368}
+  absorberLight: {fileID: 108732951435347504}
+  absorberParticleSystem: {fileID: 198493254814685420}
+  reflectorLightColor: {r: 0.5647059, g: 0, b: 1, a: 1}
+  absorberLightColor: {r: 1, g: 0.7528505, b: 0, a: 1}
+  minReflectorColor: {r: 1, g: 0, b: 0, a: 1}
+  maxReflectorColor: {r: 0, g: 0, b: 1, a: 1}
+  minAbsorberColor: {r: 0.26383924, g: 1, b: 0, a: 1}
+  maxAbsorberColor: {r: 0, g: 0.9374714, b: 1, a: 1}
 --- !u!114 &114237446513485100
 MonoBehaviour:
   m_ObjectHideFlags: 1

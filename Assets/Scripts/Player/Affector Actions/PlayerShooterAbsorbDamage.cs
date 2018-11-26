@@ -20,9 +20,31 @@ namespace FortBlast.Player.AffecterActions
         public GameObject absorber;
         public AbsorberTriggerEventCreator absorberTrigger;
 
+        [Header("Lights and Particles")]
+        public Light absorberLight;
+        public ParticleSystem absorberParticleSystem;
+
+        [Header("Light Colors")]
+        public Color reflectorLightColor;
+        public Color absorberLightColor;
+
+        [Header("Reflector Colors")]
+        public Color minReflectorColor;
+        public Color maxReflectorColor;
+
+        [Header("Absorber Color")]
+        public Color minAbsorberColor;
+        public Color maxAbsorberColor;
+
         private Animator _playerAnimator;
         private bool _absorberMechanismActive;
         private AbsorberState _absorberState;
+
+        private ParticleSystem.MainModule _absorberMain;
+        private Renderer _absorberRenderer;
+
+        private const string TintColor = "_TintColor";
+        private const float FiftyPrecentAlpha = 0.19607843137254902f;
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -35,6 +57,9 @@ namespace FortBlast.Player.AffecterActions
 
             absorberTrigger.onBulletCollided += OnBulletCollided;
             _absorberState = AbsorberState.ShutOff;
+
+            _absorberMain = absorberParticleSystem.main;
+            _absorberRenderer = absorber.GetComponent<Renderer>();
         }
 
         /// <summary>
@@ -74,7 +99,8 @@ namespace FortBlast.Player.AffecterActions
 
         private void AbsorbBullet(GameObject bullet)
         {
-            Debug.Log("Absorbed Bullet");
+            Destroy(bullet);
+            // TODO: Store bullet somewhere. So that it can be shot later
         }
 
         private void DisplayAbsorberOnInput()
@@ -87,14 +113,38 @@ namespace FortBlast.Player.AffecterActions
             bool mousePressed = mouseLeftPressed || mouseRightPressed;
 
             if (mouseLeftPressed)
+            {
                 _absorberState = AbsorberState.Reflect;
+
+                absorberLight.color = reflectorLightColor;
+                _absorberMain.startColor = new ParticleSystem.MinMaxGradient(
+                    minReflectorColor,
+                    maxReflectorColor
+                );
+                _absorberRenderer.material.SetColor(TintColor,
+                    new Color(reflectorLightColor.r, reflectorLightColor.g, reflectorLightColor.b,
+                        FiftyPrecentAlpha)
+                );
+            }
             else if (mouseRightPressed)
+            {
                 _absorberState = AbsorberState.Absorb;
+
+                absorberLight.color = absorberLightColor;
+                _absorberMain.startColor = new ParticleSystem.MinMaxGradient(
+                    minAbsorberColor,
+                    maxAbsorberColor
+                );
+                _absorberRenderer.material.SetColor(TintColor,
+                    new Color(absorberLightColor.r, absorberLightColor.g, absorberLightColor.b,
+                        FiftyPrecentAlpha)
+                );
+            }
             else if (!mousePressed)
                 _absorberState = AbsorberState.ShutOff;
 
             _playerAnimator.SetBool(PlayerData.PlayerShooting, mousePressed);
-            absorber.SetActive(mousePressed); // TODO: Change Based on Left or Right Click
+            absorber.SetActive(mousePressed);
         }
     }
 }
