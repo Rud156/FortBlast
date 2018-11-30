@@ -43,9 +43,9 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
         [Header("Terrain Size")]
         public bool fixedTerrainSize;
 
-        private const float _viewerMoveThresholdForChunkUpdate = 25f;
-        private const float _sqrViewerMoveThresholdForChunkUpdate =
-            _viewerMoveThresholdForChunkUpdate * _viewerMoveThresholdForChunkUpdate;
+        private const float ViewerMoveThresholdForChunkUpdate = 25f;
+        private const float SqrViewerMoveThresholdForChunkUpdate =
+            ViewerMoveThresholdForChunkUpdate * ViewerMoveThresholdForChunkUpdate;
 
         private Vector2 _viewerPosition;
         private List<TerrainChunk> _visibleTerrainChunks;
@@ -97,7 +97,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
                     chunk.UpdateCollisionMesh();
 
 
-            if ((_prevViewerPosition - _viewerPosition).sqrMagnitude > _sqrViewerMoveThresholdForChunkUpdate
+            if ((_prevViewerPosition - _viewerPosition).sqrMagnitude > SqrViewerMoveThresholdForChunkUpdate
                 && !_updatingChunks)
             {
                 StartCoroutine(UpdateVisibleChunks(!fixedTerrainSize, false));

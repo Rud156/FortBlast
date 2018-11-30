@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198785838799295238}
   - component: {fileID: 199549181134573686}
   m_Layer: 0
-  m_Name: AbsorberParticle System
+  m_Name: Reflector Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 135150097131671350}
   - component: {fileID: 108266261676349902}
   m_Layer: 0
-  m_Name: Absorber
+  m_Name: Reflector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

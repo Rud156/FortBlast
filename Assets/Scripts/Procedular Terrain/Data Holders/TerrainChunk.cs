@@ -12,7 +12,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
         public event System.Action<TerrainChunk, bool> onVisibilityChanged;
         public Vector2 coord;
 
-        private const float _colliderGenerationDistantThreshold = 5;
+        private const float ColliderGenerationDistantThreshold = 5;
 
         private GameObject _meshObject;
         private Vector2 _sampleCenter;
@@ -36,9 +36,9 @@ namespace FortBlast.ProceduralTerrain.DataHolders
         private Trees _chunkTrees;
 
         private TerrainInteractiblesCreator _terrainInteractibles;
-        private bool _collectiblesRequested = true;
-        private bool _droidsRequested;
-        private bool _towersRequested = true;
+        private bool _collectiblesRequested = true; // TODO: Change this later
+        private bool _droidsRequested = true; // TODO: Change this later
+        private bool _towersRequested = true; // TODO: Change this later
 
         private HeightMapSettings _heightMapSettings;
         private MeshSettings _meshSettings;
@@ -182,7 +182,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             }
 
             if (sqrDistanceFromViewerToEdge <
-                _colliderGenerationDistantThreshold * _colliderGenerationDistantThreshold)
+                ColliderGenerationDistantThreshold * ColliderGenerationDistantThreshold)
             {
                 if (_lodMeshes[_colliderLODIndex].hasMesh)
                 {

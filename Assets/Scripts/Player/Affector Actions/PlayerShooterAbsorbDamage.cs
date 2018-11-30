@@ -9,42 +9,24 @@ namespace FortBlast.Player.AffecterActions
     [RequireComponent(typeof(Animator))]
     public class PlayerShooterAbsorbDamage : MonoBehaviour
     {
-        private enum AbsorberState
+        private enum MechanismState
         {
             Reflect,
-            Absorb,
+            Teleport,
             ShutOff
         }
 
-        [Header("Absorber System")]
-        public GameObject absorber;
-        public AbsorberTriggerEventCreator absorberTrigger;
-
-        [Header("Lights and Particles")]
-        public Light absorberLight;
-        public ParticleSystem absorberParticleSystem;
-
-        [Header("Light Colors")]
-        public Color reflectorLightColor;
-        public Color absorberLightColor;
-
-        [Header("Reflector Colors")]
-        public Color minReflectorColor;
-        public Color maxReflectorColor;
-
-        [Header("Absorber Color")]
-        public Color minAbsorberColor;
-        public Color maxAbsorberColor;
+        [Header("Mechanism System")]
+        public GameObject reflector;
+        public GameObject teleporter;
+        public AbsorberTriggerEventCreator reflectorTrigger;
+        public float teleportDistance;
 
         private Animator _playerAnimator;
-        private bool _absorberMechanismActive;
-        private AbsorberState _absorberState;
+        private bool _mechanismActive;
+        private MechanismState _mechanismState;
 
-        private ParticleSystem.MainModule _absorberMain;
-        private Renderer _absorberRenderer;
-
-        private const string TintColor = "_TintColor";
-        private const float FiftyPrecentAlpha = 0.19607843137254902f;
+        private bool _teleporterPrevState;
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -53,13 +35,11 @@ namespace FortBlast.Player.AffecterActions
         void Start()
         {
             _playerAnimator = GetComponent<Animator>();
-            _absorberMechanismActive = true;
+            _mechanismActive = true;
 
-            absorberTrigger.onBulletCollided += OnBulletCollided;
-            _absorberState = AbsorberState.ShutOff;
-
-            _absorberMain = absorberParticleSystem.main;
-            _absorberRenderer = absorber.GetComponent<Renderer>();
+            reflectorTrigger.onBulletCollided += OnBulletCollided;
+            _mechanismState = MechanismState.ShutOff;
+            _teleporterPrevState = false;
         }
 
         /// <summary>
@@ -73,19 +53,22 @@ namespace FortBlast.Player.AffecterActions
             DisplayAbsorberOnInput();
         }
 
-        public void ActivateAbsorber() => _absorberMechanismActive = true;
-        public void DeActivateAbsorber() => _absorberMechanismActive = false;
+        public void ActivateAbsorber() => _mechanismActive = true;
+        public void DeActivateAbsorber()
+        {
+            _playerAnimator.SetBool(PlayerData.PlayerShooting, false);
+            reflector.SetActive(false);
+            teleporter.SetActive(false);
+
+            _mechanismActive = false;
+        }
 
         private void OnBulletCollided(GameObject bullet)
         {
-            switch (_absorberState)
+            switch (_mechanismState)
             {
-                case AbsorberState.Reflect:
+                case MechanismState.Reflect:
                     ReflectBullet(bullet);
-                    break;
-
-                case AbsorberState.Absorb:
-                    AbsorbBullet(bullet);
                     break;
             }
         }
@@ -97,15 +80,9 @@ namespace FortBlast.Player.AffecterActions
             bulletRB.velocity *= -1;
         }
 
-        private void AbsorbBullet(GameObject bullet)
-        {
-            Destroy(bullet);
-            // TODO: Store bullet somewhere. So that it can be shot later
-        }
-
         private void DisplayAbsorberOnInput()
         {
-            if (!_absorberMechanismActive)
+            if (!_mechanismActive)
                 return;
 
             bool mouseLeftPressed = Input.GetMouseButton(0);
@@ -113,38 +90,33 @@ namespace FortBlast.Player.AffecterActions
             bool mousePressed = mouseLeftPressed || mouseRightPressed;
 
             if (mouseLeftPressed)
-            {
-                _absorberState = AbsorberState.Reflect;
-
-                absorberLight.color = reflectorLightColor;
-                _absorberMain.startColor = new ParticleSystem.MinMaxGradient(
-                    minReflectorColor,
-                    maxReflectorColor
-                );
-                _absorberRenderer.material.SetColor(TintColor,
-                    new Color(reflectorLightColor.r, reflectorLightColor.g, reflectorLightColor.b,
-                        FiftyPrecentAlpha)
-                );
-            }
+                _mechanismState = MechanismState.Reflect;
             else if (mouseRightPressed)
-            {
-                _absorberState = AbsorberState.Absorb;
-
-                absorberLight.color = absorberLightColor;
-                _absorberMain.startColor = new ParticleSystem.MinMaxGradient(
-                    minAbsorberColor,
-                    maxAbsorberColor
-                );
-                _absorberRenderer.material.SetColor(TintColor,
-                    new Color(absorberLightColor.r, absorberLightColor.g, absorberLightColor.b,
-                        FiftyPrecentAlpha)
-                );
-            }
+                _mechanismState = MechanismState.Teleport;
             else if (!mousePressed)
-                _absorberState = AbsorberState.ShutOff;
+                _mechanismState = MechanismState.ShutOff;
+
+            CheckAndTeleportPlayer(mouseRightPressed);
+            _teleporterPrevState = mouseRightPressed;
 
             _playerAnimator.SetBool(PlayerData.PlayerShooting, mousePressed);
-            absorber.SetActive(mousePressed);
+            reflector.SetActive(mouseLeftPressed);
+            teleporter.SetActive(mouseRightPressed);
+        }
+
+        private void CheckAndTeleportPlayer(bool currentRightMousePressed)
+        {
+            if (currentRightMousePressed != _teleporterPrevState
+                && _teleporterPrevState == true)
+            {
+                RaycastHit hit;
+                Vector3 destination = transform.position + transform.forward * teleportDistance;
+
+                if (Physics.Linecast(transform.position, destination, out hit))
+                    destination = transform.position + transform.forward * (hit.distance - 1);
+
+                transform.position = destination;
+            }
         }
     }
 }

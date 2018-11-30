@@ -13,7 +13,7 @@ namespace FortBlast.ProceduralTerrain.Settings
         private float _savedMinHeight;
         private float _savedMaxHeight;
 
-        private const int _textureSize = 512;
+        private const int TextureSize = 512;
         private const TextureFormat _textureFormat = TextureFormat.RGB565;
 
         public void ApplyToMaterial(Material material)
@@ -42,7 +42,7 @@ namespace FortBlast.ProceduralTerrain.Settings
 
         private Texture2DArray GenerateTextureArray(Texture2D[] textures)
         {
-            Texture2DArray textureArray = new Texture2DArray(_textureSize, _textureSize,
+            Texture2DArray textureArray = new Texture2DArray(TextureSize, TextureSize,
                 textures.Length, _textureFormat, true);
 
             for (int i = 0; i < textures.Length; i++)

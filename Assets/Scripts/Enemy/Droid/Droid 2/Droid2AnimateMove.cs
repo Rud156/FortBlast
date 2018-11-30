@@ -12,7 +12,7 @@ namespace FortBlast.Enemy.Droid.Droid2
         public Animator droidAnimator;
 
         private NavMeshAgent _droidAgent;
-        private const string _animatorMovement = "Movement";
+        private const string AnimatorMovement = "Movement";
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -32,7 +32,7 @@ namespace FortBlast.Enemy.Droid.Droid2
             float currentVelocity = _droidAgent.velocity.sqrMagnitude;
 
             float movementSpeed = ExtensionFunctions.Map(currentVelocity, 0, maxVelocity, 0, 1);
-            droidAnimator.SetFloat(_animatorMovement, movementSpeed);
+            droidAnimator.SetFloat(AnimatorMovement, movementSpeed);
         }
     }
 }
