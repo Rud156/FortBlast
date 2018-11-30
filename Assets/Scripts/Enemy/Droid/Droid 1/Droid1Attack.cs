@@ -17,10 +17,12 @@ namespace FortBlast.Enemy.Droid.Droid1
                 Quaternion lookRotation = Quaternion.LookRotation(position - base.launchPoints[i].position);
                 base.launchPoints[i].transform.rotation = lookRotation;
 
+                Instantiate(base.launchEffect, base.launchPoints[i].position, lookRotation);
+
                 GameObject bulletInstance = Instantiate(base.droidBullet,
-                    base.launchPoints[i].transform.position, Quaternion.identity);
+                    base.launchPoints[i].position, Quaternion.identity);
                 bulletInstance.transform.rotation = lookRotation;
-                bulletInstance.GetComponent<Rigidbody>().velocity = base.launchPoints[i].transform.forward *
+                bulletInstance.GetComponent<Rigidbody>().velocity = base.launchPoints[i].forward *
                     base.launchSpeed;
                 bulletInstance.layer = 10; // Put it in the Initial Bullet Layer
             }

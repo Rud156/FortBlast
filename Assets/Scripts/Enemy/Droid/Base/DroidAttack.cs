@@ -9,6 +9,7 @@ namespace FortBlast.Enemy.Droid.Base
     {
         [Header("Effects")]
         public GameObject droidBullet;
+        public GameObject launchEffect;
 
         [Header("Launch Points")]
         public Transform[] launchPoints;
