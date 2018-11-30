@@ -19,6 +19,7 @@ namespace FortBlast.Player.AffecterActions
         [Header("Mechanism System")]
         public GameObject reflector;
         public GameObject teleporter;
+        public Transform lookPoint;
         public AbsorberTriggerEventCreator reflectorTrigger;
         public float teleportDistance;
 
@@ -110,10 +111,10 @@ namespace FortBlast.Player.AffecterActions
                 && _teleporterPrevState == true)
             {
                 RaycastHit hit;
-                Vector3 destination = transform.position + transform.forward * teleportDistance;
+                Vector3 destination = lookPoint.position + lookPoint.forward * teleportDistance;
 
-                if (Physics.Linecast(transform.position, destination, out hit))
-                    destination = transform.position + transform.forward * (hit.distance - 1);
+                if (Physics.Linecast(lookPoint.position, destination, out hit))
+                    destination = lookPoint.position + lookPoint.forward * (hit.distance - 1);
 
                 transform.position = destination;
             }

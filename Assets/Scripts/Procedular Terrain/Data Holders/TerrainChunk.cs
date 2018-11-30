@@ -36,9 +36,9 @@ namespace FortBlast.ProceduralTerrain.DataHolders
         private Trees _chunkTrees;
 
         private TerrainInteractiblesCreator _terrainInteractibles;
-        private bool _collectiblesRequested = true; // TODO: Change this later
-        private bool _droidsRequested = true; // TODO: Change this later
-        private bool _towersRequested = true; // TODO: Change this later
+        private bool _collectiblesRequested = false;
+        private bool _droidsRequested = false;
+        private bool _towersRequested = false;
 
         private HeightMapSettings _heightMapSettings;
         private MeshSettings _meshSettings;

@@ -46,6 +46,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1022096330505906
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4430802951464746}
+  m_Layer: 0
+  m_Name: Look Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1025804896628818
 GameObject:
   m_ObjectHideFlags: 1
@@ -1266,6 +1281,19 @@ Transform:
   m_Father: {fileID: 4215881454388188}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4430802951464746
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1022096330505906}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.8, z: 0.2}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_Children: []
+  m_Father: {fileID: 4439032615456392}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4431773873874262
 Transform:
   m_ObjectHideFlags: 1
@@ -1321,6 +1349,7 @@ Transform:
   - {fileID: 4074631527208474}
   - {fileID: 4835070363586382}
   - {fileID: 4102292850664234}
+  - {fileID: 4430802951464746}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1693,13 +1722,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1323033665322370}
-  m_LocalRotation: {x: -0, y: -0, z: -1.3322812e-15, w: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4032988912862018}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!4 &4901343024500854
 Transform:
   m_ObjectHideFlags: 1
@@ -2063,7 +2092,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reflector: {fileID: 1550520216612126}
   teleporter: {fileID: 1847134197133212}
+  lookPoint: {fileID: 4430802951464746}
   reflectorTrigger: {fileID: 114349024953332368}
+  teleportDistance: 30
 --- !u!114 &114237446513485100
 MonoBehaviour:
   m_ObjectHideFlags: 1
