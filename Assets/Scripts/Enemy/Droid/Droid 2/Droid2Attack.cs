@@ -46,8 +46,10 @@ namespace FortBlast.Enemy.Droid.Droid2
                 Quaternion lookRotation = Quaternion.LookRotation(position - base.launchPoints[i].position);
                 base.launchPoints[i].transform.rotation = lookRotation;
 
-                GameObject bulletInstance = Instantiate(base.droidBullet, base.launchPoints[i].transform.position,
-                        Quaternion.identity);
+                Instantiate(base.launchEffect, base.launchPoints[i].position, lookRotation);
+
+                GameObject bulletInstance = Instantiate(base.droidBullet,
+                    base.launchPoints[i].transform.position, Quaternion.identity);
                 bulletInstance.transform.rotation = lookRotation;
                 bulletInstance.GetComponent<Rigidbody>().velocity = base.launchPoints[i].transform.forward *
                     base.launchSpeed;

@@ -26,7 +26,7 @@ namespace FortBlast.Scenes.MainScene
         #endregion Singleton
 
         public PlayerLookAtController playerLookAtController;
-        public PlayerShooterAbsorbDamage playerAbsorbDamageController;
+        public PlayerHandControls playerAbsorbDamageController;
         public PlayerSpawner playerSpawner;
 
         private bool _inventoryOpen;
@@ -65,7 +65,7 @@ namespace FortBlast.Scenes.MainScene
         {
             _inventoryOpen = true;
             playerLookAtController.DeActivateRotation();
-            playerAbsorbDamageController.DeActivateAbsorber();
+            playerAbsorbDamageController.DeActivateMechanism();
 
             UnlockCursor();
         }
@@ -74,7 +74,7 @@ namespace FortBlast.Scenes.MainScene
         {
             _inventoryOpen = false;
             playerLookAtController.ActivateRotation();
-            playerAbsorbDamageController.ActivateAbsorber();
+            playerAbsorbDamageController.ActivateMechanism();
 
             InventoryManager.instance.CloseInventory();
             LockCursor();
@@ -96,14 +96,14 @@ namespace FortBlast.Scenes.MainScene
         public void InventoryItemUsed()
         {
             _itemSpawned = false;
-            playerAbsorbDamageController.ActivateAbsorber();
+            playerAbsorbDamageController.ActivateMechanism();
         }
 
         public void SelectedItemDiscarded()
         {
             _itemSpawned = false;
             playerSpawner.ClearItemIfNotSpawned();
-            playerAbsorbDamageController.ActivateAbsorber();
+            playerAbsorbDamageController.ActivateMechanism();
         }
 
         #endregion InventoryItem

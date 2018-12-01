@@ -11,10 +11,11 @@ namespace FortBlast.Enemy.Droid.Droid1
         {
             for (int i = 0; i < base.launchPoints.Length; i++)
             {
-                Vector3 position = usePlayerOffset ? target.position + Vector3.up * base.playerBaseOffset :
-                     target.position;
+                Vector3 position = usePlayerOffset ? target.position +
+                    Vector3.up * base.playerBaseOffset : target.position;
 
-                Quaternion lookRotation = Quaternion.LookRotation(position - base.launchPoints[i].position);
+                Quaternion lookRotation = Quaternion.LookRotation(position -
+                    base.launchPoints[i].position);
                 base.launchPoints[i].transform.rotation = lookRotation;
 
                 Instantiate(base.launchEffect, base.launchPoints[i].position, lookRotation);

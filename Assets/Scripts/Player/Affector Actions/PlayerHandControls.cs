@@ -7,7 +7,7 @@ using FortBlast.Common;
 namespace FortBlast.Player.AffecterActions
 {
     [RequireComponent(typeof(Animator))]
-    public class PlayerShooterAbsorbDamage : MonoBehaviour
+    public class PlayerHandControls : MonoBehaviour
     {
         private enum MechanismState
         {
@@ -23,11 +23,23 @@ namespace FortBlast.Player.AffecterActions
         public AbsorberTriggerEventCreator reflectorTrigger;
         public float teleportDistance;
 
+        [Header("Reflection Controls")]
+        public int maxReflectionCount;
+        public float reflectionGenerationRate;
+
+        [Header("Teleporter Controls")]
+        public int maxTeleporterCount;
+        public float teleporterGenerationRate;
+
+
         private Animator _playerAnimator;
         private bool _mechanismActive;
         private MechanismState _mechanismState;
 
         private bool _teleporterPrevState;
+        private float _currentTeleporterCount;
+
+        private float _currentReflectionCount;
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -40,7 +52,11 @@ namespace FortBlast.Player.AffecterActions
 
             reflectorTrigger.onBulletCollided += OnBulletCollided;
             _mechanismState = MechanismState.ShutOff;
+
             _teleporterPrevState = false;
+            _currentTeleporterCount = maxTeleporterCount;
+
+            _currentReflectionCount = maxReflectionCount;
         }
 
         /// <summary>
@@ -48,14 +64,15 @@ namespace FortBlast.Player.AffecterActions
         /// </summary>
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F)) // TODO: Remove this later on...
                 Debug.Break();
 
             DisplayAbsorberOnInput();
+            UpdateTeleporterAndReflectionHealth();
         }
 
-        public void ActivateAbsorber() => _mechanismActive = true;
-        public void DeActivateAbsorber()
+        public void ActivateMechanism() => _mechanismActive = true;
+        public void DeActivateMechanism()
         {
             _playerAnimator.SetBool(PlayerData.PlayerShooting, false);
             reflector.SetActive(false);
@@ -79,6 +96,8 @@ namespace FortBlast.Player.AffecterActions
             bullet.layer = 9; // Put it in the Droid Layer to enable collision
             Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
             bulletRB.velocity *= -1;
+
+            _currentReflectionCount -= 1;
         }
 
         private void DisplayAbsorberOnInput()
@@ -86,28 +105,36 @@ namespace FortBlast.Player.AffecterActions
             if (!_mechanismActive)
                 return;
 
-            bool mouseLeftPressed = Input.GetMouseButton(0);
-            bool mouseRightPressed = Input.GetMouseButton(1);
-            bool mousePressed = mouseLeftPressed || mouseRightPressed;
+            bool reflectorActive = Input.GetMouseButton(0) && _currentReflectionCount > 1;
+            bool teleporterActive = Input.GetMouseButton(1) && _currentTeleporterCount > 1;
+            bool mechanismActive = reflectorActive || teleporterActive;
 
-            if (mouseLeftPressed)
+            if (reflectorActive)
                 _mechanismState = MechanismState.Reflect;
-            else if (mouseRightPressed)
+            else if (teleporterActive)
                 _mechanismState = MechanismState.Teleport;
-            else if (!mousePressed)
+            else if (!mechanismActive)
                 _mechanismState = MechanismState.ShutOff;
 
-            CheckAndTeleportPlayer(mouseRightPressed);
-            _teleporterPrevState = mouseRightPressed;
+            _playerAnimator.SetBool(PlayerData.PlayerShooting, mechanismActive);
+            reflector.SetActive(reflectorActive);
+            teleporter.SetActive(teleporterActive);
 
-            _playerAnimator.SetBool(PlayerData.PlayerShooting, mousePressed);
-            reflector.SetActive(mouseLeftPressed);
-            teleporter.SetActive(mouseRightPressed);
+            CheckAndTeleportPlayer(teleporterActive);
         }
 
-        private void CheckAndTeleportPlayer(bool currentRightMousePressed)
+        private void UpdateTeleporterAndReflectionHealth()
         {
-            if (currentRightMousePressed != _teleporterPrevState
+            if (_currentTeleporterCount < maxTeleporterCount)
+                _currentTeleporterCount += teleporterGenerationRate * Time.deltaTime;
+
+            if (_currentReflectionCount < maxReflectionCount)
+                _currentReflectionCount += reflectionGenerationRate * Time.deltaTime;
+        }
+
+        private void CheckAndTeleportPlayer(bool currentTeleporterState)
+        {
+            if (currentTeleporterState != _teleporterPrevState
                 && _teleporterPrevState == true)
             {
                 RaycastHit hit;
@@ -116,8 +143,14 @@ namespace FortBlast.Player.AffecterActions
                 if (Physics.Linecast(lookPoint.position, destination, out hit))
                     destination = lookPoint.position + lookPoint.forward * (hit.distance - 1);
 
+                if (Physics.Raycast(destination, Vector3.down, out hit))
+                    destination = new Vector3(destination.x, hit.point.y, destination.z);
+
                 transform.position = destination;
+                _currentTeleporterCount -= 1;
             }
+
+            _teleporterPrevState = currentTeleporterState;
         }
     }
 }

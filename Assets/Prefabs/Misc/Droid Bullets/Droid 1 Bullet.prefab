@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 54883666850967032}
   - component: {fileID: 96848621638000062}
   - component: {fileID: 114255089527728888}
-  - component: {fileID: 114690971509505720}
+  - component: {fileID: 114803893244350064}
   m_Layer: 10
   m_Name: Droid 1 Bullet
   m_TagString: Bullet
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 7
---- !u!114 &114690971509505720
+--- !u!114 &114803893244350064
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}

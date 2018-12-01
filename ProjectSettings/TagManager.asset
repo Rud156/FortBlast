@@ -8,6 +8,7 @@ TagManager:
   - Terrain
   - DistractorHolder
   - Bullet
+  - Reflector
   layers:
   - Default
   - TransparentFX

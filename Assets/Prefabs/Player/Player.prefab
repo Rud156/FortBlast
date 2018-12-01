@@ -563,7 +563,7 @@ GameObject:
   - component: {fileID: 54378897941393532}
   m_Layer: 0
   m_Name: Reflector
-  m_TagString: Untagged
+  m_TagString: Reflector
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2087,7 +2087,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1962741146697706}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c639741292e28846a6fb850b4f832ac, type: 3}
+  m_Script: {fileID: 11500000, guid: 036bac1b83f85b640805ce7fa2df14e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   reflector: {fileID: 1550520216612126}
@@ -2095,6 +2095,10 @@ MonoBehaviour:
   lookPoint: {fileID: 4430802951464746}
   reflectorTrigger: {fileID: 114349024953332368}
   teleportDistance: 30
+  maxReflectionCount: 20
+  reflectionGenerationRate: 0.1
+  maxTeleporterCount: 10
+  teleporterGenerationRate: 0.1
 --- !u!114 &114237446513485100
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2232,7 +2236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e522a48989abef4bb3b9f2b58a72d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealthAmount: 100
+  maxHealthAmount: 250
   deathEffect: {fileID: 1081440733256164, guid: 4bb6ff73808d40a4184f0bb816a4a9b1,
     type: 2}
   effectInstantiatePoint: {fileID: 4439032615456392}

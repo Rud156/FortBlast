@@ -995,6 +995,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   droidBullet: {fileID: 1601084097140544, guid: 4a773961cdec15b47adb560483b05f16,
     type: 2}
+  launchEffect: {fileID: 1947570011038570, guid: 5ca26469f67125f449d890becb9d8a7d,
+    type: 2}
   launchPoints:
   - {fileID: 4904770720572072}
   - {fileID: 4000725242822578}
