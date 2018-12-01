@@ -20,7 +20,7 @@ namespace FortBlast.Player.AffecterActions
         public GameObject reflector;
         public GameObject teleporter;
         public Transform lookPoint;
-        public AbsorberTriggerEventCreator reflectorTrigger;
+        public ReflectorTriggerEventCreator reflectorTrigger;
         public float teleportDistance;
 
         [Header("Reflection Controls")]

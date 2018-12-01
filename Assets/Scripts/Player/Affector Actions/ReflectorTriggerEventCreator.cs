@@ -6,7 +6,7 @@ using UnityEngine;
 namespace FortBlast.Player.AffecterActions
 {
     [RequireComponent(typeof(Collider))]
-    public class AbsorberTriggerEventCreator : MonoBehaviour
+    public class ReflectorTriggerEventCreator : MonoBehaviour
     {
         public delegate void OnBulletCollided(GameObject bullet);
         public OnBulletCollided onBulletCollided;
