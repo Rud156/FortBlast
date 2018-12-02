@@ -59,6 +59,7 @@
         "Lerp",
         "Structs",
         "Updateble",
-        "Verts"
+        "Verts",
+        "coord"
     ]
 }

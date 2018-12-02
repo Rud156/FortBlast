@@ -97,8 +97,8 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
                     chunk.UpdateCollisionMesh();
 
 
-            if ((_prevViewerPosition - _viewerPosition).sqrMagnitude > SqrViewerMoveThresholdForChunkUpdate
-                && !_updatingChunks)
+            if ((_prevViewerPosition - _viewerPosition).sqrMagnitude >
+                SqrViewerMoveThresholdForChunkUpdate && !_updatingChunks)
             {
                 StartCoroutine(UpdateVisibleChunks(!fixedTerrainSize, false));
                 _prevViewerPosition = _viewerPosition;
@@ -160,6 +160,11 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
                 _visibleTerrainChunks.Add(terrainChunk);
             else
                 _visibleTerrainChunks.Remove(terrainChunk);
+        }
+
+        private void PlaceViewerInCornerChunk()
+        {
+
         }
     }
 }
