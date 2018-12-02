@@ -2,6 +2,8 @@ using UnityEngine;
 using FortBlast.Player.Data;
 using FortBlast.Extras;
 using FortBlast.Common;
+using FortBlast.Structs;
+using EZCameraShake;
 
 namespace FortBlast.Player.AffecterActions
 {
@@ -31,6 +33,9 @@ namespace FortBlast.Player.AffecterActions
         public float teleporterGenerationRate;
         public GameObject teleporterLandEffect;
 
+        [Header("Camera Shaker")]
+        public CameraShakerStats reflectCameraShaker;
+        public CameraShakerStats teleportCameraShaker;
 
         private Animator _playerAnimator;
         private bool _mechanismActive;
@@ -109,6 +114,12 @@ namespace FortBlast.Player.AffecterActions
             Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
             bulletRB.velocity *= -1;
 
+            CameraShaker.Instance.ShakeOnce(
+                reflectCameraShaker.magnitude,
+                reflectCameraShaker.roughness,
+                reflectCameraShaker.fadeInTime,
+                reflectCameraShaker.fadeOutTime
+            );
             _currentReflectionCount -= 1;
         }
 
@@ -160,6 +171,13 @@ namespace FortBlast.Player.AffecterActions
 
                 transform.position = destination;
                 Instantiate(teleporterLandEffect, transform.position, Quaternion.identity);
+
+                CameraShaker.Instance.ShakeOnce(
+                    teleportCameraShaker.magnitude,
+                    teleportCameraShaker.roughness,
+                    teleportCameraShaker.fadeInTime,
+                    teleportCameraShaker.fadeOutTime
+                );
                 _currentTeleporterCount -= 1;
             }
 

@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 81417229822461544}
   - component: {fileID: 114256660698800802}
   - component: {fileID: 114668971885987348}
-  - component: {fileID: 114237446513485100}
+  - component: {fileID: 114037474961375816}
   m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -580,6 +580,22 @@ GameObject:
   - component: {fileID: 199073079076603628}
   m_Layer: 0
   m_Name: Teleporter Sphere
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1588967341037630
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4941875507075228}
+  - component: {fileID: 114554375578985510}
+  m_Layer: 8
+  m_Name: Camera Transform Wrapper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1390,7 +1406,7 @@ Transform:
   m_LocalPosition: {x: -0, y: 0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4596883066834880}
+  - {fileID: 4941875507075228}
   m_Father: {fileID: 4570620395897800}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 90}
@@ -1496,11 +1512,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1019691414745522}
-  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalRotation: {x: 0.00000011920926, y: 0.00000006528706, z: 0.000000013360008,
+    w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4507392369619842}
+  m_Father: {fileID: 4941875507075228}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
 --- !u!4 &4623150935527154
@@ -1772,6 +1789,20 @@ Transform:
   m_Father: {fileID: 4205600840521894}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4941875507075228
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1588967341037630}
+  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4596883066834880}
+  m_Father: {fileID: 4507392369619842}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
 --- !u!4 &4942436675916756
 Transform:
   m_ObjectHideFlags: 1
@@ -2078,6 +2109,19 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &114037474961375816
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1019691414745522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab8353b5ebd32545867da143199a814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultPosInfluence: {x: 0.15, y: 0.15, z: 0.15}
+  DefaultRotInfluence: {x: 1, y: 1, z: 1}
 --- !u!114 &114046259173662578
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2098,20 +2142,18 @@ MonoBehaviour:
   reflectionGenerationRate: 0.1
   maxTeleporterCount: 10
   teleporterGenerationRate: 0.1
---- !u!114 &114237446513485100
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1019691414745522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1951cb51711bfd14e82e2b26b87b3151, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minCameraAngle: 30
-  maxCameraAngle: 340
-  verticalSpeed: 50
+  teleporterLandEffect: {fileID: 1920721077310836, guid: f7755e8d75312bd45b007e3e9941831a,
+    type: 2}
+  reflectCameraShaker:
+    magnitude: 3
+    roughness: 3
+    fadeOutTime: 0.2
+    fadeInTime: 0.5
+  teleportCameraShaker:
+    magnitude: 5
+    roughness: 5
+    fadeOutTime: 0.5
+    fadeInTime: 0.5
 --- !u!114 &114256660698800802
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2208,6 +2250,20 @@ MonoBehaviour:
   movementSpeed: 75
   runningSpeed: 225
   animatorLerpRate: 7
+--- !u!114 &114554375578985510
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1588967341037630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1951cb51711bfd14e82e2b26b87b3151, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minCameraAngle: 30
+  maxCameraAngle: 340
+  verticalSpeed: 50
 --- !u!114 &114668971885987348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2235,7 +2291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e522a48989abef4bb3b9f2b58a72d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealthAmount: 250
+  maxHealthAmount: 10000
   deathEffect: {fileID: 1081440733256164, guid: 4bb6ff73808d40a4184f0bb816a4a9b1,
     type: 2}
   effectInstantiatePoint: {fileID: 4439032615456392}
