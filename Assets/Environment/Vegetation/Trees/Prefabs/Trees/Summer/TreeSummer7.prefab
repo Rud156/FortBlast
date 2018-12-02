@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 208371849252670280}
   m_Layer: 0
   m_Name: TreeSummer7
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295

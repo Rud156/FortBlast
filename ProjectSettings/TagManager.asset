@@ -9,6 +9,7 @@ TagManager:
   - DistractorHolder
   - Bullet
   - Reflector
+  - Tree
   layers:
   - Default
   - TransparentFX
