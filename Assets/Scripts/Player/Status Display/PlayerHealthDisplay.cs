@@ -2,13 +2,31 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FortBlast.Player.StatusSetters
+namespace FortBlast.Player.StatusDisplay
 {
-    [RequireComponent(typeof(HealthSetter))]
     public class PlayerHealthDisplay : MonoBehaviour
     {
-        [Header("Camera Holder")]
+        #region Singleton
+
+        private static PlayerHealthDisplay _instance;
+
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
+        void Awake()
+        {
+            if (_instance == null)
+                _instance = this;
+
+            if (_instance != this)
+                Destroy(gameObject);
+        }
+
+        #endregion Singleton
+
+        [Header("Controllers")]
         public Transform mainCameraHolder;
+        public HealthSetter playerHealthSetter;
 
         [Header("UI Display")]
         public Slider healthSlider;
@@ -19,17 +37,11 @@ namespace FortBlast.Player.StatusSetters
         public Color halfHealthColor = Color.yellow;
         public Color maxHealthColor = Color.green;
 
-        private HealthSetter _playerHealthSetter;
-
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
         /// any of the Update methods is called the first time.
         /// </summary>
-        void Start()
-        {
-            _playerHealthSetter = GetComponent<HealthSetter>();
-            _playerHealthSetter.healthZero += PlayerDead;
-        }
+        void Start() => playerHealthSetter.healthZero += PlayerDead;
 
         /// <summary>
         /// Update is called every frame, if the MonoBehaviour is enabled.
@@ -39,8 +51,8 @@ namespace FortBlast.Player.StatusSetters
         private void DisplayHealthToUI()
         {
 
-            float currentHealthAmount = _playerHealthSetter.GetCurrentHealth();
-            float maxHealthAmount = _playerHealthSetter.maxHealthAmount;
+            float currentHealthAmount = playerHealthSetter.GetCurrentHealth();
+            float maxHealthAmount = playerHealthSetter.maxHealthAmount;
             float healthRatio = currentHealthAmount / maxHealthAmount;
             if (healthRatio <= 0.5f)
                 healthFiller.color = Color.Lerp(minHealthColor, halfHealthColor, healthRatio * 2);

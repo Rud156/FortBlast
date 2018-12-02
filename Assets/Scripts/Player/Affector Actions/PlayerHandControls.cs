@@ -1,4 +1,3 @@
-using FortBlast.Player.StatusSetters;
 using UnityEngine;
 using FortBlast.Player.Data;
 using FortBlast.Extras;

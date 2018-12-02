@@ -892,7 +892,6 @@ GameObject:
   - component: {fileID: 114046259173662578}
   - component: {fileID: 114853501754367484}
   - component: {fileID: 114746290639539722}
-  - component: {fileID: 114750780187453992}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2241,23 +2240,6 @@ MonoBehaviour:
     type: 2}
   effectInstantiatePoint: {fileID: 4439032615456392}
   useSkinnedMesh: 1
---- !u!114 &114750780187453992
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1962741146697706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfbae992e7c0ab14cb4e7ede79e73826, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainCameraHolder: {fileID: 4507392369619842}
-  healthSlider: {fileID: 0}
-  healthFiller: {fileID: 0}
-  minHealthColor: {r: 1, g: 0, b: 0, a: 1}
-  halfHealthColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  maxHealthColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &114853501754367484
 MonoBehaviour:
   m_ObjectHideFlags: 1
