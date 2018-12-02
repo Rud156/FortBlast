@@ -70,6 +70,8 @@ namespace FortBlast.Player.AffecterActions
             UpdateTeleporterAndReflectionHealth();
         }
 
+        #region  MechanismController
+
         public void ActivateMechanism() => _mechanismActive = true;
         public void DeActivateMechanism()
         {
@@ -79,6 +81,16 @@ namespace FortBlast.Player.AffecterActions
 
             _mechanismActive = false;
         }
+
+        #endregion MechanismController
+
+        #region MechanismControlVariables
+
+        public float GetCurrentTeleporterCount() => _currentTeleporterCount;
+
+        public float GetCurrentReflectorCount() => _currentReflectionCount;
+
+        #endregion MechanismControlVariables
 
         private void OnBulletCollided(GameObject bullet)
         {
