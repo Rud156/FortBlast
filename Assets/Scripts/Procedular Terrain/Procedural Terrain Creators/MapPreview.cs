@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using FortBlast.ProceduralTerrain.DataHolders;
 using FortBlast.ProceduralTerrain.Generators;
 using FortBlast.ProceduralTerrain.Settings;
+using FortBlast.Structs;
 using UnityEngine;
 
 namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators

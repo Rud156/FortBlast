@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using FortBlast.Structs;
 using UnityEngine;
 
 namespace FortBlast.ProceduralTerrain.Generators

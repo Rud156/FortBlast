@@ -1,6 +1,9 @@
-public struct NoiseMapData
+namespace FortBlast.Structs
 {
-    public float[,] noiseMap;
-    public float minLocalNoiseHeight;
-    public float maxLocalNoiseHeight;
+    public struct NoiseMapData
+    {
+        public float[,] noiseMap;
+        public float minLocalNoiseHeight;
+        public float maxLocalNoiseHeight;
+    }
 }

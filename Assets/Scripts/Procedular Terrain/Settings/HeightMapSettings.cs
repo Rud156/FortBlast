@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using FortBlast.Structs;
+using UnityEngine;
 
 namespace FortBlast.ProceduralTerrain.Settings
 {

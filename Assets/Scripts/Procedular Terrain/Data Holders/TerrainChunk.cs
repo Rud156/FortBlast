@@ -3,6 +3,7 @@ using FortBlast.Extras;
 using FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData;
 using FortBlast.ProceduralTerrain.Generators;
 using FortBlast.ProceduralTerrain.Settings;
+using FortBlast.Structs;
 using UnityEngine;
 
 namespace FortBlast.ProceduralTerrain.DataHolders
