@@ -49,6 +49,7 @@ namespace FortBlast.Enemy.Helpers
                     smokeEffect.transform.rotation);
                 smokeInstance.transform.SetParent(instancePoint);
                 _smokeEmission = smokeInstance.GetComponent<ParticleSystem>().emission;
+                smokeInstantiated = true;
             }
 
             if (smokeInstantiated)

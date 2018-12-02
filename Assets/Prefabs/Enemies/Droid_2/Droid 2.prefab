@@ -1212,7 +1212,7 @@ MonoBehaviour:
   lookingPoint: {fileID: 4825375985518622}
   maxLookAngle: 270
   angleTolerance: 20
-  distanceToStopFromIntrestingTarget: 7
+  distanceToStopFromIntrestingTarget: 15
   distanceToStopFromPatrolPoint: 0
 --- !u!114 &114103604845125024
 MonoBehaviour:
@@ -1405,7 +1405,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 15
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

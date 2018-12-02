@@ -29,6 +29,7 @@ namespace FortBlast.Player.AffecterActions
         [Header("Teleporter Controls")]
         public int maxTeleporterCount;
         public float teleporterGenerationRate;
+        public GameObject teleporterLandEffect;
 
 
         private Animator _playerAnimator;
@@ -158,6 +159,7 @@ namespace FortBlast.Player.AffecterActions
                     destination = new Vector3(destination.x, hit.point.y, destination.z);
 
                 transform.position = destination;
+                Instantiate(teleporterLandEffect, transform.position, Quaternion.identity);
                 _currentTeleporterCount -= 1;
             }
 
