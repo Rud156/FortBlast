@@ -56,7 +56,6 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
 
                     GameObject treeInstance =
                         Instantiate(trees[i].prefab, Vector3.zero, Quaternion.identity);
-                    treeInstance.SetActive(false);
                     treeInstance.transform.SetParent(transform);
 
                     GameObject treeBaseInstance =
@@ -66,6 +65,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
                             Quaternion.identity
                         );
                     treeBaseInstance.transform.SetParent(treeInstance.transform);
+                    treeInstance.SetActive(false);
 
                     trees[i].instantiatedTrees.Add(treeInstance);
                 }

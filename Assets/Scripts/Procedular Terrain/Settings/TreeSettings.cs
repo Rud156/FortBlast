@@ -10,5 +10,10 @@ namespace FortBlast.ProceduralTerrain.Settings
         [Header("Min Max Spawn Max LOD")]
         public int minTreesInMaxChunkSize;
         public int maxTreesInMaxChunkSize;
+
+        [Header("Create Clearing")]
+        public bool createClearing = true;
+        public Vector2 clearingBottomLeft;
+        public Vector2 clearingTopRight;
     }
 }

@@ -22,7 +22,14 @@ namespace FortBlast.ProceduralTerrain.Generators
 
             for (int i = 0; i < vertices.Length; i++)
             {
-                float selectionProbability = (float)totalTreePoints / (vertices.Length - 1);
+                if (treeSettings.createClearing &&
+                    vertices[i].x > treeSettings.clearingBottomLeft.x &&
+                    vertices[i].z < treeSettings.clearingTopRight.x &&
+                    vertices[i].z > treeSettings.clearingBottomLeft.y &&
+                    vertices[i].z < treeSettings.clearingTopRight.y)
+                    continue;
+
+                float selectionProbability = (float)totalTreePoints / (vertices.Length - i);
                 float randomValue = (float)random.NextDouble();
 
                 if (selectionProbability >= randomValue)

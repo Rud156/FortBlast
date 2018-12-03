@@ -47,6 +47,9 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
 
             for (int i = 0; i < treePoints.Length; i++)
             {
+                if (treePoints[i] == Vector3.zero)
+                    Debug.Log("Tree At Zero");
+
                 float normalizedPoint = ExtensionFunctions.Map(treePoints[i].y, 0, maxValue, 0, 1);
                 trees[i] = TreesManager.instance.RequestTree(normalizedPoint);
 

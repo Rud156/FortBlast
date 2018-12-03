@@ -161,10 +161,5 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
             else
                 _visibleTerrainChunks.Remove(terrainChunk);
         }
-
-        private void PlaceViewerInCornerChunk()
-        {
-
-        }
     }
 }

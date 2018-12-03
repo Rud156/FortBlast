@@ -13,6 +13,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minTreesInMaxChunkSize: 150
   maxTreesInMaxChunkSize: 300
-  keepCenterClear: 1
-  bottomLeftPoint: {x: -5, y: -5}
-  topRightPoint: {x: 5, y: 5}
+  createClearing: 1
+  clearingBottomLeft: {x: -20, y: -20}
+  clearingTopRight: {x: 20, y: 20}
