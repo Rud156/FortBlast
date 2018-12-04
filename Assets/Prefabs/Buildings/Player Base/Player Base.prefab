@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 23448864883427762}
   - component: {fileID: 64062797082493912}
   - component: {fileID: 54543913286308024}
+  - component: {fileID: 208672467490408900}
   m_Layer: 0
   m_Name: Player Base
   m_TagString: Untagged
@@ -129,7 +130,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1619480661717592}
   m_LocalRotation: {x: 0.00000014106499, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.85, y: 20, z: 0.39233017}
+  m_LocalPosition: {x: -24.180443, y: 115.56878, z: -151.74036}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4831138208513454}
@@ -355,3 +356,18 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!208 &208672467490408900
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1619480661717592}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 5.2660003, y: 4.123, z: 9.255}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -3.4490001, y: 3.121, z: -0.545}
+  m_TimeToStationary: 0.5
