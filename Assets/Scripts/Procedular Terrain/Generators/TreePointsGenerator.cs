@@ -8,7 +8,7 @@ namespace FortBlast.ProceduralTerrain.Generators
     public static class TreePointsGenerator
     {
         public static Vector3[] SelectTreePoints(Vector3[] vertices, int chunkSizeIndex,
-            TreeSettings treeSettings)
+            Vector3 meshCenter, TreeSettings treeSettings)
         {
             System.Random random = new System.Random();
             int chunkSize = MeshSettings.supportedChunkSizes[chunkSizeIndex];
@@ -19,15 +19,21 @@ namespace FortBlast.ProceduralTerrain.Generators
 
             Vector3[] selectedPoints = new Vector3[totalTreePoints];
             int index = 0;
+            Vector3 tileCenter = treeSettings.useOnlyCenterTile ?
+                                    meshCenter : Vector3.zero;
 
             for (int i = 0; i < vertices.Length; i++)
             {
-                if (treeSettings.createClearing &&
-                    vertices[i].x > treeSettings.clearingBottomLeft.x &&
-                    vertices[i].z < treeSettings.clearingTopRight.x &&
-                    vertices[i].z > treeSettings.clearingBottomLeft.y &&
-                    vertices[i].z < treeSettings.clearingTopRight.y)
-                    continue;
+                if (treeSettings.createClearing)
+                {
+                    Vector3 modifiedVertices = vertices[i] + tileCenter;
+
+                    if (modifiedVertices.x > treeSettings.clearingBottomLeft.x &&
+                        modifiedVertices.z < treeSettings.clearingTopRight.x &&
+                        modifiedVertices.z > treeSettings.clearingBottomLeft.y &&
+                        modifiedVertices.z < treeSettings.clearingTopRight.y)
+                        continue;
+                }
 
                 float selectionProbability = (float)totalTreePoints / (vertices.Length - i);
                 float randomValue = (float)random.NextDouble();

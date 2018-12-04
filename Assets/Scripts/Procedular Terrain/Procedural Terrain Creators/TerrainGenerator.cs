@@ -40,8 +40,9 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
         public LODInfo[] detailLevels;
         public int colliderLODIndex;
 
-        [Header("Terrain Size")]
+        [Header("Extra Terrain Params")]
         public bool fixedTerrainSize;
+        public bool enemiesOnCenterTile;
 
         private const float ViewerMoveThresholdForChunkUpdate = 25f;
         private const float SqrViewerMoveThresholdForChunkUpdate =
@@ -135,9 +136,14 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
                             _terrainChunkDict[viewChunkCoord].UpdateTerrainChunk();
                         else if (createNewChunks)
                         {
+                            bool createEnemies = true;
+                            if (!enemiesOnCenterTile && viewChunkCoord == Vector2.zero)
+                                createEnemies = false;
+
                             TerrainChunk newChunk = new TerrainChunk(viewChunkCoord,
                                 heightMapSettings, meshSettings, treeSettings, terrainObjectSettings,
-                                detailLevels, colliderLODIndex, transform, viewer, mapMaterial);
+                                detailLevels, colliderLODIndex, transform, viewer, mapMaterial, 
+                                createEnemies);
                             _terrainChunkDict.Add(viewChunkCoord, newChunk);
                             newChunk.onVisibilityChanged += OnTerrainChunkVisibilityChanged;
                             newChunk.Load();

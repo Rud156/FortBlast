@@ -32,7 +32,8 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
             hasRequestedTreePoints = true;
             ThreadedDataRequester.RequestData(
                 () =>
-                    TreePointsGenerator.SelectTreePoints(meshVertices, chunkSizeIndex, _treeSettings),
+                    TreePointsGenerator.SelectTreePoints(meshVertices, chunkSizeIndex,
+                        _meshCenter, _treeSettings),
                 OnTreePointsReceived
             );
         }

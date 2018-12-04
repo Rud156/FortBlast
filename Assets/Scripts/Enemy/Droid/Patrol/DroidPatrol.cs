@@ -42,6 +42,7 @@ namespace FortBlast.Enemy.Droid.Patrol
 
         private Transform _currentTarget;
         private Vector3[] _terrainMeshVertices;
+        private Vector3 _meshCenter;
 
         private Transform _player;
         private bool _attacking;
@@ -65,6 +66,7 @@ namespace FortBlast.Enemy.Droid.Patrol
             _player = GameObject.FindGameObjectWithTag(TagManager.Player)?.transform;
             _distactorHolder = GameObject.FindGameObjectWithTag(TagManager.DistractorHolder)?.transform;
 
+            _meshCenter = transform.position;
             _terrainMeshVertices = transform.parent.GetComponent<MeshFilter>().mesh.vertices;
             _droidAttackTarget = DroidAttackTarget.None;
 
@@ -199,7 +201,8 @@ namespace FortBlast.Enemy.Droid.Patrol
                 return;
 
             _droidAgent.stoppingDistance = distanceToStopFromPatrolPoint;
-            Vector3 randomPatrolPoint = DroidPatrolHelpers.GetNextTarget(_terrainMeshVertices);
+            Vector3 randomPatrolPoint = DroidPatrolHelpers.GetNextTarget(_terrainMeshVertices) +
+                _meshCenter;
             _currentTarget = transform.parent;
 
             SetAgentDestination(randomPatrolPoint);

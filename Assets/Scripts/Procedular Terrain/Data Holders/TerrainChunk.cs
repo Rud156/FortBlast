@@ -57,9 +57,13 @@ namespace FortBlast.ProceduralTerrain.DataHolders
         public TerrainChunk(Vector2 coord, HeightMapSettings heightMapSettings,
             MeshSettings meshSettings, TreeSettings treeSettings,
             TerrainObjectSettings terrainObjectSettings, LODInfo[] detailLevels,
-            int colliderLODIndex, Transform parent, Transform viewer, Material material)
+            int colliderLODIndex, Transform parent, Transform viewer, Material material,
+            bool createEnemies)
         {
             this.coord = coord;
+
+            _droidsRequested = !createEnemies;
+            _towersRequested = !createEnemies;
 
             _detailLevels = detailLevels;
             _prevLODIndex = -1;

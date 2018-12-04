@@ -13,6 +13,7 @@ namespace FortBlast.ProceduralTerrain.Settings
 
         [Header("Create Clearing")]
         public bool createClearing = true;
+        public bool useOnlyCenterTile = true;
         public Vector2 clearingBottomLeft;
         public Vector2 clearingTopRight;
     }
