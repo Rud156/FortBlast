@@ -10,21 +10,24 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
     {
         #region Singleton
 
-        private static TerrainGenerator _instance;
+        public static TerrainGenerator instance;
 
         /// <summary>
         /// Awake is called when the script instance is being loaded.
         /// </summary>
         void Awake()
         {
-            if (_instance == null)
-                _instance = this;
+            if (instance == null)
+                instance = this;
 
-            if (_instance != this)
+            if (instance != this)
                 Destroy(gameObject);
         }
 
         #endregion Singleton
+
+        public delegate void TerrainGenerationInitialComplete();
+        public TerrainGenerationInitialComplete terrainGenerationComplete;
 
 
         [Header("Settings")]
@@ -142,7 +145,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
 
                             TerrainChunk newChunk = new TerrainChunk(viewChunkCoord,
                                 heightMapSettings, meshSettings, treeSettings, terrainObjectSettings,
-                                detailLevels, colliderLODIndex, transform, viewer, mapMaterial, 
+                                detailLevels, colliderLODIndex, transform, viewer, mapMaterial,
                                 createEnemies);
                             _terrainChunkDict.Add(viewChunkCoord, newChunk);
                             newChunk.onVisibilityChanged += OnTerrainChunkVisibilityChanged;
@@ -154,7 +157,10 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
             }
 
             if (cleanBuildNavMesh)
+            {
+                terrainGenerationComplete?.Invoke();
                 NavMeshBaker.instance.BuildInitialNavMesh();
+            }
             else
                 NavMeshBaker.instance.ReBuildNavMesh();
             _updatingChunks = false;

@@ -1,7 +1,9 @@
 ﻿using FortBlast.Extras;
 using FortBlast.Player.AffecterActions;
 using FortBlast.Player.Movement;
+using FortBlast.ProceduralTerrain.ProceduralTerrainCreators;
 using FortBlast.Resources;
+using FortBlast.UI;
 using UnityEngine;
 
 namespace FortBlast.Scenes.MainScene
@@ -42,6 +44,7 @@ namespace FortBlast.Scenes.MainScene
             _itemSpawned = false;
 
             LockCursor();
+            TerrainGenerator.instance.terrainGenerationComplete += StartFadingIn;
         }
 
         /// <summary>
@@ -58,6 +61,12 @@ namespace FortBlast.Scenes.MainScene
             else if (_inventoryOpen)
                 CloseInventory();
         }
+
+        #region PlayerBase
+
+        private void StartFadingIn() => Fader.instance.StartFadeIn();
+
+        #endregion PlayerBase
 
         #region Inventory
 
