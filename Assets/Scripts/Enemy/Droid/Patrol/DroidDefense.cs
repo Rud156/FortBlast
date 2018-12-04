@@ -12,6 +12,12 @@ namespace FortBlast.Enemy.Droid.Patrol
         [Range(0, 1)]
         public float selectionProbability;
 
+        [Header("Animation")]
+        public Animator droidAnimator;
+
+        private const string AnimatorHitParam = "Hit";
+
+        private bool _initiateShieldActivation;
         private bool _shieldActivated;
         private GameObject _shieldSystem;
 
@@ -39,15 +45,26 @@ namespace FortBlast.Enemy.Droid.Patrol
             float probability = Random.value;
             if (probability <= selectionProbability && !_shieldActivated)
             {
-                _shieldActivated = true;
-
-                _shieldSystem = Instantiate(shieldEffect, transform.position, Quaternion.identity);
-                _shieldSystem.transform.SetParent(transform);
-                _shieldSystem.transform.localScale = Vector3.one;
+                _initiateShieldActivation = true;
+                droidAnimator.SetTrigger(AnimatorHitParam);
             }
 
             if (_shieldActivated)
                 Destroy(other.gameObject);
+        }
+
+        public void HitAnimationComplete()
+        {
+            if (!_initiateShieldActivation || _shieldActivated)
+                return;
+
+            _shieldActivated = true;
+
+            _shieldSystem = Instantiate(shieldEffect, transform.position, Quaternion.identity);
+            _shieldSystem.transform.SetParent(transform);
+            _shieldSystem.transform.localScale = Vector3.one;
+
+            _initiateShieldActivation = false;
         }
     }
 }

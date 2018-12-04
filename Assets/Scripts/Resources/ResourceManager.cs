@@ -29,6 +29,9 @@ namespace FortBlast.Resources
         public Text contentDisplay;
         public Animator contentDisplayAnimator;
 
+        [Header("Test Item")]
+        public InventoryItem testItem; // TODO: Remove this later on...
+
         public delegate void ResourcesChanged();
         public ResourcesChanged resourcesChanged;
 
@@ -41,6 +44,11 @@ namespace FortBlast.Resources
         void Start()
         {
             items = new Dictionary<string, InventoryItemStats>();
+            items.Add("Bottle", new InventoryItemStats
+            {
+                inventoryItem = testItem,
+                itemCount = 20
+            });
             // TODO: Read initial resources from file
         }
 

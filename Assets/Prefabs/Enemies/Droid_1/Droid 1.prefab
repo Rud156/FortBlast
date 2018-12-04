@@ -120,6 +120,7 @@ GameObject:
   - component: {fileID: 33066074598380264}
   - component: {fileID: 23610260887442570}
   - component: {fileID: 95130964496609644}
+  - component: {fileID: 114779107473053222}
   m_Layer: 9
   m_Name: Bot Body
   m_TagString: Untagged
@@ -380,7 +381,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1399687308123526}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.004476888, y: 0.041779045, z: -0.00027579188}
+  m_LocalPosition: {x: 0.004476888, y: 0.04177905, z: -0.0002757919}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children:
   - {fileID: 4090859264359412}
@@ -995,6 +996,7 @@ MonoBehaviour:
   shieldEffect: {fileID: 1748593451257544, guid: 496429513c0c9a24ab0e5699f67c1959,
     type: 2}
   selectionProbability: 0.3
+  droidAnimator: {fileID: 95130964496609644}
 --- !u!114 &114556778290206630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1032,6 +1034,18 @@ MonoBehaviour:
   attackTime: 1
   playerBaseOffset: 1.5
   launchSpeed: 20
+--- !u!114 &114779107473053222
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1399687308123526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00c622a0089c6734c851b8f3511bf12c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  droidDefense: {fileID: 114547803519423166}
 --- !u!195 &195867868063748600
 NavMeshAgent:
   m_ObjectHideFlags: 1
