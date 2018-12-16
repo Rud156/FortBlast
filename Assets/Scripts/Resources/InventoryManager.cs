@@ -10,6 +10,7 @@ namespace FortBlast.Resources
     public class InventoryManager : MonoBehaviour
     {
         #region Singleton
+
         public static InventoryManager instance;
 
         /// <summary>
@@ -23,31 +24,28 @@ namespace FortBlast.Resources
             if (instance != this)
                 Destroy(gameObject);
         }
+
         #endregion Singleton
 
         public List<InventoryItem> inventoryItems;
 
 
-        [Header("Inventory Display")]
-        public GameObject inventory;
+        [Header("Inventory Display")] public GameObject inventory;
         public RectTransform contentContainer;
         public GameObject itemDisplayPrefab;
         public ScrollRect scrollRect;
 
-        [Header("UI Display Image States")]
-        public Sprite defaultBorder;
+        [Header("UI Display Image States")] public Sprite defaultBorder;
         public Sprite selectedBorder;
         public Sprite notAvailableBorder;
 
-        [Header("Item Details")]
-        public GameObject itemDetail;
+        [Header("Item Details")] public GameObject itemDetail;
         public Text itemDetailName;
         public RawImage itemDetailImage;
         public Text itemDetailDescription;
         public Text itemDetailType;
 
-        [Header("Item Use Interaction")]
-        public Button itemConfirmButton;
+        [Header("Item Use Interaction")] public Button itemConfirmButton;
         public Text itemConfirmButtonText;
 
         private class InventoryDisplay
@@ -63,6 +61,7 @@ namespace FortBlast.Resources
         private List<InventoryDisplay> _itemsDisplay;
 
         private InventoryDisplay _itemSelected;
+
         private InventoryDisplay ItemSelected
         {
             get { return _itemSelected; }
@@ -72,6 +71,8 @@ namespace FortBlast.Resources
                 UpdateUIWithItemSelected();
             }
         }
+
+        private const float FiftyPercentAlpha = 0.196f;
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -143,11 +144,13 @@ namespace FortBlast.Resources
                     item.itemCountText.text =
                         $"X {ResourceManager.instance.CountResource(item.inventoryItem.displayName)}";
                     item.itemBorder.sprite = defaultBorder;
+                    item.itemBorder.color = Color.white;
                 }
                 else
                 {
                     item.itemCountText.text = "X 0";
                     item.itemBorder.sprite = notAvailableBorder;
+                    item.itemBorder.color = new Color(1, 1, 1, FiftyPercentAlpha);
                 }
             }
         }
@@ -226,8 +229,7 @@ namespace FortBlast.Resources
                 inventoryDisplay.itemImage = itemDisplayInstance
                     .transform.GetChild(1).GetComponent<RawImage>();
                 inventoryDisplay.itemImage.texture = item.image;
-                inventoryDisplay.itemNameText = itemDisplayInstance.
-                    transform.GetChild(2).GetComponent<Text>();
+                inventoryDisplay.itemNameText = itemDisplayInstance.transform.GetChild(2).GetComponent<Text>();
                 inventoryDisplay.itemNameText.text = item.displayName;
 
                 inventoryDisplay.itemCountText = itemDisplayInstance

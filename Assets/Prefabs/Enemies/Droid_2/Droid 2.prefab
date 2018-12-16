@@ -1255,7 +1255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f0c09bb926e6f34d82be37047e4d669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smokeEffect: {fileID: 1755557267898934, guid: 81aafefe5fa134c44b24eca501fe5505,
+  smokeEffect: {fileID: 1755557267898934, guid: 00be3b173286d5842ba13fbed3e58896,
     type: 2}
   instancePoint: {fileID: 4825375985518622}
 --- !u!114 &114229874375191916

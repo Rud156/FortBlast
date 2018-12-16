@@ -84,10 +84,6 @@
 					o.Albedo = o.Albedo * (1 - drawStrength) + baseColors[i] * drawStrength;
 				#endif
 			}
-
-			
-
-			// o.Albedo = xProjection + yProjection + zProjection;
 		}
 		ENDCG
 	}
