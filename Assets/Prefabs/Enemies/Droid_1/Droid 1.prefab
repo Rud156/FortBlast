@@ -1013,6 +1013,7 @@ MonoBehaviour:
     type: 2}
   effectInstantiatePoint: {fileID: 4295247924510168}
   useSkinnedMesh: 0
+  destroyWithoutEffect: 0
 --- !u!114 &114565268881050598
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -21,7 +21,7 @@ namespace FortBlast.Player.AffecterActions
         private InventoryItem _item;
         private GameObject _itemInstance;
         private Rigidbody _itemRB;
-        private BoxCollider _itemCollider;
+        private Collider _itemCollider;
 
         private Transform _itemHolder;
 
@@ -62,7 +62,7 @@ namespace FortBlast.Player.AffecterActions
             _itemInstance.transform.SetParent(spawnPoint);
 
             _itemRB = _itemInstance.GetComponent<Rigidbody>();
-            _itemCollider = _itemInstance.GetComponent<BoxCollider>();
+            _itemCollider = _itemInstance.GetComponent<Collider>();
 
             _itemRB.isKinematic = true;
             _itemCollider.enabled = false;

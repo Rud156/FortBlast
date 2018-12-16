@@ -8,12 +8,14 @@ namespace FortBlast.Common
     public class HealthSetter : MonoBehaviour
     {
         public delegate void HealthZero();
+
         public HealthZero healthZero;
 
         public float maxHealthAmount;
         public GameObject deathEffect;
         public Transform effectInstantiatePoint;
         public bool useSkinnedMesh;
+        public bool destroyWithoutEffect;
 
         private float _currentHealthAmount;
 
@@ -45,23 +47,27 @@ namespace FortBlast.Common
         public float GetCurrentHealth() => _currentHealthAmount;
 
         public void AddHealth(float healthAmount) => _currentHealthAmount =
-            _currentHealthAmount + healthAmount > maxHealthAmount ?
-                maxHealthAmount : _currentHealthAmount + healthAmount;
+            _currentHealthAmount + healthAmount > maxHealthAmount
+                ? maxHealthAmount
+                : _currentHealthAmount + healthAmount;
 
         public void ReduceHealth(float healthAmount) => _currentHealthAmount -= healthAmount;
 
         private void CheckIfHealthZero()
         {
-            if (_currentHealthAmount <= 0)
+            if (!(_currentHealthAmount <= 0))
+                return;
+
+            if (!destroyWithoutEffect)
             {
                 if (useSkinnedMesh)
                     SpawnSkinnedMeshEffect();
                 else
                     SpawnNormalEffect();
-
-                healthZero?.Invoke();
-                Destroy(gameObject);
             }
+
+            healthZero?.Invoke();
+            Destroy(gameObject);
         }
 
         private void SpawnSkinnedMeshEffect()

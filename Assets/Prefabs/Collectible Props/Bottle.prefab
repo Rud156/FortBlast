@@ -22,7 +22,9 @@ GameObject:
   - component: {fileID: 33065476617682138}
   - component: {fileID: 23462892553354060}
   - component: {fileID: 54063648322701860}
-  - component: {fileID: 65763987481323402}
+  - component: {fileID: 136541449402064712}
+  - component: {fileID: 114639536861854270}
+  - component: {fileID: 114867869072608994}
   m_Layer: 0
   m_Name: Bottle
   m_TagString: Untagged
@@ -100,8 +102,36 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65763987481323402
-BoxCollider:
+--- !u!114 &114639536861854270
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1607217949120864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e522a48989abef4bb3b9f2b58a72d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealthAmount: 30
+  deathEffect: {fileID: 0}
+  effectInstantiatePoint: {fileID: 0}
+  useSkinnedMesh: 0
+  destroyWithoutEffect: 1
+--- !u!114 &114867869072608994
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1607217949120864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab18b664caeaca84f88e6857dce81bd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryItem: {fileID: 11400000, guid: 9998c4ec1a867724287468528deb4259, type: 2}
+--- !u!136 &136541449402064712
+CapsuleCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -109,6 +139,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.09786126, y: 0.21647888, z: 0.097861245}
+  m_Radius: 0.04893063
+  m_Height: 0.21647888
+  m_Direction: 1
   m_Center: {x: -0.0000000018626451, y: -0.0000000037252903, z: -0.000000011175871}
