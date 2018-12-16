@@ -48,15 +48,12 @@ namespace FortBlast.ProceduralTerrain.DataHolders
 
         private Vector2 viewerPosition
         {
-            get
-            {
-                return new Vector2(_viewer.position.x, _viewer.position.z);
-            }
+            get { return new Vector2(_viewer.position.x, _viewer.position.z); }
         }
 
         public TerrainChunk(Vector2 coord, HeightMapSettings heightMapSettings,
             MeshSettings meshSettings, TreeSettings treeSettings,
-            TerrainObjectSettings terrainObjectSettings, LODInfo[] detailLevels,
+            TerrainObjectSettings terrainObjectSettings, ClearingSettings clearingSettings, LODInfo[] detailLevels,
             int colliderLODIndex, Transform parent, Transform viewer, Material material,
             bool createEnemies)
         {
@@ -87,9 +84,9 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             _meshFilter = _meshObject.AddComponent<MeshFilter>();
             _meshCollider = _meshObject.AddComponent<MeshCollider>();
 
-            _chunkTrees = new Trees(position, treeSettings);
+            _chunkTrees = new Trees(position, treeSettings, clearingSettings);
             _terrainInteractibles = new TerrainInteractiblesCreator(position, _meshObject.transform,
-                terrainObjectSettings);
+                terrainObjectSettings, clearingSettings);
 
             SetVisible(false);
 
@@ -164,8 +161,8 @@ namespace FortBlast.ProceduralTerrain.DataHolders
                     else if (lodIndex != 0)
                         _chunkTrees.ClearTrees();
                 }
-
             }
+
             if (wasVisible != visible)
             {
                 SetVisible(visible);
@@ -246,7 +243,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
 
         private void OnHeightMapReceived(object heightMapObject)
         {
-            _heightMap = (HeightMap)heightMapObject;
+            _heightMap = (HeightMap) heightMapObject;
             _heightMapReceived = true;
 
             UpdateTerrainChunk();

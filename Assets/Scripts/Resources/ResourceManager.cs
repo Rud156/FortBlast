@@ -10,6 +10,7 @@ namespace FortBlast.Resources
     public class ResourceManager : MonoBehaviour
     {
         #region  Singleton
+
         public static ResourceManager instance;
 
         /// <summary>
@@ -23,16 +24,16 @@ namespace FortBlast.Resources
             if (instance != this)
                 Destroy(instance);
         }
+
         #endregion Singleton
 
-        [Header("UI Display")]
-        public Text contentDisplay;
+        [Header("UI Display")] public Text contentDisplay;
         public Animator contentDisplayAnimator;
 
-        [Header("Test Item")]
-        public InventoryItem testItem; // TODO: Remove this later on...
+        [Header("Test Item")] public InventoryItem testItem; // TODO: Remove this later on...
 
         public delegate void ResourcesChanged();
+
         public ResourcesChanged resourcesChanged;
 
         private Dictionary<string, InventoryItemStats> items;
@@ -62,9 +63,10 @@ namespace FortBlast.Resources
             }
             else
             {
-                InventoryItemStats inventoryItemStats = new InventoryItemStats();
-                inventoryItemStats.itemCount = count;
-                inventoryItemStats.inventoryItem = item;
+                InventoryItemStats inventoryItemStats = new InventoryItemStats
+                {
+                    itemCount = count, inventoryItem = item
+                };
                 items.Add(item.displayName, inventoryItemStats);
             }
 
@@ -103,34 +105,22 @@ namespace FortBlast.Resources
 
         public void UseResource(string itemName)
         {
-            if (items.ContainsKey(itemName))
-            {
-                InventoryItemStats inventoryItemStats = items[itemName];
-                inventoryItemStats.itemCount -= 1;
+            if (!items.ContainsKey(itemName))
+                return;
 
-                if (inventoryItemStats.itemCount <= 0)
-                    items.Remove(itemName);
-                else
-                    items[itemName] = inventoryItemStats;
+            InventoryItemStats inventoryItemStats = items[itemName];
+            inventoryItemStats.itemCount -= 1;
 
-                resourcesChanged?.Invoke();
-            }
-        }
-
-        public bool HasResource(string itemName)
-        {
-            if (items.ContainsKey(itemName))
-                return true;
+            if (inventoryItemStats.itemCount <= 0)
+                items.Remove(itemName);
             else
-                return false;
+                items[itemName] = inventoryItemStats;
+
+            resourcesChanged?.Invoke();
         }
 
-        public int CountResource(string itemName)
-        {
-            if (items.ContainsKey(itemName))
-                return items[itemName].itemCount;
-            else
-                return 0;
-        }
+        public bool HasResource(string itemName) => items.ContainsKey(itemName);
+
+        public int CountResource(string itemName) => items.ContainsKey(itemName) ? items[itemName].itemCount : 0;
     }
 }

@@ -8,7 +8,7 @@ namespace FortBlast.ProceduralTerrain.Generators
     public static class TreePointsGenerator
     {
         public static Vector3[] SelectTreePoints(Vector3[] vertices, int chunkSizeIndex,
-            Vector3 meshCenter, TreeSettings treeSettings)
+            Vector3 meshCenter, TreeSettings treeSettings, ClearingSettings clearingSettings)
         {
             System.Random random = new System.Random();
             int chunkSize = MeshSettings.supportedChunkSizes[chunkSizeIndex];
@@ -19,19 +19,19 @@ namespace FortBlast.ProceduralTerrain.Generators
 
             Vector3[] selectedPoints = new Vector3[totalTreePoints];
             int index = 0;
-            Vector3 tileCenter = treeSettings.useOnlyCenterTile ?
+            Vector3 tileCenter = clearingSettings.useOnlyCenterTile ?
                                     meshCenter : Vector3.zero;
 
             for (int i = 0; i < vertices.Length; i++)
             {
-                if (treeSettings.createClearing)
+                if (clearingSettings.createClearing)
                 {
                     Vector3 modifiedVertices = vertices[i] + tileCenter;
 
-                    if (modifiedVertices.x > treeSettings.clearingBottomLeft.x &&
-                        modifiedVertices.z < treeSettings.clearingTopRight.x &&
-                        modifiedVertices.z > treeSettings.clearingBottomLeft.y &&
-                        modifiedVertices.z < treeSettings.clearingTopRight.y)
+                    if (modifiedVertices.x > clearingSettings.clearingBottomLeft.x &&
+                        modifiedVertices.z < clearingSettings.clearingTopRight.x &&
+                        modifiedVertices.z > clearingSettings.clearingBottomLeft.y &&
+                        modifiedVertices.z < clearingSettings.clearingTopRight.y)
                         continue;
                 }
 

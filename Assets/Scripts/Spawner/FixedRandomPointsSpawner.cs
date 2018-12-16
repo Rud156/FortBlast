@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using FortBlast.ProceduralTerrain.Settings;
 using UnityEngine;
 
 namespace FortBlast.Spawner
@@ -13,8 +14,8 @@ namespace FortBlast.Spawner
 
             for (int i = 0; i < worldVertices.Length; i++)
             {
-                float selectionProbability = (float)totalPoints / (worldVertices.Length - i);
-                float randomValue = (float)rand.NextDouble();
+                float selectionProbability = (float) totalPoints / (worldVertices.Length - i);
+                float randomValue = (float) rand.NextDouble();
 
                 if (selectionProbability >= randomValue)
                 {

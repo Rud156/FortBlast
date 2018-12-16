@@ -8,20 +8,22 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
 {
     public class Trees
     {
-        public GameObject[] trees;
-        public Vector3[] treePoints;
+        private GameObject[] trees;
+        private Vector3[] treePoints;
 
         public bool hasRequestedTreePoints;
         public bool hasReceivedTreePoints;
         public bool hasPlacedTrees;
 
-        private Vector3 _meshCenter;
-        private TreeSettings _treeSettings;
+        private readonly Vector3 _meshCenter;
+        private readonly TreeSettings _treeSettings;
+        private readonly ClearingSettings _clearingSettings;
 
-        public Trees(Vector2 meshCenter, TreeSettings treeSettings)
+        public Trees(Vector2 meshCenter, TreeSettings treeSettings, ClearingSettings clearingSettings)
         {
             _meshCenter = new Vector3(meshCenter.x, 0, meshCenter.y);
             _treeSettings = treeSettings;
+            _clearingSettings = clearingSettings;
 
             trees = new GameObject[0];
             treePoints = new Vector3[0];
@@ -33,7 +35,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
             ThreadedDataRequester.RequestData(
                 () =>
                     TreePointsGenerator.SelectTreePoints(meshVertices, chunkSizeIndex,
-                        _meshCenter, _treeSettings),
+                        _meshCenter, _treeSettings, _clearingSettings),
                 OnTreePointsReceived
             );
         }
@@ -76,7 +78,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
         private void OnTreePointsReceived(object treePointsObject)
         {
             hasReceivedTreePoints = true;
-            treePoints = (Vector3[])treePointsObject;
+            treePoints = (Vector3[]) treePointsObject;
             trees = new GameObject[treePoints.Length];
 
             PlaceTreesOnPoints();

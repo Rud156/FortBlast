@@ -27,27 +27,27 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
         #endregion Singleton
 
         public delegate void TerrainGenerationInitialComplete();
+
         public TerrainGenerationInitialComplete terrainGenerationComplete;
 
 
-        [Header("Settings")]
-        public MeshSettings meshSettings;
+        [Header("Settings")] public MeshSettings meshSettings;
         public HeightMapSettings heightMapSettings;
         public TextureData textureData;
         public TreeSettings treeSettings;
         public TerrainObjectSettings terrainObjectSettings;
+        public ClearingSettings clearingSettings;
 
-        [Header("Map Values")]
-        public Transform viewer;
+        [Header("Map Values")] public Transform viewer;
         public Material mapMaterial;
         public LODInfo[] detailLevels;
         public int colliderLODIndex;
 
-        [Header("Extra Terrain Params")]
-        public bool fixedTerrainSize;
+        [Header("Extra Terrain Params")] public bool fixedTerrainSize;
         public bool enemiesOnCenterTile;
 
         private const float ViewerMoveThresholdForChunkUpdate = 25f;
+
         private const float SqrViewerMoveThresholdForChunkUpdate =
             ViewerMoveThresholdForChunkUpdate * ViewerMoveThresholdForChunkUpdate;
 
@@ -124,10 +124,12 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
             int currentChunkCoordX = Mathf.RoundToInt(_viewerPosition.x / _meshWorldSize);
             int currentChunkCoordY = Mathf.RoundToInt(_viewerPosition.y / _meshWorldSize);
 
-            for (int xOffset = -_chunksVisibleInViewDistance; xOffset <= _chunksVisibleInViewDistance;
-                    xOffset++)
+            for (int xOffset = -_chunksVisibleInViewDistance;
+                xOffset <= _chunksVisibleInViewDistance;
+                xOffset++)
             {
-                for (int yOffset = -_chunksVisibleInViewDistance; yOffset <= _chunksVisibleInViewDistance;
+                for (int yOffset = -_chunksVisibleInViewDistance;
+                    yOffset <= _chunksVisibleInViewDistance;
                     yOffset++)
                 {
                     Vector2 viewChunkCoord =
@@ -139,12 +141,10 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
                             _terrainChunkDict[viewChunkCoord].UpdateTerrainChunk();
                         else if (createNewChunks)
                         {
-                            bool createEnemies = true;
-                            if (!enemiesOnCenterTile && viewChunkCoord == Vector2.zero)
-                                createEnemies = false;
+                            bool createEnemies = !(!enemiesOnCenterTile && viewChunkCoord == Vector2.zero);
 
                             TerrainChunk newChunk = new TerrainChunk(viewChunkCoord,
-                                heightMapSettings, meshSettings, treeSettings, terrainObjectSettings,
+                                heightMapSettings, meshSettings, treeSettings, terrainObjectSettings, clearingSettings,
                                 detailLevels, colliderLODIndex, transform, viewer, mapMaterial,
                                 createEnemies);
                             _terrainChunkDict.Add(viewChunkCoord, newChunk);
@@ -152,6 +152,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
                             newChunk.Load();
                         }
                     }
+
                     yield return null;
                 }
             }
@@ -163,6 +164,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
             }
             else
                 NavMeshBaker.instance.ReBuildNavMesh();
+
             _updatingChunks = false;
         }
 

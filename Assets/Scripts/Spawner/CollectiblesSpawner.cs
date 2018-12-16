@@ -25,7 +25,7 @@ namespace FortBlast.Spawner
 
         public List<GameObject> collectiblePrefabs;
 
-        public GameObject[] SpawnCollectibles(Vector3[] points, Transform parent)
+        public void SpawnCollectibles(Vector3[] points, Transform parent)
         {
             GameObject[] gameObjectInstances = new GameObject[points.Length];
             for (int i = 0; i < points.Length; i++)
@@ -38,8 +38,6 @@ namespace FortBlast.Spawner
                 );
                 gameObjectInstances[i].transform.SetParent(parent);
             }
-
-            return gameObjectInstances;
         }
     }
 }
