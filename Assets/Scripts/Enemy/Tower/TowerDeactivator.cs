@@ -7,8 +7,7 @@ namespace FortBlast.Enemy.Tower
 {
     public class TowerDeactivator : MonoBehaviour
     {
-        [Header("UI Display")] public GameObject uiPrompt;
-        public Slider timerSlider;
+        [Header("UI Display")] public Slider timerSlider;
         public GameObject towerSwitchLight;
 
         [Header("Activation Stats")] public TowerController towerController;
@@ -17,17 +16,6 @@ namespace FortBlast.Enemy.Tower
         private float _currentInteractionTime;
         private bool _playerNearby;
         private bool _towerDeactivated;
-
-        /// <summary>
-        /// Start is called on the frame when a script is enabled just before
-        /// any of the Update methods is called the first time.
-        /// </summary>
-        void Start()
-        {
-            _playerNearby = false;
-            _towerDeactivated = false;
-            _currentInteractionTime = 0;
-        }
 
         /// <summary>
         /// OnTriggerEnter is called when the Collider other enters the trigger.
@@ -57,43 +45,28 @@ namespace FortBlast.Enemy.Tower
             if (_towerDeactivated)
                 return;
 
-            DisplayPrompt();
-
             CheckPlayerInteraction();
             UpdateSliderAndDeactivateTower();
-        }
 
-        private void DisplayPrompt()
-        {
-            if (_playerNearby)
-                uiPrompt.SetActive(true);
-            else
-                uiPrompt.SetActive(false);
+            CheckAndDeactivateTower();
         }
 
         private void CheckPlayerInteraction()
         {
             if (Input.GetKey(Controls.InteractionKey) && _playerNearby)
-            {
                 _currentInteractionTime += Time.deltaTime;
-                timerSlider.gameObject.SetActive(true);
-            }
             else
-            {
                 _currentInteractionTime = 0;
-                timerSlider.gameObject.SetActive(false);
-            }
         }
 
-        private void UpdateSliderAndDeactivateTower()
-        {
+        private void UpdateSliderAndDeactivateTower() =>
             timerSlider.value = _currentInteractionTime / maxInteractionTime;
+
+        private void CheckAndDeactivateTower()
+        {
             if (_currentInteractionTime >= maxInteractionTime)
             {
                 _towerDeactivated = true;
-
-                timerSlider.gameObject.SetActive(false);
-                uiPrompt.SetActive(false);
                 towerSwitchLight.SetActive(false);
 
                 towerController.DeactivateTower();
