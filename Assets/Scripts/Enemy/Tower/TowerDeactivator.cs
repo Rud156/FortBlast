@@ -7,18 +7,15 @@ namespace FortBlast.Enemy.Tower
 {
     public class TowerDeactivator : MonoBehaviour
     {
-        [Header("UI Display")]
-        public GameObject uiPrompt;
+        [Header("UI Display")] public GameObject uiPrompt;
         public Slider timerSlider;
         public GameObject towerSwitchLight;
 
-        [Header("Activation Stats")]
-        public TowerController towerController;
+        [Header("Activation Stats")] public TowerController towerController;
         public float maxInteractionTime;
 
         private float _currentInteractionTime;
         private bool _playerNearby;
-        private bool _inPlayerFOV;
         private bool _towerDeactivated;
 
         /// <summary>
@@ -28,7 +25,6 @@ namespace FortBlast.Enemy.Tower
         void Start()
         {
             _playerNearby = false;
-            _inPlayerFOV = false;
             _towerDeactivated = false;
             _currentInteractionTime = 0;
         }
@@ -54,16 +50,6 @@ namespace FortBlast.Enemy.Tower
         }
 
         /// <summary>
-        /// OnBecameVisible is called when the renderer became visible by any camera.
-        /// </summary>
-        void OnBecameVisible() => _inPlayerFOV = true;
-
-        /// <summary>
-        /// OnBecameInvisible is called when the renderer is no longer visible by any camera.
-        /// </summary>
-        void OnBecameInvisible() => _inPlayerFOV = false;
-
-        /// <summary>
         /// Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
         void Update()
@@ -87,7 +73,7 @@ namespace FortBlast.Enemy.Tower
 
         private void CheckPlayerInteraction()
         {
-            if (Input.GetKey(Controls.InteractionKey) && _playerNearby && _inPlayerFOV)
+            if (Input.GetKey(Controls.InteractionKey) && _playerNearby)
             {
                 _currentInteractionTime += Time.deltaTime;
                 timerSlider.gameObject.SetActive(true);
