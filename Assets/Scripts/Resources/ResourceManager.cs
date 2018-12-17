@@ -45,7 +45,7 @@ namespace FortBlast.Resources
         void Start()
         {
             items = new Dictionary<string, InventoryItemStats>();
-            items.Add("Bottle", new InventoryItemStats
+            items.Add(testItem.displayName, new InventoryItemStats
             {
                 inventoryItem = testItem,
                 itemCount = 20

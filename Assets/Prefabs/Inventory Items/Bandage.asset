@@ -16,5 +16,5 @@ MonoBehaviour:
   image: {fileID: 2800000, guid: 0018091236eab454f913f20ecac2d7c1, type: 3}
   type: 2
   prefab: {fileID: 0}
-  healthAmount: 0
+  healthAmount: 30
   glassBreakingAudioPrefab: {fileID: 0}

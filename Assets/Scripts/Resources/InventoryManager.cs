@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FortBlast.Common;
 using FortBlast.Enums;
 using FortBlast.Extras;
 using FortBlast.Scenes.MainScene;
@@ -28,7 +29,6 @@ namespace FortBlast.Resources
         #endregion Singleton
 
         public List<InventoryItem> inventoryItems;
-
 
         [Header("Inventory Display")] public GameObject inventory;
         public RectTransform contentContainer;
@@ -72,6 +72,8 @@ namespace FortBlast.Resources
             }
         }
 
+        private HealthSetter _playerHealth;
+
         private const float FiftyPercentAlpha = 0.196f;
 
         /// <summary>
@@ -88,6 +90,8 @@ namespace FortBlast.Resources
             ItemSelected = null;
 
             itemConfirmButton.onClick.AddListener(SpawnItemOnButtonPress);
+
+            _playerHealth = GameObject.FindGameObjectWithTag(TagManager.Player)?.GetComponent<HealthSetter>();
         }
 
         /// <summary>
@@ -121,6 +125,7 @@ namespace FortBlast.Resources
 
         #endregion InventoryActions
 
+
         private void SpawnItemOnButtonPress()
         {
             if (ItemSelected == null)
@@ -128,8 +133,13 @@ namespace FortBlast.Resources
 
             if (ResourceManager.instance.HasResource(ItemSelected.inventoryItem.displayName))
             {
-                GameManager.instance.InventoryItemSelected(ItemSelected.inventoryItem);
+                if (ItemSelected.inventoryItem.type == ItemType.Spawnable)
+                    GameManager.instance.InventoryItemSelected(ItemSelected.inventoryItem);
+                else if (ItemSelected.inventoryItem.type == ItemType.Consumable)
+                    _playerHealth.AddHealth(ItemSelected.inventoryItem.healthAmount);
+
                 ResourceManager.instance.UseResource(ItemSelected.inventoryItem.displayName);
+
                 ClearItemSelection();
                 CloseInventory();
             }
@@ -218,16 +228,18 @@ namespace FortBlast.Resources
                 RectTransform itemDisplayTransform = itemDisplayInstance.GetComponent<RectTransform>();
                 itemDisplayTransform.SetParent(contentContainer, false);
 
-                InventoryDisplay inventoryDisplay = new InventoryDisplay();
-                inventoryDisplay.inventoryItem = item;
+                InventoryDisplay inventoryDisplay = new InventoryDisplay
+                {
+                    inventoryItem = item,
+                    itemButton = itemDisplayInstance
+                        .transform.GetChild(0).GetComponent<Button>(),
+                    itemBorder = itemDisplayInstance
+                        .transform.GetChild(0).GetComponent<Image>(),
+                    itemImage = itemDisplayInstance
+                        .transform.GetChild(1).GetComponent<RawImage>()
+                };
 
-                inventoryDisplay.itemButton = itemDisplayInstance
-                    .transform.GetChild(0).GetComponent<Button>();
-                inventoryDisplay.itemBorder = itemDisplayInstance
-                    .transform.GetChild(0).GetComponent<Image>();
 
-                inventoryDisplay.itemImage = itemDisplayInstance
-                    .transform.GetChild(1).GetComponent<RawImage>();
                 inventoryDisplay.itemImage.texture = item.image;
                 inventoryDisplay.itemNameText = itemDisplayInstance.transform.GetChild(2).GetComponent<Text>();
                 inventoryDisplay.itemNameText.text = item.displayName;
