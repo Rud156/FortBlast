@@ -2138,17 +2138,17 @@ MonoBehaviour:
   lookPoint: {fileID: 4430802951464746}
   reflectorTrigger: {fileID: 114349024953332368}
   teleportDistance: 30
-  maxReflectionCount: 20
+  maxReflectionCount: 2000
   reflectionGenerationRate: 0.1
-  maxTeleporterCount: 10
+  maxTeleporterCount: 1000
   teleporterGenerationRate: 0.1
   teleporterLandEffect: {fileID: 1920721077310836, guid: f7755e8d75312bd45b007e3e9941831a,
     type: 2}
   reflectCameraShaker:
-    magnitude: 3
-    roughness: 3
-    fadeOutTime: 0.2
-    fadeInTime: 0.5
+    magnitude: 2
+    roughness: 1
+    fadeOutTime: 0.1
+    fadeInTime: 0.2
   teleportCameraShaker:
     magnitude: 5
     roughness: 5
@@ -2296,6 +2296,7 @@ MonoBehaviour:
     type: 2}
   effectInstantiatePoint: {fileID: 4439032615456392}
   useSkinnedMesh: 1
+  destroyWithoutEffect: 0
 --- !u!114 &114853501754367484
 MonoBehaviour:
   m_ObjectHideFlags: 1
