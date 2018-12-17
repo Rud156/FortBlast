@@ -51,6 +51,7 @@ namespace FortBlast.Resources
                 itemCount = 20
             });
             // TODO: Read initial resources from file
+            resourcesChanged?.Invoke();
         }
 
         public void AddResource(InventoryItem item, int count = 1)
