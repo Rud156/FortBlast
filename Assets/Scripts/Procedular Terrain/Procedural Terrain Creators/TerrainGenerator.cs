@@ -40,7 +40,6 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
 
         [Header("Map Values")] public Transform viewer;
         public Material mapMaterial;
-        public LODInfo[] detailLevels;
         public int colliderLODIndex;
 
         [Header("Extra Terrain Params")] public bool fixedTerrainSize;
@@ -77,7 +76,8 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
             _terrainChunkDict = new Dictionary<Vector2, TerrainChunk>();
             _visibleTerrainChunks = new List<TerrainChunk>();
 
-            float maxViewDistance = detailLevels[detailLevels.Length - 1].visibleDistanceThreshold;
+            float maxViewDistance = terrainObjectSettings.detailLevels[terrainObjectSettings.detailLevels.Length - 1]
+                .visibleDistanceThreshold;
 
             _meshWorldSize = meshSettings.meshWorldSize;
             _chunksVisibleInViewDistance = Mathf.RoundToInt(maxViewDistance / _meshWorldSize);
@@ -145,7 +145,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
 
                             TerrainChunk newChunk = new TerrainChunk(viewChunkCoord,
                                 heightMapSettings, meshSettings, treeSettings, terrainObjectSettings, clearingSettings,
-                                detailLevels, colliderLODIndex, transform, viewer, mapMaterial,
+                                terrainObjectSettings.detailLevels, colliderLODIndex, transform, viewer, mapMaterial,
                                 createEnemies);
                             _terrainChunkDict.Add(viewChunkCoord, newChunk);
                             newChunk.onVisibilityChanged += OnTerrainChunkVisibilityChanged;
