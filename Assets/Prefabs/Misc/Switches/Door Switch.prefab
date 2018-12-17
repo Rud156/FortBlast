@@ -55,7 +55,8 @@ GameObject:
   - component: {fileID: 4994676463409162}
   - component: {fileID: 33106013728769994}
   - component: {fileID: 23065136645271256}
-  - component: {fileID: 64821382894236180}
+  - component: {fileID: 65908625077628960}
+  - component: {fileID: 114791174425354062}
   m_Layer: 0
   m_Name: Door Switch
   m_TagString: Untagged
@@ -566,20 +567,6 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300350, guid: 7c481f901e6fd6544a2901233ce8f8b2, type: 3}
---- !u!64 &64821382894236180
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1572546275846506}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300338, guid: 7c481f901e6fd6544a2901233ce8f8b2, type: 3}
 --- !u!65 &65128469853894636
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -604,6 +591,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65908625077628960
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1572546275846506}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.9009695, y: 13.131828, z: 4.3}
+  m_Center: {x: 0.057376638, y: 6.565893, z: -0.008484693}
 --- !u!114 &114490280095236134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -743,6 +742,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114791174425354062
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1572546275846506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fb592eb2b564574fb0be6c2c1d4314c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135033900722545942
 SphereCollider:
   m_ObjectHideFlags: 1

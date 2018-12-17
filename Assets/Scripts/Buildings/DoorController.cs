@@ -11,7 +11,6 @@ namespace FortBlast.Buildings
         public GameObject doorCollider;
 
         [Header("Time Controls")] public float deactivationTime;
-        public Slider timeSlider;
 
         [Header("Objects")] public Transform[] switchPoints;
         public GameObject switchPrefab;
@@ -19,6 +18,11 @@ namespace FortBlast.Buildings
         private bool _isPlayerNearby;
         private float _currentDeactivationTime;
         private bool _gateDeactivated;
+
+        private Slider _timeSlider;
+        private Renderer _switchLightRenderer;
+
+        private void Start() => CreateAndActivateDoorSwitch();
 
         private void Update()
         {
@@ -30,16 +34,31 @@ namespace FortBlast.Buildings
             CheckAndDeactivateGate();
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerPlayerEnter(Collider other)
         {
-            if (other.CompareTag(TagManager.Player))
+            if (other.CompareTag(TagManager.VisibleCollider))
                 _isPlayerNearby = true;
         }
 
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.CompareTag(TagManager.Player))
+        private void OnTriggerPlayerExit(Collider other)
+        {   
+            if (other.CompareTag(TagManager.VisibleCollider))
                 _isPlayerNearby = false;
+        }
+
+        private void CreateAndActivateDoorSwitch()
+        {
+            int randomPoint = Mathf.FloorToInt(Random.value * switchPoints.Length);
+            GameObject switchInstance = Instantiate(switchPrefab, switchPoints[randomPoint].position,
+                switchPrefab.transform.rotation);
+            switchInstance.transform.SetParent(transform);
+
+            SwitchColliderNotifier colliderNotifier = switchInstance.GetComponent<SwitchColliderNotifier>();
+            colliderNotifier.triggerEnter += OnTriggerPlayerEnter;
+            colliderNotifier.triggerExit += OnTriggerPlayerExit;
+
+            _timeSlider = switchInstance.GetComponentInChildren<Slider>();
+            _switchLightRenderer = switchInstance.transform.GetChild(0).GetComponent<Renderer>();
         }
 
         private void CheckPlayerInteractionTime()
@@ -51,7 +70,7 @@ namespace FortBlast.Buildings
         }
 
 
-        private void UpdateTimerSlider() => timeSlider.value = _currentDeactivationTime / deactivationTime;
+        private void UpdateTimerSlider() => _timeSlider.value = _currentDeactivationTime / deactivationTime;
 
         private void CheckAndDeactivateGate()
         {
@@ -63,6 +82,8 @@ namespace FortBlast.Buildings
 
                 ParticleSystem.EmissionModule emission = doorParticles.emission;
                 emission.rateOverTime = 0;
+
+                _switchLightRenderer.material.SetColor("_EmissionColor", Color.red);
             }
         }
     }
