@@ -69,10 +69,11 @@ namespace FortBlast.Spawner
             if (selectionProbability >= randomValue)
             {
                 int meshVertexIndex = Mathf.FloorToInt(Random.value * meshData.vertices.Length);
-                Vector3 meshVertex = meshData.vertices[meshVertexIndex] + meshData.meshCenter;
+                Vector3 meshVertex = meshData.vertices[meshVertexIndex] +
+                                     new Vector3(meshData.meshCenter.x, 0, meshData.meshCenter.y);
                 meshVertex.y = heightAboveBaseGround;
 
-                if (clearingSettings.createClearing && clearingSettings.useOnlyCenterTile)
+                if (clearingSettings.useOnlyCenterTile && clearingSettings.createClearing)
                     if (meshData.meshCenter == Vector3.zero)
                         return;
 
