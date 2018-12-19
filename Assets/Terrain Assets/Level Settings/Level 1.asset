@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Level 1
   m_EditorClassIdentifier: 
   maxDroids: 1
-  maxTowers: 1
+  maxTowers: 5
   maxCollectibles: 10
   detailLevels:
   - lod: 0

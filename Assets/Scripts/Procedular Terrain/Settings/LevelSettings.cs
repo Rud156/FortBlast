@@ -2,8 +2,8 @@
 
 namespace FortBlast.ProceduralTerrain.Settings
 {
-    [CreateAssetMenu(menuName = "Terrain/TerrainObjectSettings", fileName = "TerrainObjectSettings")]
-    public class TerrainObjectSettings : ScriptableObject
+    [CreateAssetMenu(menuName = "Terrain/LevelSettings", fileName = "LevelSettings")]
+    public class LevelSettings : ScriptableObject
     {
         [Header("Items Per Terrain Chunk")] public int maxDroids;
         public int maxTowers;

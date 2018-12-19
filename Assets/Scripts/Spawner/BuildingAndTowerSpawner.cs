@@ -1,11 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using FortBlast.ProceduralTerrain.Settings;
 using UnityEngine;
 
 namespace FortBlast.Spawner
 {
     public class BuildingAndTowerSpawner : MonoBehaviour
     {
+        private struct TerrainMeshData
+        {
+            public Vector3[] vertices;
+            public Vector3 meshCenter;
+            public Transform parent;
+        }
+
         #region Singleton
 
         public static BuildingAndTowerSpawner instance;
@@ -24,27 +32,70 @@ namespace FortBlast.Spawner
 
         #endregion Singleton
 
-        public GameObject buildingPrefab;
+        [Header("Building Prefabs")] public GameObject buildingPrefab;
         public GameObject towerPrefab;
         public int[] yRotation;
 
-        public void CreateTowersAndBuildings(Vector3 meshVertex, Transform parent)
+        [Header("Creation Stats")] public LevelSettings levelSettings;
+        public ClearingSettings clearingSettings;
+        public float heightAboveBaseGround;
+
+        private int _terrainCount;
+        private int _totalTerrainCount;
+        private int _currentCount;
+        private int _totalBuildingToBeCreated;
+
+        private void Start() => _totalBuildingToBeCreated = levelSettings.maxTowers;
+
+        public void SetTotalTerrainCount(int totalTerrainCount) => _totalTerrainCount = totalTerrainCount;
+
+        public void AddTerrainData(Vector3[] meshVertices, Vector3 meshCenter, Transform parent)
         {
-            int randomNumber = Random.Range(0, 1000) % yRotation.Length;
-            GameObject buildingInstance = Instantiate(buildingPrefab, meshVertex,
-                buildingPrefab.transform.rotation);
-            buildingInstance.transform.SetParent(parent);
+            TerrainMeshData meshData = new TerrainMeshData
+            {
+                vertices = meshVertices,
+                meshCenter = meshCenter,
+                parent = parent
+            };
 
-            Transform towerPointsParent = buildingInstance.transform.GetChild(0);
-            Vector3 position = towerPointsParent.GetChild(randomNumber).position;
+            CheckAndCreateTowersAndBuildings(meshData);
+        }
 
-            GameObject towerInstance = Instantiate(
-                towerPrefab,
-                position,
-                Quaternion.Euler(0, yRotation[randomNumber], 0)
-            );
+        private void CheckAndCreateTowersAndBuildings(TerrainMeshData meshData)
+        {
+            float selectionProbability = (float) _totalBuildingToBeCreated / (_totalTerrainCount - _currentCount);
+            float randomValue = Random.value;
 
-			towerInstance.transform.SetParent(buildingInstance.transform);
+            if (selectionProbability >= randomValue)
+            {
+                int meshVertexIndex = Mathf.FloorToInt(Random.value * meshData.vertices.Length);
+                Vector3 meshVertex = meshData.vertices[meshVertexIndex] + meshData.meshCenter;
+                meshVertex.y = heightAboveBaseGround;
+
+                if (clearingSettings.createClearing && clearingSettings.useOnlyCenterTile)
+                    if (meshData.meshCenter == Vector3.zero)
+                        return;
+
+                int randomNumber = Random.Range(0, 1000) % yRotation.Length;
+                GameObject buildingInstance = Instantiate(buildingPrefab, meshVertex,
+                    buildingPrefab.transform.rotation);
+                buildingInstance.transform.SetParent(meshData.parent);
+
+                Transform towerPointsParent = buildingInstance.transform.GetChild(0);
+                Vector3 position = towerPointsParent.GetChild(randomNumber).position;
+
+                GameObject towerInstance = Instantiate(
+                    towerPrefab,
+                    position,
+                    Quaternion.Euler(0, yRotation[randomNumber], 0)
+                );
+
+                towerInstance.transform.SetParent(buildingInstance.transform);
+
+                _totalBuildingToBeCreated -= 1;
+            }
+
+            _currentCount += 1;
         }
     }
 }

@@ -3,6 +3,7 @@ using FortBlast.Extras;
 using FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData;
 using FortBlast.ProceduralTerrain.Generators;
 using FortBlast.ProceduralTerrain.Settings;
+using FortBlast.Spawner;
 using FortBlast.Structs;
 using UnityEngine;
 
@@ -37,9 +38,9 @@ namespace FortBlast.ProceduralTerrain.DataHolders
         private Trees _chunkTrees;
 
         private TerrainInteractiblesCreator _terrainInteractibles;
-        private bool _collectiblesRequested = false;
-        private bool _droidsRequested = false;
-        private bool _towersRequested = false;
+        private bool _collectiblesRequested;
+        private bool _droidsRequested;
+        private bool _meshDatSentForTower;
 
         private HeightMapSettings _heightMapSettings;
         private MeshSettings _meshSettings;
@@ -53,14 +54,13 @@ namespace FortBlast.ProceduralTerrain.DataHolders
 
         public TerrainChunk(Vector2 coord, HeightMapSettings heightMapSettings,
             MeshSettings meshSettings, TreeSettings treeSettings,
-            TerrainObjectSettings terrainObjectSettings, ClearingSettings clearingSettings, LODInfo[] detailLevels,
+            LevelSettings levelSettings, ClearingSettings clearingSettings, LODInfo[] detailLevels,
             int colliderLODIndex, Transform parent, Transform viewer, Material material,
             bool createEnemies)
         {
             this.coord = coord;
 
             _droidsRequested = !createEnemies;
-            _towersRequested = !createEnemies;
 
             _detailLevels = detailLevels;
             _prevLODIndex = -1;
@@ -86,7 +86,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
 
             _chunkTrees = new Trees(position, treeSettings, clearingSettings);
             _terrainInteractibles = new TerrainInteractiblesCreator(position, _meshObject.transform,
-                terrainObjectSettings, clearingSettings);
+                levelSettings, clearingSettings);
 
             SetVisible(false);
 
@@ -100,10 +100,6 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             }
 
             _maxViewDistance = detailLevels[detailLevels.Length - 1].visibleDistanceThreshold;
-
-            bool willTerrainHaveTower = Random.Range(0, 100) < 10;
-            if (!willTerrainHaveTower)
-                _towersRequested = true;
         }
 
         public void Load()
@@ -150,8 +146,12 @@ namespace FortBlast.ProceduralTerrain.DataHolders
 
                         if (!_droidsRequested)
                             CreateInitialDroids(lodMesh.meshVertices);
-                        if (!_towersRequested)
-                            RequestTerrainTower(lodMesh.meshVertices);
+                        if (!_meshDatSentForTower)
+                        {
+                            BuildingAndTowerSpawner.instance.AddTerrainData(lodMesh.meshVertices, _sampleCenter,
+                                _meshObject.transform);
+                            _meshDatSentForTower = true;
+                        }
                     }
                     else if (!lodMesh.hasRequestedMesh)
                         lodMesh.RequestMesh(_heightMap, _meshSettings);
@@ -214,12 +214,6 @@ namespace FortBlast.ProceduralTerrain.DataHolders
         {
             _terrainInteractibles.RequestInteractiblesPoints(meshVertices, TerrainInteractibles.droids);
             _droidsRequested = true;
-        }
-
-        private void RequestTerrainTower(Vector3[] meshVertices)
-        {
-            _terrainInteractibles.RequestInteractiblesPoints(meshVertices, TerrainInteractibles.towers);
-            _towersRequested = true;
         }
 
         private void RequestAndPlaceTrees(LODMesh lodMesh)

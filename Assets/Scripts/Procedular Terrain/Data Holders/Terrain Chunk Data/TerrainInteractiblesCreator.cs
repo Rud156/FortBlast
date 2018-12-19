@@ -11,15 +11,15 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
     {
         private Transform _parent;
         private Vector3 _meshCenter;
-        private TerrainObjectSettings _terrainObjectSettings;
+        private LevelSettings _levelSettings;
         private ClearingSettings _clearingSettings;
 
         public TerrainInteractiblesCreator(Vector2 meshCenter, Transform parent,
-            TerrainObjectSettings terrainObjectSettings, ClearingSettings clearingSettings)
+            LevelSettings levelSettings, ClearingSettings clearingSettings)
         {
             _meshCenter = new Vector3(meshCenter.x, 0, meshCenter.y);
             _parent = parent;
-            _terrainObjectSettings = terrainObjectSettings;
+            _levelSettings = levelSettings;
             _clearingSettings = clearingSettings;
         }
 
@@ -33,16 +33,13 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
                     {
                         case TerrainInteractibles.collectibles:
                             return FixedRandomPointsSpawner.GeneratePoints(meshVertices,
-                                _terrainObjectSettings.maxCollectibles);
+                                _levelSettings.maxCollectibles);
                         case TerrainInteractibles.droids:
                             return FixedRandomPointsSpawner.GeneratePoints(meshVertices,
-                                _terrainObjectSettings.maxDroids);
-                        case TerrainInteractibles.towers:
-                            return FixedRandomPointsSpawner.GeneratePoints(meshVertices,
-                                _terrainObjectSettings.maxTowers);
+                                _levelSettings.maxDroids);
                         default:
                             return FixedRandomPointsSpawner.GeneratePoints(meshVertices,
-                                _terrainObjectSettings.maxCollectibles);
+                                _levelSettings.maxCollectibles);
                     }
                 },
                 (points) =>
@@ -68,9 +65,6 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
                     break;
                 case TerrainInteractibles.droids:
                     DroidSpawner.instance.SpawnDroids(rawPoints, _parent);
-                    break;
-                case TerrainInteractibles.towers:
-                    BuildingAndTowerSpawner.instance.CreateTowersAndBuildings(rawPoints[0], _parent);
                     break;
             }
         }

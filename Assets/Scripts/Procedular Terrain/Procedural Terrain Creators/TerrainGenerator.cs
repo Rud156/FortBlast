@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FortBlast.ProceduralTerrain.DataHolders;
 using FortBlast.ProceduralTerrain.Settings;
+using FortBlast.Spawner;
 using UnityEngine;
 
 namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
@@ -35,7 +36,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
         public HeightMapSettings heightMapSettings;
         public TextureData textureData;
         public TreeSettings treeSettings;
-        public TerrainObjectSettings terrainObjectSettings;
+        public LevelSettings levelSettings;
         public ClearingSettings clearingSettings;
 
         [Header("Map Values")] public Transform viewer;
@@ -76,12 +77,16 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
             _terrainChunkDict = new Dictionary<Vector2, TerrainChunk>();
             _visibleTerrainChunks = new List<TerrainChunk>();
 
-            float maxViewDistance = terrainObjectSettings.detailLevels[terrainObjectSettings.detailLevels.Length - 1]
+            float maxViewDistance = levelSettings.detailLevels[levelSettings.detailLevels.Length - 1]
                 .visibleDistanceThreshold;
 
             _meshWorldSize = meshSettings.meshWorldSize;
             _chunksVisibleInViewDistance = Mathf.RoundToInt(maxViewDistance / _meshWorldSize);
             _updatingChunks = false;
+
+            BuildingAndTowerSpawner.instance.SetTotalTerrainCount(
+                (_chunksVisibleInViewDistance * 2 + 1) * (_chunksVisibleInViewDistance * 2 + 1)
+            );
 
             StartCoroutine(UpdateVisibleChunks(true, true));
         }
@@ -91,7 +96,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
         /// </summary>
         void Update()
         {
-            if (viewer == null)
+            if (!viewer)
                 return;
 
             _viewerPosition =
@@ -144,8 +149,8 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
                             bool createEnemies = !(!enemiesOnCenterTile && viewChunkCoord == Vector2.zero);
 
                             TerrainChunk newChunk = new TerrainChunk(viewChunkCoord,
-                                heightMapSettings, meshSettings, treeSettings, terrainObjectSettings, clearingSettings,
-                                terrainObjectSettings.detailLevels, colliderLODIndex, transform, viewer, mapMaterial,
+                                heightMapSettings, meshSettings, treeSettings, levelSettings, clearingSettings,
+                                levelSettings.detailLevels, colliderLODIndex, transform, viewer, mapMaterial,
                                 createEnemies);
                             _terrainChunkDict.Add(viewChunkCoord, newChunk);
                             newChunk.onVisibilityChanged += OnTerrainChunkVisibilityChanged;
