@@ -593,7 +593,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4941875507075228}
-  - component: {fileID: 114554375578985510}
   m_Layer: 8
   m_Name: Camera Transform Wrapper
   m_TagString: Untagged
@@ -908,6 +907,7 @@ GameObject:
   - component: {fileID: 114046259173662578}
   - component: {fileID: 114853501754367484}
   - component: {fileID: 114746290639539722}
+  - component: {fileID: 114669628295997426}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2133,27 +2133,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 036bac1b83f85b640805ce7fa2df14e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reflector: {fileID: 1550520216612126}
-  teleporter: {fileID: 1847134197133212}
   lookPoint: {fileID: 4430802951464746}
-  reflectorTrigger: {fileID: 114349024953332368}
-  teleportDistance: 30
   maxReflectionCount: 2000
-  reflectionGenerationRate: 0.1
   maxTeleporterCount: 1000
-  teleporterGenerationRate: 0.1
-  teleporterLandEffect: {fileID: 1920721077310836, guid: f7755e8d75312bd45b007e3e9941831a,
-    type: 2}
   reflectCameraShaker:
     magnitude: 2
     roughness: 1
     fadeOutTime: 0.1
     fadeInTime: 0.2
+  reflectionGenerationRate: 0.1
+  reflector: {fileID: 1550520216612126}
+  reflectorTrigger: {fileID: 114349024953332368}
   teleportCameraShaker:
     magnitude: 5
     roughness: 5
     fadeOutTime: 0.5
     fadeInTime: 0.5
+  teleportDistance: 30
+  teleporter: {fileID: 1847134197133212}
+  teleporterGenerationRate: 0.1
+  teleporterLandEffect: {fileID: 1920721077310836, guid: f7755e8d75312bd45b007e3e9941831a,
+    type: 2}
 --- !u!114 &114256660698800802
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2247,23 +2247,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 552792754ed0e33498fba2935b73e5c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animatorLerpRate: 7
   movementSpeed: 75
   runningSpeed: 225
-  animatorLerpRate: 7
---- !u!114 &114554375578985510
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1588967341037630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1951cb51711bfd14e82e2b26b87b3151, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minCameraAngle: 30
-  maxCameraAngle: 340
-  verticalSpeed: 50
 --- !u!114 &114668971885987348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2280,6 +2266,21 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   priority: 0
+--- !u!114 &114669628295997426
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1962741146697706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1951cb51711bfd14e82e2b26b87b3151, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxCameraAngle: 340
+  minCameraAngle: 30
+  verticalSpeed: 50
+  playerCamera: {fileID: 4941875507075228}
 --- !u!114 &114746290639539722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2291,12 +2292,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e522a48989abef4bb3b9f2b58a72d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealthAmount: 10000
   deathEffect: {fileID: 1081440733256164, guid: 4bb6ff73808d40a4184f0bb816a4a9b1,
     type: 2}
-  effectInstantiatePoint: {fileID: 4439032615456392}
-  useSkinnedMesh: 1
   destroyWithoutEffect: 0
+  effectInstantiatePoint: {fileID: 4439032615456392}
+  maxHealthAmount: 10000
+  useSkinnedMesh: 1
 --- !u!114 &114853501754367484
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2308,10 +2309,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811f4c6b6a7c7e14fba93a3d166b61b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 4770809429133766}
   itemLaunchVelocity: 25
   launchEffect: {fileID: 1164654482026490, guid: 98c11e4fb77cc974e85a08b52a0a4074,
     type: 2}
+  spawnPoint: {fileID: 4770809429133766}
 --- !u!135 &135168868423397694
 SphereCollider:
   m_ObjectHideFlags: 1

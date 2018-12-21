@@ -1,42 +1,36 @@
 using FortBlast.Extras;
 using UnityEngine;
 
-namespace FortBlast.Camera
+namespace FortBlast.CustomCamera
 {
     public class MoveCameraWithMouse : MonoBehaviour
     {
         private const string MouseY = "Mouse Y";
 
-        private float _pitch;
-        public float maxCameraAngle = 340;
+        [Header(("Movement Stats"))] public float maxCameraAngle = 340;
         public float minCameraAngle = 30;
         public float verticalSpeed;
+
+        [Header(("Camera"))] public Transform playerCamera;
+
+        private float _pitch;
 
         /// <summary>
         ///     Start is called on the frame when a script is enabled just before
         ///     any of the Update methods is called the first time.
         /// </summary>
-        private void Start()
-        {
-            _pitch = transform.localRotation.eulerAngles.x;
-        }
+        private void Start() => _pitch = playerCamera.localRotation.eulerAngles.x;
 
         /// <summary>
         ///     Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
-        private void Update()
-        {
-            SetAndLimitPitch();
-        }
+        private void Update() => SetAndLimitPitch();
 
         /// <summary>
         ///     LateUpdate is called every frame, if the Behaviour is enabled.
         ///     It is called after all Update functions have been called.
         /// </summary>
-        private void LateUpdate()
-        {
-            transform.localRotation = Quaternion.Euler(_pitch, 0, 0);
-        }
+        private void LateUpdate() => playerCamera.localRotation = Quaternion.Euler(_pitch, 0, 0);
 
         private void SetAndLimitPitch()
         {

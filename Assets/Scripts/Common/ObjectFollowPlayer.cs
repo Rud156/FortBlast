@@ -1,3 +1,4 @@
+using FortBlast.Extras;
 using UnityEngine;
 
 namespace FortBlast.Common
@@ -9,9 +10,9 @@ namespace FortBlast.Common
         public float lookSpeed = 10f;
         public Vector3 objectOffset;
 
-        [Header("Player")] public Transform player;
-
         [Header("Rotation")] public bool useRotation;
+
+        private Transform _player;
 
         /// <summary>
         ///     Start is called on the frame when a script is enabled just before
@@ -19,7 +20,8 @@ namespace FortBlast.Common
         /// </summary>
         private void Start()
         {
-            _lastPlayerPosition = player.position;
+            _player = GameObject.FindGameObjectWithTag(TagManager.Player)?.transform;
+            _lastPlayerPosition = _player.position;
         }
 
         private void LateUpdate()
@@ -33,7 +35,7 @@ namespace FortBlast.Common
 
         private void LookAtTarget()
         {
-            var targetPosition = player ? player.position : _lastPlayerPosition;
+            var targetPosition = _player ? _player.position : _lastPlayerPosition;
 
             var lookDirection = targetPosition - transform.position;
             var rotation = Quaternion.LookRotation(lookDirection, Vector3.up);
@@ -49,12 +51,12 @@ namespace FortBlast.Common
             var rightVector = Vector3.right;
             var upVector = Vector3.up;
 
-            if (player)
+            if (_player)
             {
-                targetVector = player.position;
-                forwardVector = player.forward;
-                rightVector = player.right;
-                upVector = player.up;
+                targetVector = _player.position;
+                forwardVector = _player.forward;
+                rightVector = _player.right;
+                upVector = _player.up;
             }
 
             var targetPosition = targetVector +
@@ -67,8 +69,8 @@ namespace FortBlast.Common
 
         private void UpdateLastPlayerPosition()
         {
-            if (player)
-                _lastPlayerPosition = player.position;
+            if (_player)
+                _lastPlayerPosition = _player.position;
         }
     }
 }
