@@ -1,41 +1,21 @@
-﻿using System.Collections.Generic;
-using FortBlast.Enemy.Droid.Patrol;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace FortBlast.Spawner
 {
     public class DroidSpawner : MonoBehaviour
     {
-        #region Singleton
-
-        public static DroidSpawner instance;
-
-        /// <summary>
-        /// Awake is called when the script instance is being loaded.
-        /// </summary>
-        void Awake()
-        {
-            if (instance == null)
-                instance = this;
-
-            if (instance != this)
-                Destroy(gameObject);
-        }
-
-        #endregion Singleton
-
-        [Range(10, 90)]
-        public int secondDroidSpawnProbability;
         public GameObject[] droidPrefabs;
+
+        [Range(10, 90)] public int secondDroidSpawnProbability;
 
         public GameObject[] SpawnDroids(Vector3[] meshVertices, Transform parent)
         {
-            GameObject[] droids = new GameObject[meshVertices.Length];
+            var droids = new GameObject[meshVertices.Length];
 
-            for (int i = 0; i < meshVertices.Length; i++)
+            for (var i = 0; i < meshVertices.Length; i++)
             {
                 GameObject droidPrefab;
-                int randomValue = Random.Range(0, 100);
+                var randomValue = Random.Range(0, 100);
 
                 if (randomValue <= secondDroidSpawnProbability)
                     droidPrefab = droidPrefabs[1];
@@ -49,5 +29,23 @@ namespace FortBlast.Spawner
 
             return droids;
         }
+
+        #region Singleton
+
+        public static DroidSpawner instance;
+
+        /// <summary>
+        ///     Awake is called when the script instance is being loaded.
+        /// </summary>
+        private void Awake()
+        {
+            if (instance == null)
+                instance = this;
+
+            if (instance != this)
+                Destroy(gameObject);
+        }
+
+        #endregion Singleton
     }
 }

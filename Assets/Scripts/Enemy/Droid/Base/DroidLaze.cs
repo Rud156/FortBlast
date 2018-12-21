@@ -6,6 +6,9 @@ namespace FortBlast.Enemy.Droid.Base
     {
         public float waitForAnimationTime = 10f;
 
-        public float LazeAroundSpot() => waitForAnimationTime;
+        public float LazeAroundSpot()
+        {
+            return waitForAnimationTime;
+        }
     }
 }

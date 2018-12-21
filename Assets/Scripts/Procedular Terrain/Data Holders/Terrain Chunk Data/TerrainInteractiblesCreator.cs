@@ -9,10 +9,10 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
 {
     public class TerrainInteractiblesCreator
     {
-        private Transform _parent;
-        private Vector3 _meshCenter;
-        private LevelSettings _levelSettings;
-        private ClearingSettings _clearingSettings;
+        private readonly ClearingSettings _clearingSettings;
+        private readonly LevelSettings _levelSettings;
+        private readonly Vector3 _meshCenter;
+        private readonly Transform _parent;
 
         public TerrainInteractiblesCreator(Vector2 meshCenter, Transform parent,
             LevelSettings levelSettings, ClearingSettings clearingSettings)
@@ -42,7 +42,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
                                 _levelSettings.maxCollectibles);
                     }
                 },
-                (points) =>
+                points =>
                     OnInteractiblesPointsReceived(points, interactiblesType)
             );
         }
@@ -50,9 +50,9 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
         private void OnInteractiblesPointsReceived(object interactiblesPoints,
             TerrainInteractibles interactiblesType)
         {
-            Vector3[] rawPoints = (Vector3[]) interactiblesPoints;
+            var rawPoints = (Vector3[]) interactiblesPoints;
 
-            for (int i = 0; i < rawPoints.Length; i++)
+            for (var i = 0; i < rawPoints.Length; i++)
                 rawPoints[i] += _meshCenter;
 
             switch (interactiblesType)
@@ -71,8 +71,8 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
 
         private void ClearCollectiblePointsAndSpawn(Vector3[] rawPoints)
         {
-            List<Vector3> points = new List<Vector3>();
-            for (int i = 0; i < rawPoints.Length; i++)
+            var points = new List<Vector3>();
+            for (var i = 0; i < rawPoints.Length; i++)
             {
                 if (rawPoints[i].x > _clearingSettings.clearingBottomLeft.x &&
                     rawPoints[i].z < _clearingSettings.clearingTopRight.x &&

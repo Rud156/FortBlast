@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace FortBlast.Scenes.MainScene
+﻿namespace FortBlast.Scenes.MainScene
 {
     public static class GlobalData
     {

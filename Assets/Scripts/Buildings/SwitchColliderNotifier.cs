@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using FortBlast.Extras;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace FortBlast.Buildings
 {
@@ -15,8 +12,14 @@ namespace FortBlast.Buildings
         public TriggerEnter triggerEnter;
         public TriggerExit triggerExit;
 
-        private void OnTriggerEnter(Collider other) => triggerEnter?.Invoke(other);
+        private void OnTriggerEnter(Collider other)
+        {
+            triggerEnter?.Invoke(other);
+        }
 
-        private void OnTriggerExit(Collider other) => triggerExit?.Invoke(other);
+        private void OnTriggerExit(Collider other)
+        {
+            triggerExit?.Invoke(other);
+        }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using FortBlast.Extras;
+﻿using FortBlast.Extras;
 using UnityEngine;
 
 namespace FortBlast.Enemy.Droid.Patrol
@@ -8,24 +6,23 @@ namespace FortBlast.Enemy.Droid.Patrol
     [RequireComponent(typeof(Collider))]
     public class DroidDefense : MonoBehaviour
     {
-        public GameObject shieldEffect;
-        [Range(0, 1)]
-        public float selectionProbability;
-
-        [Header("Animation")]
-        public Animator droidAnimator;
-
         private const string AnimatorHitParam = "Hit";
+        private static readonly int Hit = Animator.StringToHash(AnimatorHitParam);
 
         private bool _initiateShieldActivation;
         private bool _shieldActivated;
         private GameObject _shieldSystem;
-        private static readonly int Hit = Animator.StringToHash(AnimatorHitParam);
+
+        [Header("Animation")] public Animator droidAnimator;
+
+        [Range(0, 1)] public float selectionProbability;
+
+        public GameObject shieldEffect;
 
         /// <summary>
-        /// Update is called every frame, if the MonoBehaviour is enabled.
+        ///     Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
-        void Update()
+        private void Update()
         {
             if (!_shieldSystem)
                 _shieldActivated = false;
@@ -35,15 +32,15 @@ namespace FortBlast.Enemy.Droid.Patrol
         }
 
         /// <summary>
-        /// OnTriggerEnter is called when the Collider other enters the trigger.
+        ///     OnTriggerEnter is called when the Collider other enters the trigger.
         /// </summary>
         /// <param name="other">The other Collider involved in this collision.</param>
-        void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             if (!other.CompareTag(TagManager.Bullet))
                 return;
 
-            float probability = Random.value;
+            var probability = Random.value;
             if (probability <= selectionProbability && !_shieldActivated)
             {
                 _initiateShieldActivation = true;

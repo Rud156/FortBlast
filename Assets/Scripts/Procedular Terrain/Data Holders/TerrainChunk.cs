@@ -1,4 +1,5 @@
-﻿using FortBlast.Enums;
+﻿using System;
+using FortBlast.Enums;
 using FortBlast.Extras;
 using FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData;
 using FortBlast.ProceduralTerrain.Generators;
@@ -11,46 +12,39 @@ namespace FortBlast.ProceduralTerrain.DataHolders
 {
     public class TerrainChunk
     {
-        public event System.Action<TerrainChunk, bool> onVisibilityChanged;
-        public Vector2 coord;
-
         private const float ColliderGenerationDistantThreshold = 5;
-
-        private GameObject _meshObject;
-        private Vector2 _sampleCenter;
         private Bounds _bounds;
 
-        private MeshRenderer _meshRenderer;
-        private MeshFilter _meshFilter;
-        private MeshCollider _meshCollider;
+        private readonly Trees _chunkTrees;
+        private bool _collectiblesRequested;
+        private readonly int _colliderLODIndex;
 
-        private LODInfo[] _detailLevels;
-        private LODMesh[] _lodMeshes;
-        private int _colliderLODIndex;
+        private readonly LODInfo[] _detailLevels;
+        private bool _droidsRequested;
+        private bool _hasSetCollider;
 
         private HeightMap _heightMap;
 
         private bool _heightMapReceived;
-        private int _prevLODIndex;
-        private bool _hasSetCollider;
-        private float _maxViewDistance;
 
-        private Trees _chunkTrees;
-
-        private TerrainInteractiblesCreator _terrainInteractibles;
-        private bool _collectiblesRequested;
-        private bool _droidsRequested;
+        private readonly HeightMapSettings _heightMapSettings;
+        private readonly LODMesh[] _lodMeshes;
+        private readonly float _maxViewDistance;
+        private readonly MeshCollider _meshCollider;
         private bool _meshDatSentForTower;
+        private readonly MeshFilter _meshFilter;
 
-        private HeightMapSettings _heightMapSettings;
-        private MeshSettings _meshSettings;
+        private readonly GameObject _meshObject;
 
-        private Transform _viewer;
+        private readonly MeshRenderer _meshRenderer;
+        private readonly MeshSettings _meshSettings;
+        private int _prevLODIndex;
+        private readonly Vector2 _sampleCenter;
 
-        private Vector2 viewerPosition
-        {
-            get { return new Vector2(_viewer.position.x, _viewer.position.z); }
-        }
+        private readonly TerrainInteractiblesCreator _terrainInteractibles;
+
+        private readonly Transform _viewer;
+        public Vector2 coord;
 
         public TerrainChunk(Vector2 coord, HeightMapSettings heightMapSettings,
             MeshSettings meshSettings, TreeSettings treeSettings,
@@ -70,7 +64,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             _viewer = viewer;
 
             _sampleCenter = coord * meshSettings.meshWorldSize / meshSettings.meshScale;
-            Vector2 position = coord * meshSettings.meshWorldSize;
+            var position = coord * meshSettings.meshWorldSize;
             _bounds = new Bounds(position, Vector2.one * meshSettings.meshWorldSize);
 
             _meshObject = new GameObject("Terrain Chunk");
@@ -91,7 +85,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             SetVisible(false);
 
             _lodMeshes = new LODMesh[detailLevels.Length];
-            for (int i = 0; i < detailLevels.Length; i++)
+            for (var i = 0; i < detailLevels.Length; i++)
             {
                 _lodMeshes[i] = new LODMesh(detailLevels[i].lod);
                 _lodMeshes[i].updateCallback += UpdateTerrainChunk;
@@ -101,6 +95,10 @@ namespace FortBlast.ProceduralTerrain.DataHolders
 
             _maxViewDistance = detailLevels[detailLevels.Length - 1].visibleDistanceThreshold;
         }
+
+        private Vector2 viewerPosition => new Vector2(_viewer.position.x, _viewer.position.z);
+
+        public event Action<TerrainChunk, bool> onVisibilityChanged;
 
         public void Load()
         {
@@ -121,24 +119,22 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             if (!_heightMapReceived)
                 return;
 
-            float viewerDistanceFromNearestEdge = Mathf.Sqrt(_bounds.SqrDistance(viewerPosition));
-            bool wasVisible = IsVisible();
-            bool visible = viewerDistanceFromNearestEdge <= _maxViewDistance;
+            var viewerDistanceFromNearestEdge = Mathf.Sqrt(_bounds.SqrDistance(viewerPosition));
+            var wasVisible = IsVisible();
+            var visible = viewerDistanceFromNearestEdge <= _maxViewDistance;
 
             if (visible)
             {
-                int lodIndex = 0;
-                for (int i = 0; i < _detailLevels.Length - 1; i++)
-                {
+                var lodIndex = 0;
+                for (var i = 0; i < _detailLevels.Length - 1; i++)
                     if (viewerDistanceFromNearestEdge > _detailLevels[i].visibleDistanceThreshold)
                         lodIndex = i + 1;
                     else
                         break;
-                }
 
                 if (lodIndex != _prevLODIndex)
                 {
-                    LODMesh lodMesh = _lodMeshes[lodIndex];
+                    var lodMesh = _lodMeshes[lodIndex];
                     if (lodMesh.hasMesh)
                     {
                         _prevLODIndex = lodIndex;
@@ -154,7 +150,9 @@ namespace FortBlast.ProceduralTerrain.DataHolders
                         }
                     }
                     else if (!lodMesh.hasRequestedMesh)
+                    {
                         lodMesh.RequestMesh(_heightMap, _meshSettings);
+                    }
 
                     if (lodIndex == 0 && lodMesh.hasMesh)
                         LOD0ValidStateAvailable(lodMesh);
@@ -175,23 +173,19 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             if (_hasSetCollider)
                 return;
 
-            float sqrDistanceFromViewerToEdge = _bounds.SqrDistance(viewerPosition);
+            var sqrDistanceFromViewerToEdge = _bounds.SqrDistance(viewerPosition);
 
             if (sqrDistanceFromViewerToEdge < _detailLevels[_colliderLODIndex].sqrVisibleDistanceThreshold)
-            {
                 if (!_lodMeshes[_colliderLODIndex].hasRequestedMesh)
                     _lodMeshes[_colliderLODIndex].RequestMesh(_heightMap, _meshSettings);
-            }
 
             if (sqrDistanceFromViewerToEdge <
                 ColliderGenerationDistantThreshold * ColliderGenerationDistantThreshold)
-            {
                 if (_lodMeshes[_colliderLODIndex].hasMesh)
                 {
                     _meshCollider.sharedMesh = _lodMeshes[_colliderLODIndex].mesh;
                     _hasSetCollider = true;
                 }
-            }
         }
 
         private void SetVisible(bool visible)
@@ -202,7 +196,10 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             _meshObject.SetActive(visible);
         }
 
-        private bool IsVisible() => _meshObject.activeInHierarchy;
+        private bool IsVisible()
+        {
+            return _meshObject.activeInHierarchy;
+        }
 
         private void LOD0ValidStateAvailable(LODMesh lodMesh)
         {

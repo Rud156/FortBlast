@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using FortBlast.ProceduralTerrain.DataHolders;
+﻿using FortBlast.ProceduralTerrain.DataHolders;
 using FortBlast.ProceduralTerrain.Settings;
 using UnityEngine;
 
@@ -11,99 +9,96 @@ namespace FortBlast.ProceduralTerrain.Generators
         public static MeshData GenerateTerrainMesh(float[,] heightMap, int levelOfDetail,
             MeshSettings meshSettings)
         {
+            var skipIncrement = levelOfDetail == 0 ? 1 : levelOfDetail * 2;
+            var numVertsPerLine = meshSettings.numVerticesPerLine;
+            var topLeft = new Vector2(-1, 1) * meshSettings.meshWorldSize / 2f;
 
-            int skipIncrement = levelOfDetail == 0 ? 1 : levelOfDetail * 2;
-            int numVertsPerLine = meshSettings.numVerticesPerLine;
-            Vector2 topLeft = new Vector2(-1, 1) * meshSettings.meshWorldSize / 2f;
+            var meshData = new MeshData(numVertsPerLine, skipIncrement, meshSettings.useFlatShading);
+            var vertexIndicesMap = new int[numVertsPerLine, numVertsPerLine];
+            var meshVertexIndex = 0;
+            var outOfMeshVertexIndex = -1;
 
-            MeshData meshData = new MeshData(numVertsPerLine, skipIncrement, meshSettings.useFlatShading);
-            int[,] vertexIndicesMap = new int[numVertsPerLine, numVertsPerLine];
-            int meshVertexIndex = 0;
-            int outOfMeshVertexIndex = -1;
-
-            for (int x = 0; x < numVertsPerLine; x++)
+            for (var x = 0; x < numVertsPerLine; x++)
+            for (var y = 0; y < numVertsPerLine; y++)
             {
-                for (int y = 0; y < numVertsPerLine; y++)
-                {
-                    bool isOutOfMeshVertex = y == 0 || y == numVertsPerLine - 1 || x == 0 ||
-                        x == numVertsPerLine - 1;
-                    bool skippedVertex = x > 2 && x < numVertsPerLine - 3 & y > 2 && y < numVertsPerLine - 3
-                        && ((x - 2) % skipIncrement != 0 || (y - 2) % skipIncrement != 0);
+                var isOutOfMeshVertex = y == 0 || y == numVertsPerLine - 1 || x == 0 ||
+                                        x == numVertsPerLine - 1;
+                var skippedVertex = x > 2 && (x < numVertsPerLine - 3) & (y > 2) && y < numVertsPerLine - 3
+                                    && ((x - 2) % skipIncrement != 0 || (y - 2) % skipIncrement != 0);
 
-                    if (isOutOfMeshVertex)
-                    {
-                        vertexIndicesMap[x, y] = outOfMeshVertexIndex;
-                        outOfMeshVertexIndex -= 1;
-                    }
-                    else if (!skippedVertex)
-                    {
-                        vertexIndicesMap[x, y] = meshVertexIndex;
-                        meshVertexIndex += 1;
-                    }
+                if (isOutOfMeshVertex)
+                {
+                    vertexIndicesMap[x, y] = outOfMeshVertexIndex;
+                    outOfMeshVertexIndex -= 1;
+                }
+                else if (!skippedVertex)
+                {
+                    vertexIndicesMap[x, y] = meshVertexIndex;
+                    meshVertexIndex += 1;
                 }
             }
 
-            for (int x = 0; x < numVertsPerLine; x++)
+            for (var x = 0; x < numVertsPerLine; x++)
+            for (var y = 0; y < numVertsPerLine; y++)
             {
-                for (int y = 0; y < numVertsPerLine; y++)
+                var skippedVertex = x > 2 && (x < numVertsPerLine - 3) & (y > 2) && y < numVertsPerLine - 3
+                                    && ((x - 2) % skipIncrement != 0 || (y - 2) % skipIncrement != 0);
+
+                if (skippedVertex)
+                    continue;
+
+                var isOutOfMeshVertex = y == 0 || y == numVertsPerLine - 1 ||
+                                        x == 0 || x == numVertsPerLine - 1;
+                var isMeshEdgeVertex = (y == 1 || y == numVertsPerLine - 2 ||
+                                        x == 1 || x == numVertsPerLine - 2) && !isOutOfMeshVertex;
+                var isMainVertex = (x - 2) % skipIncrement == 0 && (y - 2) % skipIncrement == 0 &&
+                                   !isOutOfMeshVertex && !isMeshEdgeVertex;
+                var isEdgeConnectionVertex = (y == 2 || y == numVertsPerLine - 3 ||
+                                              x == 2 || x == numVertsPerLine - 3) &&
+                                             !isOutOfMeshVertex && !isMeshEdgeVertex && !isMainVertex;
+
+                var percent = new Vector2(x - 1, y - 1) / (numVertsPerLine - 3);
+                var height = heightMap[x, y];
+                var vertexPosition2D = topLeft + new Vector2(percent.x, -percent.y)
+                                       * meshSettings.meshWorldSize;
+                var vertexIndex = vertexIndicesMap[x, y];
+
+                if (isEdgeConnectionVertex)
                 {
-                    bool skippedVertex = x > 2 && x < numVertsPerLine - 3 & y > 2 && y < numVertsPerLine - 3
-                       && ((x - 2) % skipIncrement != 0 || (y - 2) % skipIncrement != 0);
+                    var isVertical = x == 2 || x == numVertsPerLine - 3;
+                    var distanceToMainVertexA = (isVertical ? y - 2 : x - 2) % skipIncrement;
+                    var distanceToMainVertexB = skipIncrement - distanceToMainVertexA;
+                    var distancePercentFromAToB = distanceToMainVertexA / (float) skipIncrement;
 
-                    if (skippedVertex)
-                        continue;
+                    var heightMainVertexA = heightMap[isVertical ? x : x - distanceToMainVertexA,
+                        isVertical ? y - distanceToMainVertexA : y];
+                    var heightMainVertexB = heightMap[isVertical ? x : x + distanceToMainVertexB,
+                        isVertical ? y + distanceToMainVertexB : y];
 
-                    bool isOutOfMeshVertex = y == 0 || y == numVertsPerLine - 1 ||
-                        x == 0 || x == numVertsPerLine - 1;
-                    bool isMeshEdgeVertex = (y == 1 || y == numVertsPerLine - 2 ||
-                         x == 1 || x == numVertsPerLine - 2) && !isOutOfMeshVertex;
-                    bool isMainVertex = (x - 2) % skipIncrement == 0 && (y - 2) % skipIncrement == 0 &&
-                        !isOutOfMeshVertex && !isMeshEdgeVertex;
-                    bool isEdgeConnectionVertex = (y == 2 || y == numVertsPerLine - 3 ||
-                        x == 2 || x == numVertsPerLine - 3) &&
-                        !isOutOfMeshVertex && !isMeshEdgeVertex && !isMainVertex;
+                    height = heightMainVertexA * (1 - distancePercentFromAToB) +
+                             heightMainVertexB * distancePercentFromAToB;
+                }
 
-                    Vector2 percent = new Vector2(x - 1, y - 1) / (numVertsPerLine - 3);
-                    float height = heightMap[x, y];
-                    Vector2 vertexPosition2D = topLeft + new Vector2(percent.x, -percent.y)
-                        * meshSettings.meshWorldSize;
-                    int vertexIndex = vertexIndicesMap[x, y];
+                meshData.AddVertex(new Vector3(vertexPosition2D.x, height, vertexPosition2D.y),
+                    percent, vertexIndex);
 
-                    if (isEdgeConnectionVertex)
-                    {
-                        bool isVertical = x == 2 || x == numVertsPerLine - 3;
-                        int distanceToMainVertexA = (isVertical ? y - 2 : x - 2) % skipIncrement;
-                        int distanceToMainVertexB = skipIncrement - distanceToMainVertexA;
-                        float distancePercentFromAToB = distanceToMainVertexA / (float)skipIncrement;
+                var createTriangle = x < numVertsPerLine - 1 && y < numVertsPerLine - 1 &&
+                                     (!isEdgeConnectionVertex || x != 2 && y != 2);
 
-                        float heightMainVertexA = heightMap[isVertical ? x : x - distanceToMainVertexA,
-                            isVertical ? y - distanceToMainVertexA : y];
-                        float heightMainVertexB = heightMap[isVertical ? x : x + distanceToMainVertexB,
-                            isVertical ? y + distanceToMainVertexB : y];
+                if (createTriangle)
+                {
+                    var currentIncrement = isMainVertex &&
+                                           x != numVertsPerLine - 3 && y != numVertsPerLine - 3
+                        ? skipIncrement
+                        : 1;
 
-                        height = heightMainVertexA * (1 - distancePercentFromAToB) +
-                            heightMainVertexB * (distancePercentFromAToB);
-                    }
+                    var a = vertexIndicesMap[x, y];
+                    var b = vertexIndicesMap[x + currentIncrement, y];
+                    var c = vertexIndicesMap[x, y + currentIncrement];
+                    var d = vertexIndicesMap[x + currentIncrement, y + currentIncrement];
 
-                    meshData.AddVertex(new Vector3(vertexPosition2D.x, height, vertexPosition2D.y),
-                        percent, vertexIndex);
-
-                    bool createTriangle = x < numVertsPerLine - 1 && y < numVertsPerLine - 1 &&
-                        (!isEdgeConnectionVertex || (x != 2 && y != 2));
-
-                    if (createTriangle)
-                    {
-                        int currentIncrement = (isMainVertex &&
-                            x != numVertsPerLine - 3 && y != numVertsPerLine - 3) ? skipIncrement : 1;
-
-                        int a = vertexIndicesMap[x, y];
-                        int b = vertexIndicesMap[x + currentIncrement, y];
-                        int c = vertexIndicesMap[x, y + currentIncrement];
-                        int d = vertexIndicesMap[x + currentIncrement, y + currentIncrement];
-
-                        meshData.AddTriangle(a, d, c);
-                        meshData.AddTriangle(d, a, b);
-                    }
+                    meshData.AddTriangle(a, d, c);
+                    meshData.AddTriangle(d, a, b);
                 }
             }
 

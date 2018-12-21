@@ -10,35 +10,18 @@ namespace FortBlast.Scenes.MainScene
 {
     public class GameManager : MonoBehaviour
     {
-
-        #region Singleton
-        public static GameManager instance;
-
-        /// <summary>
-        /// Awake is called when the script instance is being loaded.
-        /// </summary>
-        void Awake()
-        {
-            if (instance == null)
-                instance = this;
-
-            if (instance != this)
-                Destroy(gameObject);
-        }
-        #endregion Singleton
-
-        public PlayerLookAtController playerLookAtController;
-        public PlayerHandControls playerAbsorbDamageController;
-        public PlayerSpawner playerSpawner;
-
         private bool _inventoryOpen;
         private bool _itemSpawned;
+        public PlayerHandControls playerAbsorbDamageController;
+
+        public PlayerLookAtController playerLookAtController;
+        public PlayerSpawner playerSpawner;
 
         /// <summary>
-        /// Start is called on the frame when a script is enabled just before
-        /// any of the Update methods is called the first time.
+        ///     Start is called on the frame when a script is enabled just before
+        ///     any of the Update methods is called the first time.
         /// </summary>
-        void Start()
+        private void Start()
         {
             _inventoryOpen = false;
             _itemSpawned = false;
@@ -48,9 +31,9 @@ namespace FortBlast.Scenes.MainScene
         }
 
         /// <summary>
-        /// Update is called every frame, if the MonoBehaviour is enabled.
+        ///     Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
-        void Update()
+        private void Update()
         {
             if (!Input.GetKeyDown(Controls.CloseKey))
                 return;
@@ -64,9 +47,42 @@ namespace FortBlast.Scenes.MainScene
 
         #region PlayerBase
 
-        private void StartFadingIn() => Fader.instance.StartFadeIn();
+        private void StartFadingIn()
+        {
+            Fader.instance.StartFadeIn();
+        }
 
         #endregion PlayerBase
+
+        private void LockCursor()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
+        private void UnlockCursor()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
+        #region Singleton
+
+        public static GameManager instance;
+
+        /// <summary>
+        ///     Awake is called when the script instance is being loaded.
+        /// </summary>
+        private void Awake()
+        {
+            if (instance == null)
+                instance = this;
+
+            if (instance != this)
+                Destroy(gameObject);
+        }
+
+        #endregion Singleton
 
         #region Inventory
 
@@ -116,17 +132,5 @@ namespace FortBlast.Scenes.MainScene
         }
 
         #endregion InventoryItem
-
-        private void LockCursor()
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-
-        private void UnlockCursor()
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
     }
 }

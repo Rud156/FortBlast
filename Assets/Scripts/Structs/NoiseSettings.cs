@@ -1,24 +1,24 @@
+using System;
 using FortBlast.Enums;
-using FortBlast.ProceduralTerrain.Generators;
 using UnityEngine;
 
 namespace FortBlast.Structs
 {
-    [System.Serializable]
+    [Serializable]
     public class NoiseSettings
     {
+        public float lacunarity = 2;
         public NormalizedMode normalizedMode;
+
+        [Header("Map Noise Data")] public int octaves = 6;
+
+        public Vector2 offset;
+
+        [Range(0, 1)] public float persistance = 0.6f;
+
         public float scale = 50;
 
-        [Header("Map Noise Data")]
-        public int octaves = 6;
-        [Range(0, 1)]
-        public float persistance = 0.6f;
-        public float lacunarity = 2;
-
-        [Header("Randomness")]
-        public int seed;
-        public Vector2 offset;
+        [Header("Randomness")] public int seed;
 
         public void ValidateValues()
         {

@@ -5,5 +5,5 @@
         Spawnable,
         UpgradeHelper,
         Consumable
-    };
+    }
 }

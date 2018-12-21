@@ -9,64 +9,47 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
 {
     public class TerrainGenerator : MonoBehaviour
     {
-        #region Singleton
-
-        public static TerrainGenerator instance;
-
-        /// <summary>
-        /// Awake is called when the script instance is being loaded.
-        /// </summary>
-        void Awake()
-        {
-            if (instance == null)
-                instance = this;
-
-            if (instance != this)
-                Destroy(gameObject);
-        }
-
-        #endregion Singleton
-
         public delegate void TerrainGenerationInitialComplete();
-
-        public TerrainGenerationInitialComplete terrainGenerationComplete;
-
-
-        [Header("Settings")] public MeshSettings meshSettings;
-        public HeightMapSettings heightMapSettings;
-        public TextureData textureData;
-        public TreeSettings treeSettings;
-        public LevelSettings levelSettings;
-        public ClearingSettings clearingSettings;
-
-        [Header("Map Values")] public Transform viewer;
-        public Material mapMaterial;
-        public int colliderLODIndex;
-
-        [Header("Extra Terrain Params")] public bool fixedTerrainSize;
-        public bool enemiesOnCenterTile;
 
         private const float ViewerMoveThresholdForChunkUpdate = 25f;
 
         private const float SqrViewerMoveThresholdForChunkUpdate =
             ViewerMoveThresholdForChunkUpdate * ViewerMoveThresholdForChunkUpdate;
 
-        private Vector2 _viewerPosition;
-        private List<TerrainChunk> _visibleTerrainChunks;
-
-        private float _meshWorldSize;
         private int _chunksVisibleInViewDistance;
 
-        private Dictionary<Vector2, TerrainChunk> _terrainChunkDict;
+        private float _meshWorldSize;
 
         private Vector2 _prevViewerPosition;
+
+        private Dictionary<Vector2, TerrainChunk> _terrainChunkDict;
         private bool _updatingChunks;
 
+        private Vector2 _viewerPosition;
+        private List<TerrainChunk> _visibleTerrainChunks;
+        public ClearingSettings clearingSettings;
+        public int colliderLODIndex;
+        public bool enemiesOnCenterTile;
+
+        [Header("Extra Terrain Params")] public bool fixedTerrainSize;
+        public HeightMapSettings heightMapSettings;
+        public LevelSettings levelSettings;
+        public Material mapMaterial;
+
+
+        [Header("Settings")] public MeshSettings meshSettings;
+
+        public TerrainGenerationInitialComplete terrainGenerationComplete;
+        public TextureData textureData;
+        public TreeSettings treeSettings;
+
+        [Header("Map Values")] public Transform viewer;
+
         /// <summary>
-        /// Start is called on the frame when a script is enabled just before
-        /// any of the Update methods is called the first time.
+        ///     Start is called on the frame when a script is enabled just before
+        ///     any of the Update methods is called the first time.
         /// </summary>
-        void Start()
+        private void Start()
         {
             _prevViewerPosition = new Vector2(int.MaxValue, int.MaxValue);
 
@@ -77,7 +60,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
             _terrainChunkDict = new Dictionary<Vector2, TerrainChunk>();
             _visibleTerrainChunks = new List<TerrainChunk>();
 
-            float maxViewDistance = levelSettings.detailLevels[levelSettings.detailLevels.Length - 1]
+            var maxViewDistance = levelSettings.detailLevels[levelSettings.detailLevels.Length - 1]
                 .visibleDistanceThreshold;
 
             _meshWorldSize = meshSettings.meshWorldSize;
@@ -92,9 +75,9 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
         }
 
         /// <summary>
-        /// Update is called every frame, if the MonoBehaviour is enabled.
+        ///     Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
-        void Update()
+        private void Update()
         {
             if (!viewer)
                 return;
@@ -102,7 +85,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
             _viewerPosition =
                 new Vector2(viewer.position.x, viewer.position.z);
             if (_viewerPosition != _prevViewerPosition)
-                foreach (TerrainChunk chunk in _visibleTerrainChunks)
+                foreach (var chunk in _visibleTerrainChunks)
                     chunk.UpdateCollisionMesh();
 
 
@@ -117,49 +100,49 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
         private IEnumerator UpdateVisibleChunks(bool createNewChunks, bool cleanBuildNavMesh)
         {
             _updatingChunks = true;
-            HashSet<Vector2> alreadyUpdatedChunkCoords = new HashSet<Vector2>();
+            var alreadyUpdatedChunkCoords = new HashSet<Vector2>();
 
-            for (int i = _visibleTerrainChunks.Count - 1; i >= 0; i--)
+            for (var i = _visibleTerrainChunks.Count - 1; i >= 0; i--)
             {
                 alreadyUpdatedChunkCoords.Add(_visibleTerrainChunks[i].coord);
                 _visibleTerrainChunks[i].UpdateTerrainChunk();
                 yield return null;
             }
 
-            int currentChunkCoordX = Mathf.RoundToInt(_viewerPosition.x / _meshWorldSize);
-            int currentChunkCoordY = Mathf.RoundToInt(_viewerPosition.y / _meshWorldSize);
+            var currentChunkCoordX = Mathf.RoundToInt(_viewerPosition.x / _meshWorldSize);
+            var currentChunkCoordY = Mathf.RoundToInt(_viewerPosition.y / _meshWorldSize);
 
-            for (int xOffset = -_chunksVisibleInViewDistance;
+            for (var xOffset = -_chunksVisibleInViewDistance;
                 xOffset <= _chunksVisibleInViewDistance;
                 xOffset++)
+            for (var yOffset = -_chunksVisibleInViewDistance;
+                yOffset <= _chunksVisibleInViewDistance;
+                yOffset++)
             {
-                for (int yOffset = -_chunksVisibleInViewDistance;
-                    yOffset <= _chunksVisibleInViewDistance;
-                    yOffset++)
+                var viewChunkCoord =
+                    new Vector2(currentChunkCoordX + xOffset, currentChunkCoordY + yOffset);
+
+                if (!alreadyUpdatedChunkCoords.Contains(viewChunkCoord))
                 {
-                    Vector2 viewChunkCoord =
-                        new Vector2(currentChunkCoordX + xOffset, currentChunkCoordY + yOffset);
-
-                    if (!alreadyUpdatedChunkCoords.Contains(viewChunkCoord))
+                    if (_terrainChunkDict.ContainsKey(viewChunkCoord))
                     {
-                        if (_terrainChunkDict.ContainsKey(viewChunkCoord))
-                            _terrainChunkDict[viewChunkCoord].UpdateTerrainChunk();
-                        else if (createNewChunks)
-                        {
-                            bool createEnemies = !(!enemiesOnCenterTile && viewChunkCoord == Vector2.zero);
-
-                            TerrainChunk newChunk = new TerrainChunk(viewChunkCoord,
-                                heightMapSettings, meshSettings, treeSettings, levelSettings, clearingSettings,
-                                levelSettings.detailLevels, colliderLODIndex, transform, viewer, mapMaterial,
-                                createEnemies);
-                            _terrainChunkDict.Add(viewChunkCoord, newChunk);
-                            newChunk.onVisibilityChanged += OnTerrainChunkVisibilityChanged;
-                            newChunk.Load();
-                        }
+                        _terrainChunkDict[viewChunkCoord].UpdateTerrainChunk();
                     }
+                    else if (createNewChunks)
+                    {
+                        var createEnemies = !(!enemiesOnCenterTile && viewChunkCoord == Vector2.zero);
 
-                    yield return null;
+                        var newChunk = new TerrainChunk(viewChunkCoord,
+                            heightMapSettings, meshSettings, treeSettings, levelSettings, clearingSettings,
+                            levelSettings.detailLevels, colliderLODIndex, transform, viewer, mapMaterial,
+                            createEnemies);
+                        _terrainChunkDict.Add(viewChunkCoord, newChunk);
+                        newChunk.onVisibilityChanged += OnTerrainChunkVisibilityChanged;
+                        newChunk.Load();
+                    }
                 }
+
+                yield return null;
             }
 
             if (cleanBuildNavMesh)
@@ -168,7 +151,9 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
                 NavMeshBaker.instance.BuildInitialNavMesh();
             }
             else
+            {
                 NavMeshBaker.instance.ReBuildNavMesh();
+            }
 
             _updatingChunks = false;
         }
@@ -180,5 +165,23 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
             else
                 _visibleTerrainChunks.Remove(terrainChunk);
         }
+
+        #region Singleton
+
+        public static TerrainGenerator instance;
+
+        /// <summary>
+        ///     Awake is called when the script instance is being loaded.
+        /// </summary>
+        private void Awake()
+        {
+            if (instance == null)
+                instance = this;
+
+            if (instance != this)
+                Destroy(gameObject);
+        }
+
+        #endregion Singleton
     }
 }

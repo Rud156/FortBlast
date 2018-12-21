@@ -1,23 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace FortBlast.Common
 {
     [RequireComponent(typeof(ParticleSystem))]
     public class FadeOutParticles : MonoBehaviour
     {
+        private float _decreaseRate;
+        private ParticleSystem.EmissionModule _emissionModule;
+        private ParticleSystem _particles;
         public float timeToZero;
 
-        private float _decreaseRate;
-        private ParticleSystem _particles;
-        private ParticleSystem.EmissionModule _emissionModule;
-
         /// <summary>
-        /// Start is called on the frame when a script is enabled just before
-        /// any of the Update methods is called the first time.
+        ///     Start is called on the frame when a script is enabled just before
+        ///     any of the Update methods is called the first time.
         /// </summary>
-        void Start()
+        private void Start()
         {
             _particles = GetComponent<ParticleSystem>();
             _emissionModule = _particles.emission;
@@ -25,13 +22,12 @@ namespace FortBlast.Common
         }
 
         /// <summary>
-        /// Update is called every frame, if the MonoBehaviour is enabled.
+        ///     Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
-        void Update()
+        private void Update()
         {
             _emissionModule.rateOverTime = _emissionModule.rateOverTime.constant -
-                _decreaseRate * Time.deltaTime;
+                                           _decreaseRate * Time.deltaTime;
         }
-
     }
 }

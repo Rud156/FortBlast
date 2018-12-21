@@ -8,16 +8,16 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
 {
     public class Trees
     {
-        private GameObject[] trees;
-        private Vector3[] treePoints;
-
-        public bool hasRequestedTreePoints;
-        public bool hasReceivedTreePoints;
-        public bool hasPlacedTrees;
+        private readonly ClearingSettings _clearingSettings;
 
         private readonly Vector3 _meshCenter;
         private readonly TreeSettings _treeSettings;
-        private readonly ClearingSettings _clearingSettings;
+        public bool hasPlacedTrees;
+        public bool hasReceivedTreePoints;
+
+        public bool hasRequestedTreePoints;
+        private Vector3[] treePoints;
+        private GameObject[] trees;
 
         public Trees(Vector2 meshCenter, TreeSettings treeSettings, ClearingSettings clearingSettings)
         {
@@ -43,17 +43,17 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
         public void PlaceTreesOnPoints()
         {
             hasPlacedTrees = true;
-            float maxValue = float.MinValue;
-            for (int i = 0; i < treePoints.Length; i++)
+            var maxValue = float.MinValue;
+            for (var i = 0; i < treePoints.Length; i++)
                 if (treePoints[i].y > maxValue)
                     maxValue = treePoints[i].y;
 
-            for (int i = 0; i < treePoints.Length; i++)
+            for (var i = 0; i < treePoints.Length; i++)
             {
                 if (treePoints[i] == Vector3.zero)
                     Debug.Log("Tree At Zero");
 
-                float normalizedPoint = ExtensionFunctions.Map(treePoints[i].y, 0, maxValue, 0, 1);
+                var normalizedPoint = ExtensionFunctions.Map(treePoints[i].y, 0, maxValue, 0, 1);
                 trees[i] = TreesManager.instance.RequestTree(normalizedPoint);
 
                 if (trees[i] != null)
@@ -66,7 +66,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
 
         public void ClearTrees()
         {
-            for (int i = 0; i < trees.Length; i++)
+            for (var i = 0; i < trees.Length; i++)
             {
                 trees[i]?.SetActive(false);
                 trees[i] = null;

@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using FortBlast.ProceduralTerrain.Settings;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 namespace FortBlast.Spawner
 {
@@ -9,13 +8,13 @@ namespace FortBlast.Spawner
     {
         public static Vector3[] GeneratePoints(Vector3[] worldVertices, int totalPoints)
         {
-            List<Vector3> randomPoints = new List<Vector3>();
-            System.Random rand = new System.Random();
+            var randomPoints = new List<Vector3>();
+            var rand = new Random();
 
-            for (int i = 0; i < worldVertices.Length; i++)
+            for (var i = 0; i < worldVertices.Length; i++)
             {
-                float selectionProbability = (float) totalPoints / (worldVertices.Length - i);
-                float randomValue = (float) rand.NextDouble();
+                var selectionProbability = (float) totalPoints / (worldVertices.Length - i);
+                var randomValue = (float) rand.NextDouble();
 
                 if (selectionProbability >= randomValue)
                 {

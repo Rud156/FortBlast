@@ -1,6 +1,5 @@
 using FortBlast.Extras;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace FortBlast.UI
@@ -8,36 +7,24 @@ namespace FortBlast.UI
     [RequireComponent(typeof(Image))]
     public class Fader : MonoBehaviour
     {
-        #region Singleton
-
-        public static Fader instance;
-
-        private void Awake()
-        {
-            if (instance == null)
-                instance = this;
-
-            if (instance != this)
-                Destroy(gameObject);
-        }
-
-        #endregion Singleton
-
-        public delegate void FadeStart();
         public delegate void FadeInComplete();
+
         public delegate void FadeOutComplete();
 
-        public FadeStart fadeStart;
-        public FadeInComplete fadeInComplete;
-        public FadeOutComplete fadeOutComplete;
+        public delegate void FadeStart();
 
-        [Header("Fade Rate")] public float fadeInRate;
-        public float fadeOutRate;
-
-        private Image fadeImage;
         private bool activateFadeIn;
         private bool activateFadeOut;
         private float currentAlpha;
+
+        private Image fadeImage;
+        public FadeInComplete fadeInComplete;
+
+        [Header("Fade Rate")] public float fadeInRate;
+        public FadeOutComplete fadeOutComplete;
+        public float fadeOutRate;
+
+        public FadeStart fadeStart;
 
         private void Start()
         {
@@ -64,10 +51,9 @@ namespace FortBlast.UI
         {
             currentAlpha -= fadeInRate * Time.deltaTime;
 
-            Color fadeImageColor = fadeImage.color;
+            var fadeImageColor = fadeImage.color;
             fadeImage.color =
-                ExtensionFunctions.
-                    ConvertAndClampColor(fadeImageColor.r, fadeImageColor.g, fadeImageColor.b,
+                ExtensionFunctions.ConvertAndClampColor(fadeImageColor.r, fadeImageColor.g, fadeImageColor.b,
                     currentAlpha);
 
             if (!(currentAlpha <= 0))
@@ -91,10 +77,9 @@ namespace FortBlast.UI
         {
             currentAlpha += fadeOutRate * Time.deltaTime;
 
-            Color fadeImageColor = fadeImage.color;
+            var fadeImageColor = fadeImage.color;
             fadeImage.color =
-                ExtensionFunctions.
-                    ConvertAndClampColor(fadeImageColor.r, fadeImageColor.g, fadeImageColor.b,
+                ExtensionFunctions.ConvertAndClampColor(fadeImageColor.r, fadeImageColor.g, fadeImageColor.b,
                     currentAlpha);
 
             if (!(currentAlpha >= 255))
@@ -103,5 +88,20 @@ namespace FortBlast.UI
             fadeOutComplete?.Invoke();
             activateFadeOut = false;
         }
+
+        #region Singleton
+
+        public static Fader instance;
+
+        private void Awake()
+        {
+            if (instance == null)
+                instance = this;
+
+            if (instance != this)
+                Destroy(gameObject);
+        }
+
+        #endregion Singleton
     }
 }

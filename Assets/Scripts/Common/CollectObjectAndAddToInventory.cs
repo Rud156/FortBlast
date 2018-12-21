@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using FortBlast.Extras;
+﻿using FortBlast.Extras;
 using FortBlast.Resources;
 using UnityEngine;
 

@@ -4,23 +4,25 @@ namespace FortBlast.Common
 {
     public class ObjectFollowPlayer : MonoBehaviour
     {
+        private Vector3 _lastPlayerPosition;
         [Header("Base Stats")] public float followSpeed = 10f;
-        public Vector3 objectOffset;
-
-        [Header(("Rotation"))] public bool useRotation;
         public float lookSpeed = 10f;
+        public Vector3 objectOffset;
 
         [Header("Player")] public Transform player;
 
-        private Vector3 _lastPlayerPosition;
+        [Header("Rotation")] public bool useRotation;
 
         /// <summary>
-        /// Start is called on the frame when a script is enabled just before
-        /// any of the Update methods is called the first time.
+        ///     Start is called on the frame when a script is enabled just before
+        ///     any of the Update methods is called the first time.
         /// </summary>
-        void Start() => _lastPlayerPosition = player.position;
+        private void Start()
+        {
+            _lastPlayerPosition = player.position;
+        }
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             if (useRotation)
                 LookAtTarget();
@@ -31,10 +33,10 @@ namespace FortBlast.Common
 
         private void LookAtTarget()
         {
-            Vector3 targetPosition = player ? player.position : _lastPlayerPosition;
+            var targetPosition = player ? player.position : _lastPlayerPosition;
 
-            Vector3 lookDirection = targetPosition - transform.position;
-            Quaternion rotation = Quaternion.LookRotation(lookDirection, Vector3.up);
+            var lookDirection = targetPosition - transform.position;
+            var rotation = Quaternion.LookRotation(lookDirection, Vector3.up);
 
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, lookSpeed * Time.deltaTime);
         }
@@ -42,10 +44,10 @@ namespace FortBlast.Common
         private void MoveToTarget()
         {
             // Player is NULL only when destroyed
-            Vector3 targetVector = _lastPlayerPosition;
-            Vector3 forwardVector = Vector3.forward;
-            Vector3 rightVector = Vector3.right;
-            Vector3 upVector = Vector3.up;
+            var targetVector = _lastPlayerPosition;
+            var forwardVector = Vector3.forward;
+            var rightVector = Vector3.right;
+            var upVector = Vector3.up;
 
             if (player)
             {
@@ -55,10 +57,10 @@ namespace FortBlast.Common
                 upVector = player.up;
             }
 
-            Vector3 targetPosition = targetVector +
-                                     forwardVector * objectOffset.z +
-                                     rightVector * objectOffset.x +
-                                     upVector * objectOffset.y;
+            var targetPosition = targetVector +
+                                 forwardVector * objectOffset.z +
+                                 rightVector * objectOffset.x +
+                                 upVector * objectOffset.y;
 
             transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
         }

@@ -6,32 +6,30 @@ namespace FortBlast.Enemy.Helpers
     public class LightFlickerFastFaster : MonoBehaviour
     {
         public delegate void FlickerComplete();
-        public FlickerComplete flickerComplete;
 
-        [Header("Flicker Data")]
-        public float startFlickerRate;
-        [Range(4, 10)]
-        public int maxFlickerTimes;
-
-        [Header("Color Data")]
-        [Range(1, 4)]
-        public float emissionStrength;
-        public Color emissionColor;
-
-
-        private Renderer _renderer;
+        private bool _completed;
 
         private float _currentFlickerRateValue;
         private float _currentFlickerTimeValue;
-
-        private bool _completed;
         private bool _lightOn;
 
+
+        private Renderer _renderer;
+        public Color emissionColor;
+
+        [Header("Color Data")] [Range(1, 4)] public float emissionStrength;
+
+        public FlickerComplete flickerComplete;
+
+        [Range(4, 10)] public int maxFlickerTimes;
+
+        [Header("Flicker Data")] public float startFlickerRate;
+
         /// <summary>
-        /// Start is called on the frame when a script is enabled just before
-        /// any of the Update methods is called the first time.
+        ///     Start is called on the frame when a script is enabled just before
+        ///     any of the Update methods is called the first time.
         /// </summary>
-        void Start()
+        private void Start()
         {
             _currentFlickerRateValue = startFlickerRate;
             _currentFlickerTimeValue = maxFlickerTimes * 2;
@@ -43,9 +41,12 @@ namespace FortBlast.Enemy.Helpers
         }
 
         /// <summary>
-        /// Update is called every frame, if the MonoBehaviour is enabled.
+        ///     Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
-        void Update() => MakeLightFlicker();
+        private void Update()
+        {
+            MakeLightFlicker();
+        }
 
         private void MakeLightFlicker()
         {
@@ -67,22 +68,33 @@ namespace FortBlast.Enemy.Helpers
                     flickerComplete?.Invoke();
                     return;
                 }
-                else if (_currentFlickerTimeValue <= 8)
+
+                if (_currentFlickerTimeValue <= 8)
+                {
                     _currentFlickerRateValue = 0.1f;
+                }
                 else if (_currentFlickerTimeValue <= 10)
+                {
                     _currentFlickerRateValue = startFlickerRate / 2f;
+                }
                 else
+                {
                     _currentFlickerRateValue = startFlickerRate;
+                }
 
                 _currentFlickerTimeValue -= 1;
                 _lightOn = !_lightOn;
             }
         }
 
-        private void TurnLightOn() =>
+        private void TurnLightOn()
+        {
             _renderer.material.SetColor("_EmissionColor", emissionColor * emissionStrength);
+        }
 
-        private void TurnLightOff() =>
+        private void TurnLightOff()
+        {
             _renderer.material.SetColor("_EmissionColor", emissionColor);
+        }
     }
 }

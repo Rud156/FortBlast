@@ -6,28 +6,13 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
 {
     public class NavMeshBaker : MonoBehaviour
     {
-        #region Singleton
-
-        public static NavMeshBaker instance;
-
-        /// <summary>
-        /// Awake is called when the script instance is being loaded.
-        /// </summary>
-        private void Awake()
-        {
-            if (instance == null)
-                instance = this;
-
-            if (instance != this)
-                Destroy(gameObject);
-        }
-
-        #endregion Singleton
-
         public NavMeshSurface botSurface;
         public NavMeshSurface creatureSurface;
 
-        public void ReBuildNavMesh() => StartCoroutine(BuildNavMeshes());
+        public void ReBuildNavMesh()
+        {
+            StartCoroutine(BuildNavMeshes());
+        }
 
         public void BuildInitialNavMesh()
         {
@@ -41,5 +26,23 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
             yield return null;
             creatureSurface.UpdateNavMesh(creatureSurface.navMeshData);
         }
+
+        #region Singleton
+
+        public static NavMeshBaker instance;
+
+        /// <summary>
+        ///     Awake is called when the script instance is being loaded.
+        /// </summary>
+        private void Awake()
+        {
+            if (instance == null)
+                instance = this;
+
+            if (instance != this)
+                Destroy(gameObject);
+        }
+
+        #endregion Singleton
     }
 }

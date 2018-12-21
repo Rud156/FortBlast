@@ -1,31 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using FortBlast.Enums;
+﻿using FortBlast.Enums;
 using UnityEngine;
 
 namespace FortBlast.Common
 {
     public class Floater : MonoBehaviour
     {
-        public float degreesPerSecond = 15.0f;
-        public float amplitude = 0.5f;
-        public float frequency = 1f;
-        public Direction direction;
-
         // Position Storage Variables
-        private Vector3 _posOffset = new Vector3();
-        private Vector3 _tempPos = new Vector3();
+        private Vector3 _posOffset;
+        private Vector3 _tempPos;
+        public float amplitude = 0.5f;
+        public float degreesPerSecond = 15.0f;
+        public Direction direction;
+        public float frequency = 1f;
 
         /// <summary>
-        /// Start is called on the frame when a script is enabled just before
-        /// any of the Update methods is called the first time.
+        ///     Start is called on the frame when a script is enabled just before
+        ///     any of the Update methods is called the first time.
         /// </summary>
-        void Start() => _posOffset = transform.localPosition;
+        private void Start()
+        {
+            _posOffset = transform.localPosition;
+        }
 
         /// <summary>
-        /// Update is called every frame, if the MonoBehaviour is enabled.
+        ///     Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
-        void Update()
+        private void Update()
         {
             // Float up/down with a Sin()
             _tempPos = _posOffset;

@@ -4,5 +4,5 @@ namespace FortBlast.Enums
     {
         collectibles,
         droids
-    };
+    }
 }

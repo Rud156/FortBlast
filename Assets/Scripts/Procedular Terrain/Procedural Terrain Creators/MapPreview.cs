@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using FortBlast.ProceduralTerrain.DataHolders;
+﻿using FortBlast.ProceduralTerrain.DataHolders;
 using FortBlast.ProceduralTerrain.Generators;
 using FortBlast.ProceduralTerrain.Settings;
 using FortBlast.Structs;
@@ -11,48 +8,28 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
 {
     public class MapPreview : MonoBehaviour
     {
-        #region Singleton
-
-        private static MapPreview _instance;
-
-        /// <summary>
-        /// Awake is called when the script instance is being loaded.
-        /// </summary>
-        void Awake()
-        {
-            if (_instance == null)
-                _instance = this;
-
-            if (_instance != this)
-                Destroy(gameObject);
-        }
-
-        #endregion Singleton
-
-
         public enum DrawMode
         {
             NoiseMap,
             Mesh,
             FalloffMap
         }
+
+        [Header("Debug")] public bool autoUpdate;
+
         public DrawMode drawMode;
 
-        [Header("Mesh Components")]
-        public Renderer textureRenderer;
+        [Header("Map Data")] [Range(0, MeshSettings.numSupportedLODs - 1)]
+        public int editorPreviewLOD;
+
+        public HeightMapSettings heightMapSettings;
         public MeshFilter meshFilter;
         public MeshRenderer meshRenderer;
-
-        [Header("Map Data")]
-        [Range(0, MeshSettings.numSupportedLODs - 1)]
-        public int editorPreviewLOD;
         public MeshSettings meshSettings;
-        public HeightMapSettings heightMapSettings;
-        public TextureData textureData;
         public Material terrainMaterial;
+        public TextureData textureData;
 
-        [Header("Debug")]
-        public bool autoUpdate;
+        [Header("Mesh Components")] public Renderer textureRenderer;
 
         public void DrawMapInEditor()
         {
@@ -60,33 +37,37 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
             textureData.UpdateMeshHeights(terrainMaterial,
                 heightMapSettings.minHeight, heightMapSettings.maxHeight);
 
-            HeightMap heightMap = HeightMapGenerator.GenerateHeightMap(
+            var heightMap = HeightMapGenerator.GenerateHeightMap(
                 meshSettings.numVerticesPerLine,
                 meshSettings.numVerticesPerLine,
                 heightMapSettings,
                 Vector2.zero
             );
             if (drawMode == DrawMode.NoiseMap)
+            {
                 DrawTexture(TextureGenerator.TextureFromHeightMap(heightMap));
+            }
             else if (drawMode == DrawMode.Mesh)
+            {
                 DrawMesh(MeshGenerator.GenerateTerrainMesh(
                         heightMap.values,
                         editorPreviewLOD,
                         meshSettings
                     )
                 );
+            }
             else
             {
-                float[,] values = FalloffGenerator.GenerateFalloffMap(meshSettings.numVerticesPerLine);
+                var values = FalloffGenerator.GenerateFalloffMap(meshSettings.numVerticesPerLine);
                 DrawTexture(TextureGenerator.TextureFromHeightMap(new HeightMap(values, 0, 1)));
             }
         }
 
         /// <summary>
-        /// Called when the script is loaded or a value is changed in the
-        /// inspector (Called in the editor only).
+        ///     Called when the script is loaded or a value is changed in the
+        ///     inspector (Called in the editor only).
         /// </summary>
-        void OnValidate()
+        private void OnValidate()
         {
             if (meshSettings != null)
             {
@@ -130,6 +111,27 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
                 DrawMapInEditor();
         }
 
-        private void OnTextureValuesUpdated() => textureData.ApplyToMaterial(terrainMaterial);
+        private void OnTextureValuesUpdated()
+        {
+            textureData.ApplyToMaterial(terrainMaterial);
+        }
+
+        #region Singleton
+
+        private static MapPreview _instance;
+
+        /// <summary>
+        ///     Awake is called when the script instance is being loaded.
+        /// </summary>
+        private void Awake()
+        {
+            if (_instance == null)
+                _instance = this;
+
+            if (_instance != this)
+                Destroy(gameObject);
+        }
+
+        #endregion Singleton
     }
 }

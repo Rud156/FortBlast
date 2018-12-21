@@ -10,57 +10,33 @@ namespace FortBlast.Resources
 {
     public class InventoryManager : MonoBehaviour
     {
-        #region Singleton
-
-        public static InventoryManager instance;
-
-        /// <summary>
-        /// Awake is called when the script instance is being loaded.
-        /// </summary>
-        void Awake()
-        {
-            if (instance == null)
-                instance = this;
-
-            if (instance != this)
-                Destroy(gameObject);
-        }
-
-        #endregion Singleton
-
-        public List<InventoryItem> inventoryItems;
-
-        [Header("Inventory Display")] public GameObject inventory;
-        public RectTransform contentContainer;
-        public GameObject itemDisplayPrefab;
-        public ScrollRect scrollRect;
-
-        [Header("UI Display Image States")] public Sprite defaultBorder;
-        public Sprite selectedBorder;
-        public Sprite notAvailableBorder;
-
-        [Header("Item Details")] public GameObject itemDetail;
-        public Text itemDetailName;
-        public RawImage itemDetailImage;
-        public Text itemDetailDescription;
-        public Text itemDetailType;
-
-        [Header("Item Use Interaction")] public Button itemConfirmButton;
-        public Text itemConfirmButtonText;
-
-        private class InventoryDisplay
-        {
-            public InventoryItem inventoryItem;
-            public Button itemButton;
-            public Image itemBorder;
-            public Text itemNameText;
-            public RawImage itemImage;
-            public Text itemCountText;
-        }
+        private const float FiftyPercentAlpha = 0.196f;
 
         private List<InventoryDisplay> _itemsDisplay;
 
         private InventoryDisplay _itemSelected;
+
+        private HealthSetter _playerHealth;
+        public RectTransform contentContainer;
+
+        [Header("UI Display Image States")] public Sprite defaultBorder;
+
+        [Header("Inventory Display")] public GameObject inventory;
+
+        public List<InventoryItem> inventoryItems;
+
+        [Header("Item Use Interaction")] public Button itemConfirmButton;
+        public Text itemConfirmButtonText;
+
+        [Header("Item Details")] public GameObject itemDetail;
+        public Text itemDetailDescription;
+        public RawImage itemDetailImage;
+        public Text itemDetailName;
+        public Text itemDetailType;
+        public GameObject itemDisplayPrefab;
+        public Sprite notAvailableBorder;
+        public ScrollRect scrollRect;
+        public Sprite selectedBorder;
 
         private InventoryDisplay ItemSelected
         {
@@ -72,15 +48,11 @@ namespace FortBlast.Resources
             }
         }
 
-        private HealthSetter _playerHealth;
-
-        private const float FiftyPercentAlpha = 0.196f;
-
         /// <summary>
-        /// Start is called on the frame when a script is enabled just before
-        /// any of the Update methods is called the first time.
+        ///     Start is called on the frame when a script is enabled just before
+        ///     any of the Update methods is called the first time.
         /// </summary>
-        void Start()
+        private void Start()
         {
             _itemsDisplay = new List<InventoryDisplay>();
 
@@ -95,35 +67,13 @@ namespace FortBlast.Resources
         }
 
         /// <summary>
-        /// Update is called every frame, if the MonoBehaviour is enabled.
+        ///     Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
-        void Update()
+        private void Update()
         {
             if (Input.GetKeyDown(Controls.InventoryKey))
                 OpenInventory();
         }
-
-        #region InventoryActions
-
-        public void OpenInventory()
-        {
-            inventory.SetActive(true);
-            scrollRect.verticalNormalizedPosition = 1;
-
-            GameManager.instance.InventoryOpened();
-        }
-
-        public void CloseInventory()
-        {
-            inventory.SetActive(false);
-            itemDetail.SetActive(false);
-
-            ClearItemSelection();
-        }
-
-        public void ClearItemSelection() => ItemSelected = null;
-
-        #endregion InventoryActions
 
 
         private void SpawnItemOnButtonPress()
@@ -148,7 +98,6 @@ namespace FortBlast.Resources
         private void UpdateUIWithResources()
         {
             foreach (var item in _itemsDisplay)
-            {
                 if (ResourceManager.instance.HasResource(item.inventoryItem.displayName))
                 {
                     item.itemCountText.text =
@@ -162,7 +111,6 @@ namespace FortBlast.Resources
                     item.itemBorder.sprite = notAvailableBorder;
                     item.itemBorder.color = new Color(1, 1, 1, FiftyPercentAlpha);
                 }
-            }
         }
 
         private void UpdateUIWithItemSelected()
@@ -173,7 +121,6 @@ namespace FortBlast.Resources
                 return;
 
             foreach (var item in _itemsDisplay)
-            {
                 if (item == ItemSelected)
                 {
                     item.itemBorder.sprite = selectedBorder;
@@ -205,7 +152,9 @@ namespace FortBlast.Resources
                     itemDetail.SetActive(true);
 
                     if (ResourceManager.instance.HasResource(ItemSelected.inventoryItem.displayName))
+                    {
                         itemConfirmButton.interactable = true;
+                    }
                     else
                     {
                         itemConfirmButton.gameObject.SetActive(false);
@@ -214,21 +163,23 @@ namespace FortBlast.Resources
 
                     break;
                 }
-            }
         }
 
-        private void SelectItem(InventoryDisplay item) => ItemSelected = item;
+        private void SelectItem(InventoryDisplay item)
+        {
+            ItemSelected = item;
+        }
 
         private void CreateUIDisplayItems()
         {
             foreach (var item in inventoryItems)
             {
-                GameObject itemDisplayInstance = Instantiate(itemDisplayPrefab, contentContainer.position,
+                var itemDisplayInstance = Instantiate(itemDisplayPrefab, contentContainer.position,
                     Quaternion.identity);
-                RectTransform itemDisplayTransform = itemDisplayInstance.GetComponent<RectTransform>();
+                var itemDisplayTransform = itemDisplayInstance.GetComponent<RectTransform>();
                 itemDisplayTransform.SetParent(contentContainer, false);
 
-                InventoryDisplay inventoryDisplay = new InventoryDisplay
+                var inventoryDisplay = new InventoryDisplay
                 {
                     inventoryItem = item,
                     itemButton = itemDisplayInstance
@@ -254,5 +205,58 @@ namespace FortBlast.Resources
                 _itemsDisplay.Add(inventoryDisplay);
             }
         }
+
+        private class InventoryDisplay
+        {
+            public InventoryItem inventoryItem;
+            public Image itemBorder;
+            public Button itemButton;
+            public Text itemCountText;
+            public RawImage itemImage;
+            public Text itemNameText;
+        }
+
+        #region Singleton
+
+        public static InventoryManager instance;
+
+        /// <summary>
+        ///     Awake is called when the script instance is being loaded.
+        /// </summary>
+        private void Awake()
+        {
+            if (instance == null)
+                instance = this;
+
+            if (instance != this)
+                Destroy(gameObject);
+        }
+
+        #endregion Singleton
+
+        #region InventoryActions
+
+        public void OpenInventory()
+        {
+            inventory.SetActive(true);
+            scrollRect.verticalNormalizedPosition = 1;
+
+            GameManager.instance.InventoryOpened();
+        }
+
+        public void CloseInventory()
+        {
+            inventory.SetActive(false);
+            itemDetail.SetActive(false);
+
+            ClearItemSelection();
+        }
+
+        public void ClearItemSelection()
+        {
+            ItemSelected = null;
+        }
+
+        #endregion InventoryActions
     }
 }

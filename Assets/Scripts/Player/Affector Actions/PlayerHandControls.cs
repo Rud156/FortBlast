@@ -1,56 +1,45 @@
-using UnityEngine;
-using FortBlast.Player.Data;
-using FortBlast.Extras;
-using FortBlast.Common;
-using FortBlast.Structs;
 using EZCameraShake;
+using FortBlast.Player.Data;
+using FortBlast.Structs;
+using UnityEngine;
 
 namespace FortBlast.Player.AffecterActions
 {
     [RequireComponent(typeof(Animator))]
     public class PlayerHandControls : MonoBehaviour
     {
-        private enum MechanismState
-        {
-            Reflect,
-            Teleport,
-            ShutOff
-        }
-
-        [Header("Mechanism System")]
-        public GameObject reflector;
-        public GameObject teleporter;
-        public Transform lookPoint;
-        public ReflectorTriggerEventCreator reflectorTrigger;
-        public float teleportDistance;
-
-        [Header("Reflection Controls")]
-        public int maxReflectionCount;
-        public float reflectionGenerationRate;
-
-        [Header("Teleporter Controls")]
-        public int maxTeleporterCount;
-        public float teleporterGenerationRate;
-        public GameObject teleporterLandEffect;
-
-        [Header("Camera Shaker")]
-        public CameraShakerStats reflectCameraShaker;
-        public CameraShakerStats teleportCameraShaker;
-
-        private Animator _playerAnimator;
+        private float _currentReflectionCount;
+        private float _currentTeleporterCount;
         private bool _mechanismActive;
         private MechanismState _mechanismState;
 
-        private bool _teleporterPrevState;
-        private float _currentTeleporterCount;
+        private Animator _playerAnimator;
 
-        private float _currentReflectionCount;
+        private bool _teleporterPrevState;
+        public Transform lookPoint;
+
+        [Header("Reflection Controls")] public int maxReflectionCount;
+
+        [Header("Teleporter Controls")] public int maxTeleporterCount;
+
+        [Header("Camera Shaker")] public CameraShakerStats reflectCameraShaker;
+
+        public float reflectionGenerationRate;
+
+        [Header("Mechanism System")] public GameObject reflector;
+
+        public ReflectorTriggerEventCreator reflectorTrigger;
+        public CameraShakerStats teleportCameraShaker;
+        public float teleportDistance;
+        public GameObject teleporter;
+        public float teleporterGenerationRate;
+        public GameObject teleporterLandEffect;
 
         /// <summary>
-        /// Start is called on the frame when a script is enabled just before
-        /// any of the Update methods is called the first time.
+        ///     Start is called on the frame when a script is enabled just before
+        ///     any of the Update methods is called the first time.
         /// </summary>
-        void Start()
+        private void Start()
         {
             _playerAnimator = GetComponent<Animator>();
             _mechanismActive = true;
@@ -65,9 +54,9 @@ namespace FortBlast.Player.AffecterActions
         }
 
         /// <summary>
-        /// Update is called every frame, if the MonoBehaviour is enabled.
+        ///     Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
-        void Update()
+        private void Update()
         {
             if (Input.GetKeyDown(KeyCode.F)) // TODO: Remove this later on...
                 Debug.Break();
@@ -75,28 +64,6 @@ namespace FortBlast.Player.AffecterActions
             DisplayAbsorberOnInput();
             UpdateTeleporterAndReflectionHealth();
         }
-
-        #region  MechanismController
-
-        public void ActivateMechanism() => _mechanismActive = true;
-        public void DeActivateMechanism()
-        {
-            _playerAnimator.SetBool(PlayerData.PlayerShooting, false);
-            reflector.SetActive(false);
-            teleporter.SetActive(false);
-
-            _mechanismActive = false;
-        }
-
-        #endregion MechanismController
-
-        #region MechanismControlVariables
-
-        public float GetCurrentTeleporterCount() => _currentTeleporterCount;
-
-        public float GetCurrentReflectorCount() => _currentReflectionCount;
-
-        #endregion MechanismControlVariables
 
         private void OnBulletCollided(GameObject bullet)
         {
@@ -111,7 +78,7 @@ namespace FortBlast.Player.AffecterActions
         private void ReflectBullet(GameObject bullet)
         {
             bullet.layer = 9; // Put it in the Droid Layer to enable collision
-            Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
+            var bulletRB = bullet.GetComponent<Rigidbody>();
             bulletRB.velocity *= -1;
 
             CameraShaker.Instance.ShakeOnce(
@@ -128,9 +95,9 @@ namespace FortBlast.Player.AffecterActions
             if (!_mechanismActive)
                 return;
 
-            bool reflectorActive = Input.GetMouseButton(0) && _currentReflectionCount > 1;
-            bool teleporterActive = Input.GetMouseButton(1) && _currentTeleporterCount > 1;
-            bool mechanismActive = reflectorActive || teleporterActive;
+            var reflectorActive = Input.GetMouseButton(0) && _currentReflectionCount > 1;
+            var teleporterActive = Input.GetMouseButton(1) && _currentTeleporterCount > 1;
+            var mechanismActive = reflectorActive || teleporterActive;
 
             if (reflectorActive)
                 _mechanismState = MechanismState.Reflect;
@@ -158,10 +125,10 @@ namespace FortBlast.Player.AffecterActions
         private void CheckAndTeleportPlayer(bool currentTeleporterState)
         {
             if (currentTeleporterState != _teleporterPrevState
-                && _teleporterPrevState == true)
+                && _teleporterPrevState)
             {
                 RaycastHit hit;
-                Vector3 destination = lookPoint.position + lookPoint.forward * teleportDistance;
+                var destination = lookPoint.position + lookPoint.forward * teleportDistance;
 
                 if (Physics.Linecast(lookPoint.position, destination, out hit))
                     destination = lookPoint.position + lookPoint.forward * (hit.distance - 1);
@@ -183,5 +150,44 @@ namespace FortBlast.Player.AffecterActions
 
             _teleporterPrevState = currentTeleporterState;
         }
+
+        private enum MechanismState
+        {
+            Reflect,
+            Teleport,
+            ShutOff
+        }
+
+        #region  MechanismController
+
+        public void ActivateMechanism()
+        {
+            _mechanismActive = true;
+        }
+
+        public void DeActivateMechanism()
+        {
+            _playerAnimator.SetBool(PlayerData.PlayerShooting, false);
+            reflector.SetActive(false);
+            teleporter.SetActive(false);
+
+            _mechanismActive = false;
+        }
+
+        #endregion MechanismController
+
+        #region MechanismControlVariables
+
+        public float GetCurrentTeleporterCount()
+        {
+            return _currentTeleporterCount;
+        }
+
+        public float GetCurrentReflectorCount()
+        {
+            return _currentReflectionCount;
+        }
+
+        #endregion MechanismControlVariables
     }
 }

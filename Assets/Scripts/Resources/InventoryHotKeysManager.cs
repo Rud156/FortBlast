@@ -7,32 +7,16 @@ namespace FortBlast.Resources
 {
     public class InventoryHotKeysManager : MonoBehaviour
     {
-        #region Singleton
-
-        private static InventoryHotKeysManager _instance;
-
-        /// <summary>
-        /// Awake is called when the script instance is being loaded.
-        /// </summary>
-        void Awake()
-        {
-            if (_instance == null)
-                _instance = this;
-
-            if (_instance != this)
-                Destroy(gameObject);
-        }
-
-        #endregion Singleton
+        private HealthSetter _playerHealth;
+        public InventoryItem bandage;
 
         public InventoryItem bottle;
         public InventoryItem chocolate;
-        public InventoryItem bandage;
 
-        private HealthSetter _playerHealth;
-
-        private void Start() =>
+        private void Start()
+        {
             _playerHealth = GameObject.FindGameObjectWithTag(TagManager.Player)?.GetComponent<HealthSetter>();
+        }
 
         private void Update()
         {
@@ -43,6 +27,24 @@ namespace FortBlast.Resources
             if (Input.GetKeyDown(Controls.HotKey_3))
                 EatChocolateOnKeyPress();
         }
+
+        #region Singleton
+
+        private static InventoryHotKeysManager _instance;
+
+        /// <summary>
+        ///     Awake is called when the script instance is being loaded.
+        /// </summary>
+        private void Awake()
+        {
+            if (_instance == null)
+                _instance = this;
+
+            if (_instance != this)
+                Destroy(gameObject);
+        }
+
+        #endregion Singleton
 
         #region HotKeyActions
 

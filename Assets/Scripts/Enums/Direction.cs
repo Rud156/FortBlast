@@ -5,5 +5,5 @@
         xAxis,
         yAxis,
         zAxis
-    };
+    }
 }

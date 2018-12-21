@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 namespace FortBlast.Common
 {
@@ -9,34 +7,40 @@ namespace FortBlast.Common
     {
         public delegate void HealthZero();
 
+        private float _currentHealthAmount;
+        public GameObject deathEffect;
+        public bool destroyWithoutEffect;
+        public Transform effectInstantiatePoint;
+
         public HealthZero healthZero;
 
         public float maxHealthAmount;
-        public GameObject deathEffect;
-        public Transform effectInstantiatePoint;
         public bool useSkinnedMesh;
-        public bool destroyWithoutEffect;
-
-        private float _currentHealthAmount;
 
         /// <summary>
-        /// Start is called on the frame when a script is enabled just before
-        /// any of the Update methods is called the first time.
+        ///     Start is called on the frame when a script is enabled just before
+        ///     any of the Update methods is called the first time.
         /// </summary>
-        void Start() => _currentHealthAmount = maxHealthAmount;
+        private void Start()
+        {
+            _currentHealthAmount = maxHealthAmount;
+        }
 
         /// <summary>
-        /// Update is called every frame, if the MonoBehaviour is enabled.
+        ///     Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
-        void Update() => CheckIfHealthZero();
+        private void Update()
+        {
+            CheckIfHealthZero();
+        }
 
         /// <summary>
-        /// OnTriggerEnter is called when the Collider other enters the trigger.
+        ///     OnTriggerEnter is called when the Collider other enters the trigger.
         /// </summary>
         /// <param name="other">The other Collider involved in this collision.</param>
-        void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
-            DamageAmountSetter damageAmountSetter = other.GetComponent<DamageAmountSetter>();
+            var damageAmountSetter = other.GetComponent<DamageAmountSetter>();
             if (damageAmountSetter != null)
             {
                 Destroy(other.gameObject);
@@ -44,14 +48,23 @@ namespace FortBlast.Common
             }
         }
 
-        public float GetCurrentHealth() => _currentHealthAmount;
+        public float GetCurrentHealth()
+        {
+            return _currentHealthAmount;
+        }
 
-        public void AddHealth(float healthAmount) => _currentHealthAmount =
-            _currentHealthAmount + healthAmount > maxHealthAmount
-                ? maxHealthAmount
-                : _currentHealthAmount + healthAmount;
+        public void AddHealth(float healthAmount)
+        {
+            _currentHealthAmount =
+                _currentHealthAmount + healthAmount > maxHealthAmount
+                    ? maxHealthAmount
+                    : _currentHealthAmount + healthAmount;
+        }
 
-        public void ReduceHealth(float healthAmount) => _currentHealthAmount -= healthAmount;
+        public void ReduceHealth(float healthAmount)
+        {
+            _currentHealthAmount -= healthAmount;
+        }
 
         private void CheckIfHealthZero()
         {
@@ -72,17 +85,17 @@ namespace FortBlast.Common
 
         private void SpawnSkinnedMeshEffect()
         {
-            SkinnedMeshRenderer skinnedMesh = GetComponent<SkinnedMeshRenderer>();
-            GameObject particleEffect = Instantiate(deathEffect, transform.position, Quaternion.identity);
+            var skinnedMesh = GetComponent<SkinnedMeshRenderer>();
+            var particleEffect = Instantiate(deathEffect, transform.position, Quaternion.identity);
             particleEffect.transform.position = effectInstantiatePoint.position;
 
-            ParticleSystem.ShapeModule shape = particleEffect.GetComponent<ParticleSystem>().shape;
+            var shape = particleEffect.GetComponent<ParticleSystem>().shape;
             shape.skinnedMeshRenderer = skinnedMesh;
         }
 
         private void SpawnNormalEffect()
         {
-            GameObject particleEffect = Instantiate(deathEffect, transform.position, Quaternion.identity);
+            var particleEffect = Instantiate(deathEffect, transform.position, Quaternion.identity);
             particleEffect.transform.position = effectInstantiatePoint.position;
         }
     }

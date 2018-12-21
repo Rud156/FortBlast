@@ -6,35 +6,23 @@ namespace FortBlast.ProceduralTerrain.Settings
     [CreateAssetMenu(fileName = "HeightMapSettings", menuName = "Terrain/HeightMapSettings")]
     public class HeightMapSettings : UpdatebleData
     {
-        public NoiseSettings noiseSettings;
-
-        [Header("Mesh Data")]
-        public float heightMultiplier;
         public AnimationCurve heightCurve;
 
-        [Header("Color Data")]
-        public bool useFalloff;
+        [Header("Mesh Data")] public float heightMultiplier;
 
-        public float minHeight
-        {
-            get
-            {
-                return heightMultiplier * heightCurve.Evaluate(0);
-            }
-        }
-        public float maxHeight
-        {
-            get
-            {
-                return heightMultiplier * heightCurve.Evaluate(1);
-            }
-        }
+        public NoiseSettings noiseSettings;
+
+        [Header("Color Data")] public bool useFalloff;
+
+        public float minHeight => heightMultiplier * heightCurve.Evaluate(0);
+
+        public float maxHeight => heightMultiplier * heightCurve.Evaluate(1);
 
 #if UNITY_EDITOR
 
         /// <summary>
-        /// Called when the script is loaded or a value is changed in the
-        /// inspector (Called in the editor only).
+        ///     Called when the script is loaded or a value is changed in the
+        ///     inspector (Called in the editor only).
         /// </summary>
         protected override void OnValidate()
         {

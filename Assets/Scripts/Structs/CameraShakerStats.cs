@@ -1,6 +1,8 @@
-﻿namespace FortBlast.Structs
+﻿using System;
+
+namespace FortBlast.Structs
 {
-    [System.Serializable]
+    [Serializable]
     public struct CameraShakerStats
     {
         public float magnitude;

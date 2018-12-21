@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace FortBlast.Player.Data
 {
     public static class PlayerData

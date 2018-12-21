@@ -1,5 +1,5 @@
+using System;
 using FortBlast.Extras;
-using FortBlast.ProceduralTerrain.DataHolders;
 using FortBlast.ProceduralTerrain.Generators;
 using FortBlast.ProceduralTerrain.Settings;
 using FortBlast.Structs;
@@ -9,20 +9,19 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
 {
     public class LODMesh
     {
-        public Mesh mesh;
-        public bool hasRequestedMesh;
+        private readonly int _lod;
         public bool hasMesh;
+        public bool hasRequestedMesh;
+        public Mesh mesh;
 
         public Vector3[] meshVertices;
-
-        public event System.Action updateCallback;
-
-        private int _lod;
 
         public LODMesh(int lod)
         {
             _lod = lod;
         }
+
+        public event Action updateCallback;
 
         public void RequestMesh(HeightMap heightMap, MeshSettings meshSettings)
         {
@@ -36,7 +35,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
 
         private void OnMeshDataReceived(object meshDataObject)
         {
-            MeshData meshData = (MeshData)meshDataObject;
+            var meshData = (MeshData) meshDataObject;
 
             mesh = meshData.CreateMesh();
             hasMesh = true;

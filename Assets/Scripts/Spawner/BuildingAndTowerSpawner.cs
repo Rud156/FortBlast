@@ -1,57 +1,37 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using FortBlast.ProceduralTerrain.Settings;
+﻿using FortBlast.ProceduralTerrain.Settings;
 using UnityEngine;
 
 namespace FortBlast.Spawner
 {
     public class BuildingAndTowerSpawner : MonoBehaviour
     {
-        private struct TerrainMeshData
-        {
-            public Vector3[] vertices;
-            public Vector3 meshCenter;
-            public Transform parent;
-        }
+        private int _currentCount;
 
-        #region Singleton
-
-        public static BuildingAndTowerSpawner instance;
-
-        /// <summary>
-        /// Awake is called when the script instance is being loaded.
-        /// </summary>
-        void Awake()
-        {
-            if (instance == null)
-                instance = this;
-
-            if (instance != this)
-                Destroy(gameObject);
-        }
-
-        #endregion Singleton
+        private int _terrainCount;
+        private int _totalBuildingToBeCreated;
+        private int _totalTerrainCount;
 
         [Header("Building Prefabs")] public GameObject buildingPrefab;
-        public GameObject towerPrefab;
-        public int[] yRotation;
-
-        [Header("Creation Stats")] public LevelSettings levelSettings;
         public ClearingSettings clearingSettings;
         public float heightAboveBaseGround;
 
-        private int _terrainCount;
-        private int _totalTerrainCount;
-        private int _currentCount;
-        private int _totalBuildingToBeCreated;
+        [Header("Creation Stats")] public LevelSettings levelSettings;
+        public GameObject towerPrefab;
+        public int[] yRotation;
 
-        private void Start() => _totalBuildingToBeCreated = levelSettings.maxTowers;
+        private void Start()
+        {
+            _totalBuildingToBeCreated = levelSettings.maxTowers;
+        }
 
-        public void SetTotalTerrainCount(int totalTerrainCount) => _totalTerrainCount = totalTerrainCount;
+        public void SetTotalTerrainCount(int totalTerrainCount)
+        {
+            _totalTerrainCount = totalTerrainCount;
+        }
 
         public void AddTerrainData(Vector3[] meshVertices, Vector3 meshCenter, Transform parent)
         {
-            TerrainMeshData meshData = new TerrainMeshData
+            var meshData = new TerrainMeshData
             {
                 vertices = meshVertices,
                 meshCenter = meshCenter,
@@ -63,29 +43,29 @@ namespace FortBlast.Spawner
 
         private void CheckAndCreateTowersAndBuildings(TerrainMeshData meshData)
         {
-            float selectionProbability = (float) _totalBuildingToBeCreated / (_totalTerrainCount - _currentCount);
-            float randomValue = Random.value;
+            var selectionProbability = (float) _totalBuildingToBeCreated / (_totalTerrainCount - _currentCount);
+            var randomValue = Random.value;
 
             if (selectionProbability >= randomValue)
             {
-                int meshVertexIndex = Mathf.FloorToInt(Random.value * meshData.vertices.Length);
-                Vector3 meshVertex = meshData.vertices[meshVertexIndex] +
-                                     new Vector3(meshData.meshCenter.x, 0, meshData.meshCenter.y);
+                var meshVertexIndex = Mathf.FloorToInt(Random.value * meshData.vertices.Length);
+                var meshVertex = meshData.vertices[meshVertexIndex] +
+                                 new Vector3(meshData.meshCenter.x, 0, meshData.meshCenter.y);
                 meshVertex.y = heightAboveBaseGround;
 
                 if (clearingSettings.useOnlyCenterTile && clearingSettings.createClearing)
                     if (meshData.meshCenter == Vector3.zero)
                         return;
 
-                int randomNumber = Random.Range(0, 1000) % yRotation.Length;
-                GameObject buildingInstance = Instantiate(buildingPrefab, meshVertex,
+                var randomNumber = Random.Range(0, 1000) % yRotation.Length;
+                var buildingInstance = Instantiate(buildingPrefab, meshVertex,
                     buildingPrefab.transform.rotation);
                 buildingInstance.transform.SetParent(meshData.parent);
 
-                Transform towerPointsParent = buildingInstance.transform.GetChild(0);
-                Vector3 position = towerPointsParent.GetChild(randomNumber).position;
+                var towerPointsParent = buildingInstance.transform.GetChild(0);
+                var position = towerPointsParent.GetChild(randomNumber).position;
 
-                GameObject towerInstance = Instantiate(
+                var towerInstance = Instantiate(
                     towerPrefab,
                     position,
                     Quaternion.Euler(0, yRotation[randomNumber], 0)
@@ -98,5 +78,30 @@ namespace FortBlast.Spawner
 
             _currentCount += 1;
         }
+
+        private struct TerrainMeshData
+        {
+            public Vector3[] vertices;
+            public Vector3 meshCenter;
+            public Transform parent;
+        }
+
+        #region Singleton
+
+        public static BuildingAndTowerSpawner instance;
+
+        /// <summary>
+        ///     Awake is called when the script instance is being loaded.
+        /// </summary>
+        private void Awake()
+        {
+            if (instance == null)
+                instance = this;
+
+            if (instance != this)
+                Destroy(gameObject);
+        }
+
+        #endregion Singleton
     }
 }

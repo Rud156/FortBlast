@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using UnityEngine;
 
@@ -8,13 +7,12 @@ namespace FortBlast.ProceduralTerrain.Settings
     [CreateAssetMenu(fileName = "TextureData", menuName = "Terrain/Texture")]
     public class TextureData : UpdatebleData
     {
-        public Layer[] layers;
-
-        private float _savedMinHeight;
-        private float _savedMaxHeight;
-
         private const int TextureSize = 512;
         private const TextureFormat _textureFormat = TextureFormat.RGB565;
+        private float _savedMaxHeight;
+
+        private float _savedMinHeight;
+        public Layer[] layers;
 
         public void ApplyToMaterial(Material material)
         {
@@ -25,7 +23,7 @@ namespace FortBlast.ProceduralTerrain.Settings
             material.SetFloatArray("baseColorStrengths", layers.Select(_ => _.tintStrength).ToArray());
             material.SetFloatArray("baseTextureScales", layers.Select(_ => _.textureScale).ToArray());
 
-            Texture2DArray textureArray = GenerateTextureArray(layers.Select(_ => _.texture).ToArray());
+            var textureArray = GenerateTextureArray(layers.Select(_ => _.texture).ToArray());
             material.SetTexture("baseTextures", textureArray);
 
             UpdateMeshHeights(material, _savedMinHeight, _savedMaxHeight);
@@ -42,29 +40,28 @@ namespace FortBlast.ProceduralTerrain.Settings
 
         private Texture2DArray GenerateTextureArray(Texture2D[] textures)
         {
-            Texture2DArray textureArray = new Texture2DArray(TextureSize, TextureSize,
+            var textureArray = new Texture2DArray(TextureSize, TextureSize,
                 textures.Length, _textureFormat, true);
 
-            for (int i = 0; i < textures.Length; i++)
+            for (var i = 0; i < textures.Length; i++)
                 textureArray.SetPixels(textures[i].GetPixels(), i);
 
             textureArray.Apply();
             return textureArray;
         }
 
-        [System.Serializable]
+        [Serializable]
         public class Layer
         {
-            public Texture2D texture;
-            public Color tint;
-            [Range(0, 1)]
-            public float tintStrength;
-            [Range(0, 1)]
-            public float startHeight;
-            [Range(0, 1)]
-            public float blendStrength;
-            public float textureScale;
+            [Range(0, 1)] public float blendStrength;
 
+            [Range(0, 1)] public float startHeight;
+
+            public Texture2D texture;
+            public float textureScale;
+            public Color tint;
+
+            [Range(0, 1)] public float tintStrength;
         }
     }
 }

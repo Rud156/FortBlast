@@ -7,20 +7,21 @@ namespace FortBlast.Player.Movement
     [RequireComponent(typeof(Animator))]
     public class PlayerMovementController : MonoBehaviour
     {
-        [Header("Movement")]
-        public float movementSpeed;
-        public float runningSpeed;
-        public float animatorLerpRate;
+        private Animator _playerAnimator;
 
         private Rigidbody _playerRB;
-        private Animator _playerAnimator;
         private float _prevMoveZ;
+        public float animatorLerpRate;
+
+        [Header("Movement")] public float movementSpeed;
+
+        public float runningSpeed;
 
         /// <summary>
-        /// Start is called on the frame when a script is enabled just before
-        /// any of the Update methods is called the first time.
+        ///     Start is called on the frame when a script is enabled just before
+        ///     any of the Update methods is called the first time.
         /// </summary>
-        void Start()
+        private void Start()
         {
             _playerRB = GetComponent<Rigidbody>();
             _playerAnimator = GetComponent<Animator>();
@@ -28,13 +29,13 @@ namespace FortBlast.Player.Movement
         }
 
         /// <summary>
-        /// Update is called every frame, if the MonoBehaviour is enabled.
+        ///     Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
-        void Update()
+        private void Update()
         {
-            float moveX = Input.GetAxis(PlayerData.HorizontalAxis);
-            float moveZ = Input.GetAxis(PlayerData.VerticalAxis);
-            bool runKeyPressed = Input.GetKey(KeyCode.LeftShift);
+            var moveX = Input.GetAxis(PlayerData.HorizontalAxis);
+            var moveZ = Input.GetAxis(PlayerData.VerticalAxis);
+            var runKeyPressed = Input.GetKey(KeyCode.LeftShift);
 
 
             SetAnimator(moveX, moveZ, runKeyPressed);
@@ -45,7 +46,7 @@ namespace FortBlast.Player.Movement
         {
             _playerAnimator.SetFloat(PlayerData.PlayerHorizontal, moveX);
 
-            float potentialMoveZ = moveZ;
+            var potentialMoveZ = moveZ;
             if (moveZ > 0)
             {
                 if (runKeyPressed)
@@ -62,8 +63,8 @@ namespace FortBlast.Player.Movement
 
         private void MovePlayer(float moveX, float moveZ, bool runKeyPressed)
         {
-            Vector3 xVelocity = Vector3.zero;
-            Vector3 zVelocity = Vector3.zero;
+            var xVelocity = Vector3.zero;
+            var zVelocity = Vector3.zero;
 
             if (moveZ != 0)
                 zVelocity = transform.forward * moveZ;
@@ -71,8 +72,8 @@ namespace FortBlast.Player.Movement
             if (moveX != 0)
                 xVelocity = transform.right * moveX;
 
-            float playerSpeed = runKeyPressed && moveZ > 0 ? runningSpeed : movementSpeed;
-            Vector3 combinedVelocity = (zVelocity + xVelocity) * playerSpeed * Time.deltaTime;
+            var playerSpeed = runKeyPressed && moveZ > 0 ? runningSpeed : movementSpeed;
+            var combinedVelocity = (zVelocity + xVelocity) * playerSpeed * Time.deltaTime;
             _playerRB.velocity = new Vector3(combinedVelocity.x, _playerRB.velocity.y, combinedVelocity.z);
         }
     }

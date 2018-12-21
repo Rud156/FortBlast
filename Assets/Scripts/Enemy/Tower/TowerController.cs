@@ -1,47 +1,46 @@
 ﻿using System.Collections;
 using FortBlast.Enemy.Tower.Helpers;
 using FortBlast.Extras;
-using FortBlast.Player.AffecterActions;
-using FortBlast.Scenes.MainScene;
 using UnityEngine;
 
 namespace FortBlast.Enemy.Tower
 {
     public class TowerController : MonoBehaviour
     {
-        [Header("Movement")]
-        [Range(0, 360)]
-        public int maxLookAngle;
-        public float rotationSpeed;
-        public float waitTimeBetweenLaze;
-
-        [Header("Attack")]
-        public float attackAngleTolerance;
-        public float waitTimeBetweenAttack;
-        public float maxTargetRange;
-        public float launchSpeed;
-
-        [Header("Prefabs And Movement Points")]
-        public Transform towerTop;
-        public Transform shootingPoint;
-        public GameObject bombPrefab;
-        public GameObject bombLaunchEffect;
-
-        private Transform _player;
-        private Transform _distactorHolder;
         private bool _attacking;
-
-        private Quaternion _lazeLookRotation;
-        private bool _lazingAround;
         private Coroutine _coroutine;
 
         private bool _deactivateTower;
+        private Transform _distactorHolder;
+
+        private Quaternion _lazeLookRotation;
+        private bool _lazingAround;
+
+        private Transform _player;
+
+        [Header("Attack")] public float attackAngleTolerance;
+
+        public GameObject bombLaunchEffect;
+        public GameObject bombPrefab;
+        public float launchSpeed;
+
+        [Header("Movement")] [Range(0, 360)] public int maxLookAngle;
+
+        public float maxTargetRange;
+        public float rotationSpeed;
+        public Transform shootingPoint;
+
+        [Header("Prefabs And Movement Points")]
+        public Transform towerTop;
+
+        public float waitTimeBetweenAttack;
+        public float waitTimeBetweenLaze;
 
         /// <summary>
-        /// Start is called on the frame when a script is enabled just before
-        /// any of the Update methods is called the first time.
+        ///     Start is called on the frame when a script is enabled just before
+        ///     any of the Update methods is called the first time.
         /// </summary>
-        void Start()
+        private void Start()
         {
             _player = GameObject.FindGameObjectWithTag(TagManager.Player)?.transform;
             _distactorHolder = GameObject.FindGameObjectWithTag(TagManager.DistractorHolder)?.transform;
@@ -52,29 +51,31 @@ namespace FortBlast.Enemy.Tower
         }
 
         /// <summary>
-        /// Update is called every frame, if the MonoBehaviour is enabled.
+        ///     Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
-        void Update()
+        private void Update()
         {
             if (_deactivateTower)
                 return;
 
             if (!_attacking)
             {
-                float normalizedAngle = TowerControllerHelpers
+                var normalizedAngle = TowerControllerHelpers
                     .CheckTargetInsideFOV(_player,
-                    towerTop, maxTargetRange, maxLookAngle);
+                        towerTop, maxTargetRange, maxLookAngle);
 
                 if (normalizedAngle != -1)
+                {
                     CheckAndAttackPlayer(normalizedAngle);
+                }
                 else
                 {
-                    Transform closestDistractor = TowerControllerHelpers.GetClosestDistractor(
-                            _distactorHolder, towerTop
-                        );
+                    var closestDistractor = TowerControllerHelpers.GetClosestDistractor(
+                        _distactorHolder, towerTop
+                    );
                     normalizedAngle = TowerControllerHelpers
                         .CheckTargetInsideFOV(closestDistractor,
-                        towerTop, maxTargetRange, maxLookAngle, false);
+                            towerTop, maxTargetRange, maxLookAngle, false);
 
                     if (normalizedAngle != -1)
                         CheckAndAttackDistractor(closestDistractor, normalizedAngle);
@@ -84,21 +85,27 @@ namespace FortBlast.Enemy.Tower
             }
         }
 
-        public void ActivateTower() => _deactivateTower = false;
+        public void ActivateTower()
+        {
+            _deactivateTower = false;
+        }
 
-        public void DeactivateTower() => _deactivateTower = true;
+        public void DeactivateTower()
+        {
+            _deactivateTower = true;
+        }
 
         private void LookAtTarget(Transform target)
         {
             if (!target)
                 return;
 
-            Vector3 lookDirection = target.position - towerTop.position;
+            var lookDirection = target.position - towerTop.position;
             lookDirection.y = 0;
 
             if (lookDirection != Vector3.zero)
             {
-                Quaternion lookRotation = Quaternion.LookRotation(lookDirection);
+                var lookRotation = Quaternion.LookRotation(lookDirection);
                 towerTop.rotation = Quaternion.Slerp(towerTop.rotation, lookRotation,
                     rotationSpeed * Time.deltaTime);
             }
@@ -142,14 +149,14 @@ namespace FortBlast.Enemy.Tower
 
         private IEnumerator AttackTarget(Transform target)
         {
-            Quaternion lookRotation = Quaternion.LookRotation(target.position - shootingPoint.position);
+            var lookRotation = Quaternion.LookRotation(target.position - shootingPoint.position);
             shootingPoint.transform.rotation = lookRotation;
 
-            GameObject bombLaunchEffectInstance =
+            var bombLaunchEffectInstance =
                 Instantiate(bombLaunchEffect, shootingPoint.position, Quaternion.identity);
             bombLaunchEffectInstance.transform.SetParent(shootingPoint.transform);
 
-            GameObject bombInstance = Instantiate(bombPrefab, shootingPoint.position, Quaternion.identity);
+            var bombInstance = Instantiate(bombPrefab, shootingPoint.position, Quaternion.identity);
             bombInstance.GetComponent<Rigidbody>().velocity = shootingPoint.transform.forward * launchSpeed;
 
             _attacking = true;
@@ -160,7 +167,7 @@ namespace FortBlast.Enemy.Tower
 
         private IEnumerator LazilyLookAround()
         {
-            int randomAngle = Random.Range(0, 360);
+            var randomAngle = Random.Range(0, 360);
             _lazeLookRotation = Quaternion.Euler(0, randomAngle, 0);
             _lazingAround = true;
 

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using FortBlast.Common;
+﻿using FortBlast.Common;
 using UnityEngine;
 
 namespace FortBlast.Enemy.Helpers
@@ -8,14 +6,14 @@ namespace FortBlast.Enemy.Helpers
     [RequireComponent(typeof(LightFlickerFastFaster))]
     public class TowerBombExplosion : MonoBehaviour
     {
+        private DamageAmountSetter _damageAmountSetter;
+
+        private LightFlickerFastFaster _lightFlickerFastFaster;
         public GameObject bombExplosion;
         public float explosionRadius;
 
-        private LightFlickerFastFaster _lightFlickerFastFaster;
-        private DamageAmountSetter _damageAmountSetter;
-
         // Use this for initialization
-        void Start()
+        private void Start()
         {
             _lightFlickerFastFaster = GetComponent<LightFlickerFastFaster>();
             _lightFlickerFastFaster.flickerComplete += ExplodeBomb;
@@ -25,11 +23,11 @@ namespace FortBlast.Enemy.Helpers
 
         private void ExplodeBomb()
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+            var colliders = Physics.OverlapSphere(transform.position, explosionRadius);
 
             foreach (var collider in colliders)
             {
-                HealthSetter healthSetter = collider.GetComponent<HealthSetter>();
+                var healthSetter = collider.GetComponent<HealthSetter>();
                 if (healthSetter != null)
                     healthSetter.ReduceHealth(_damageAmountSetter.damageAmount);
             }

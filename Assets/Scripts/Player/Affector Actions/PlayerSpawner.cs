@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using FortBlast.Common;
-using FortBlast.Extras;
+﻿using FortBlast.Extras;
 using FortBlast.Player.Data;
 using FortBlast.Resources;
 using FortBlast.Scenes.MainScene;
@@ -12,24 +9,23 @@ namespace FortBlast.Player.AffecterActions
     [RequireComponent(typeof(Animator))]
     public class PlayerSpawner : MonoBehaviour
     {
-        public Transform spawnPoint;
-        public float itemLaunchVelocity;
-        public GameObject launchEffect;
-
-        private Animator _playerAnimator;
-
         private InventoryItem _item;
-        private GameObject _itemInstance;
-        private Rigidbody _itemRB;
         private Collider _itemCollider;
 
         private Transform _itemHolder;
+        private GameObject _itemInstance;
+        private Rigidbody _itemRB;
+
+        private Animator _playerAnimator;
+        public float itemLaunchVelocity;
+        public GameObject launchEffect;
+        public Transform spawnPoint;
 
         /// <summary>
-        /// Start is called on the frame when a script is enabled just before
-        /// any of the Update methods is called the first time.
+        ///     Start is called on the frame when a script is enabled just before
+        ///     any of the Update methods is called the first time.
         /// </summary>
-        void Start()
+        private void Start()
         {
             _playerAnimator = GetComponent<Animator>();
             _itemInstance = null;
@@ -38,9 +34,9 @@ namespace FortBlast.Player.AffecterActions
         }
 
         /// <summary>
-        /// Update is called every frame, if the MonoBehaviour is enabled.
+        ///     Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
-        void Update()
+        private void Update()
         {
             if (Input.GetMouseButtonDown(0))
                 SpawnItemWorld();

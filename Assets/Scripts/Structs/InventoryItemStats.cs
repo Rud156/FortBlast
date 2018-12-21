@@ -1,8 +1,9 @@
-﻿using FortBlast.Resources;
+﻿using System;
+using FortBlast.Resources;
 
 namespace FortBlast.Structs
 {
-    [System.Serializable]
+    [Serializable]
     public struct InventoryItemStats
     {
         public InventoryItem inventoryItem;

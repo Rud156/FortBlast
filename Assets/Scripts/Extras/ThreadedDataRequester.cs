@@ -7,37 +7,22 @@ namespace FortBlast.Extras
 {
     public class ThreadedDataRequester : MonoBehaviour
     {
-        #region Singleton
-
-        private static ThreadedDataRequester _instance;
-
-        /// <summary>
-        /// Awake is called when the script instance is being loaded.
-        /// </summary>
-        void Awake()
-        {
-            if (_instance == null)
-                _instance = this;
-
-            if (_instance != this)
-                Destroy(gameObject);
-        }
-
-        #endregion Singleton
-
         private ConcurrentQueue<ThreadInfo> _dataQueue;
 
         /// <summary>
-        /// Start is called on the frame when a script is enabled just before
-        /// any of the Update methods is called the first time.
+        ///     Start is called on the frame when a script is enabled just before
+        ///     any of the Update methods is called the first time.
         /// </summary>
-        void Start() => _dataQueue = new ConcurrentQueue<ThreadInfo>();
+        private void Start()
+        {
+            _dataQueue = new ConcurrentQueue<ThreadInfo>();
+        }
 
 
         /// <summary>
-        /// Update is called every frame, if the MonoBehaviour is enabled.
+        ///     Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
-        void Update()
+        private void Update()
         {
             if (_dataQueue.Count > 0)
             {
@@ -49,14 +34,13 @@ namespace FortBlast.Extras
 
         public static void RequestData(Func<object> generateData, Action<object> callback)
         {
-            ThreadStart threadStart = new ThreadStart(() => _instance.DataThread(generateData, callback));
+            ThreadStart threadStart = () => _instance.DataThread(generateData, callback);
             new Thread(threadStart).Start();
-
         }
 
         private void DataThread(Func<object> generateData, Action<object> callback)
         {
-            object data = generateData.Invoke();
+            var data = generateData.Invoke();
             _dataQueue.Enqueue(new ThreadInfo(callback, data));
         }
 
@@ -71,5 +55,23 @@ namespace FortBlast.Extras
                 this.parameter = parameter;
             }
         }
+
+        #region Singleton
+
+        private static ThreadedDataRequester _instance;
+
+        /// <summary>
+        ///     Awake is called when the script instance is being loaded.
+        /// </summary>
+        private void Awake()
+        {
+            if (_instance == null)
+                _instance = this;
+
+            if (_instance != this)
+                Destroy(gameObject);
+        }
+
+        #endregion Singleton
     }
 }

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using FortBlast.ProceduralTerrain.Settings;
+﻿using FortBlast.ProceduralTerrain.Settings;
 using UnityEngine;
+using Random = System.Random;
 
 namespace FortBlast.ProceduralTerrain.Generators
 {
@@ -10,23 +9,22 @@ namespace FortBlast.ProceduralTerrain.Generators
         public static Vector3[] SelectTreePoints(Vector3[] vertices, int chunkSizeIndex,
             Vector3 meshCenter, TreeSettings treeSettings, ClearingSettings clearingSettings)
         {
-            System.Random random = new System.Random();
-            int chunkSize = MeshSettings.supportedChunkSizes[chunkSizeIndex];
-            int totalTreePoints = Mathf.FloorToInt
-                (random.Next(treeSettings.minTreesInMaxChunkSize, treeSettings.maxTreesInMaxChunkSize) /
-                (float)MeshSettings.supportedChunkSizes[MeshSettings.supportedChunkSizes.Length - 1] *
-                chunkSize);
+            var random = new Random();
+            var chunkSize = MeshSettings.supportedChunkSizes[chunkSizeIndex];
+            var totalTreePoints = Mathf.FloorToInt
+            (random.Next(treeSettings.minTreesInMaxChunkSize, treeSettings.maxTreesInMaxChunkSize) /
+             (float) MeshSettings.supportedChunkSizes[MeshSettings.supportedChunkSizes.Length - 1] *
+             chunkSize);
 
-            Vector3[] selectedPoints = new Vector3[totalTreePoints];
-            int index = 0;
-            Vector3 tileCenter = clearingSettings.useOnlyCenterTile ?
-                                    meshCenter : Vector3.zero;
+            var selectedPoints = new Vector3[totalTreePoints];
+            var index = 0;
+            var tileCenter = clearingSettings.useOnlyCenterTile ? meshCenter : Vector3.zero;
 
-            for (int i = 0; i < vertices.Length; i++)
+            for (var i = 0; i < vertices.Length; i++)
             {
                 if (clearingSettings.createClearing)
                 {
-                    Vector3 modifiedVertices = vertices[i] + tileCenter;
+                    var modifiedVertices = vertices[i] + tileCenter;
 
                     if (modifiedVertices.x > clearingSettings.clearingBottomLeft.x &&
                         modifiedVertices.z < clearingSettings.clearingTopRight.x &&
@@ -35,8 +33,8 @@ namespace FortBlast.ProceduralTerrain.Generators
                         continue;
                 }
 
-                float selectionProbability = (float)totalTreePoints / (vertices.Length - i);
-                float randomValue = (float)random.NextDouble();
+                var selectionProbability = (float) totalTreePoints / (vertices.Length - i);
+                var randomValue = (float) random.NextDouble();
 
                 if (selectionProbability >= randomValue)
                 {

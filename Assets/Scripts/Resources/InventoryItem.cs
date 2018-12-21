@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using FortBlast.Enums;
+﻿using FortBlast.Enums;
 using UnityEngine;
 
 namespace FortBlast.Resources
@@ -8,18 +6,17 @@ namespace FortBlast.Resources
     [CreateAssetMenu(fileName = "InventoryItem", menuName = "Inventory/Item")]
     public class InventoryItem : ScriptableObject
     {
-        [Header("Basic Data")]
-        public string displayName;
-        [TextArea]
-        public string description;
-        public Texture2D image;
+        [TextArea] public string description;
 
-        [Header("Item Details")]
-        public ItemType type;
+        [Header("Basic Data")] public string displayName;
+
+        public GameObject glassBreakingAudioPrefab;
+
+        [Header("Item Specifics")] public float healthAmount;
+
+        public Texture2D image;
         public GameObject prefab;
 
-        [Header("Item Specifics")]
-        public float healthAmount;
-        public GameObject glassBreakingAudioPrefab;
+        [Header("Item Details")] public ItemType type;
     }
 }
