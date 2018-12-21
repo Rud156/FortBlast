@@ -20,16 +20,17 @@ namespace FortBlast.Enemy.Droid.Patrol
         private bool _initiateShieldActivation;
         private bool _shieldActivated;
         private GameObject _shieldSystem;
+        private static readonly int Hit = Animator.StringToHash(AnimatorHitParam);
 
         /// <summary>
         /// Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
         void Update()
         {
-            if (_shieldSystem == null)
+            if (!_shieldSystem)
                 _shieldActivated = false;
 
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F)) // TODO: Remove this later
                 Debug.Break();
         }
 
@@ -46,7 +47,7 @@ namespace FortBlast.Enemy.Droid.Patrol
             if (probability <= selectionProbability && !_shieldActivated)
             {
                 _initiateShieldActivation = true;
-                droidAnimator.SetTrigger(AnimatorHitParam);
+                droidAnimator.SetTrigger(Hit);
             }
 
             if (_shieldActivated)

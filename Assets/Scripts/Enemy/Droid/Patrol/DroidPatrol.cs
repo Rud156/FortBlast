@@ -177,7 +177,7 @@ namespace FortBlast.Enemy.Droid.Patrol
 
         private void SetAgentDestination(Vector3 position)
         {
-            if (!_droidAgent.isOnNavMesh || _currentTarget == null)
+            if (!_droidAgent.isOnNavMesh || !_currentTarget)
                 return;
 
             _droidAgent.SetDestination(position);
@@ -187,9 +187,10 @@ namespace FortBlast.Enemy.Droid.Patrol
         {
             _currentTarget = target;
             _droidAgent.stoppingDistance = distanceToStopFromIntrestingTarget;
+            Vector3 position = _currentTarget.position;
 
-            SetAgentDestination(_currentTarget.position);
-            LookTowardsTarget(_currentTarget.position);
+            SetAgentDestination(position);
+            LookTowardsTarget(position);
             ResetAnimationOnFindingInterestingTarget();
         }
 

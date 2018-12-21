@@ -194,7 +194,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             }
         }
 
-        public void SetVisible(bool visible)
+        private void SetVisible(bool visible)
         {
             if (!visible)
                 _chunkTrees.ClearTrees();
@@ -202,7 +202,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             _meshObject.SetActive(visible);
         }
 
-        public bool IsVisible() => _meshObject.activeInHierarchy;
+        private bool IsVisible() => _meshObject.activeInHierarchy;
 
         private void LOD0ValidStateAvailable(LODMesh lodMesh)
         {

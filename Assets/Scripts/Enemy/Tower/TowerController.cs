@@ -90,7 +90,7 @@ namespace FortBlast.Enemy.Tower
 
         private void LookAtTarget(Transform target)
         {
-            if (target == null)
+            if (!target)
                 return;
 
             Vector3 lookDirection = target.position - towerTop.position;

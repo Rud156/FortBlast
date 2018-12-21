@@ -26,7 +26,8 @@ namespace FortBlast.Enemy.Droid.Droid1
         /// </summary>
         void Update()
         {
-            float maxVelocity = _droidAgent.speed * _droidAgent.speed;
+            float droidSpeed = _droidAgent.speed;
+            float maxVelocity = droidSpeed * droidSpeed;
             float currentVelocity = _droidAgent.velocity.sqrMagnitude;
 
             float rotationSpeed = ExtensionFunctions.Map(currentVelocity, 0, maxVelocity,
