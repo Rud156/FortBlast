@@ -35,7 +35,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1827403842552088}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -56,7 +56,6 @@ MonoBehaviour:
   followSpeed: 10
   lookSpeed: 10
   objectOffset: {x: 0, y: 10, z: 0}
-  player: {fileID: 0}
   useRotation: 0
 --- !u!198 &198363675101714484
 ParticleSystem:

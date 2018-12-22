@@ -66,7 +66,7 @@ ParticleSystem:
   serializedVersion: 5
   lengthInSec: 10
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   looping: 1
   prewarm: 1
   playOnAwake: 1
@@ -126,7 +126,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -3693,7 +3693,7 @@ ParticleSystem:
   LightsModule:
     enabled: 1
     ratio: 0.1
-    light: {fileID: 108231579409274624, guid: 7e650b1857c55b243a4a391a77f00f00, type: 2}
+    light: {fileID: 0}
     randomDistribution: 1
     color: 1
     range: 1
