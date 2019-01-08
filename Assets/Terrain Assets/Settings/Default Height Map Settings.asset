@@ -12,14 +12,6 @@ MonoBehaviour:
   m_Name: Default Height Map Settings
   m_EditorClassIdentifier: 
   autoUpdate: 1
-  noiseSettings:
-    normalizedMode: 1
-    scale: 50
-    octaves: 6
-    persistance: 0.6
-    lacunarity: 1.5
-    seed: 0
-    offset: {x: 0, y: 0}
   heightMultiplier: 1
   heightCurve:
     serializedVersion: 2
@@ -55,3 +47,11 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   useFalloff: 0
+  noiseSettings:
+    normalizedMode: 1
+    offset: {x: 0, y: 0}
+    scale: 50
+    seed: 0
+    lacunarity: 1.5
+    persistance: 0.6
+    octaves: 6

@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Mesh Material
   m_Shader: {fileID: 4800000, guid: 4f6dfee9fd5380744b51e26f4d28880a, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: USE_TEXTURE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -81,7 +81,7 @@ Material:
     - _ZWrite: 1
     - terrainScale: 1
     - testScale: 34.46
-    - useTexture: 0
+    - useTexture: 1
     m_Colors:
     - _Color: {r: 0.4811321, g: 0.374466, b: 0.374466, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

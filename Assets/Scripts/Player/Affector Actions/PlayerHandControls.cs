@@ -93,7 +93,7 @@ namespace FortBlast.Player.AffecterActions
                 _mechanismState = MechanismState.Reflect;
             else if (teleporterActive)
                 _mechanismState = MechanismState.Teleport;
-            else if (!mechanismActive)
+            else
                 _mechanismState = MechanismState.ShutOff;
 
             _playerAnimator.SetBool(PlayerData.PlayerShooting, mechanismActive);
