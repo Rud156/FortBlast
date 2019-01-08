@@ -14,6 +14,7 @@ namespace FortBlast.Spawner
         [Header("Building Prefabs")] public GameObject buildingPrefab;
         public ClearingSettings clearingSettings;
         public float heightAboveBaseGround;
+        public float safeBufferDistance;
 
         [Header("Creation Stats")] public LevelSettings levelSettings;
         public GameObject towerPrefab;
@@ -29,13 +30,14 @@ namespace FortBlast.Spawner
             _totalTerrainCount = totalTerrainCount;
         }
 
-        public void AddTerrainData(Vector3[] meshVertices, Vector3 meshCenter, Transform parent)
+        public void AddTerrainData(Vector3[] meshVertices, Vector3 meshCenter, Transform parent, Bounds meshBounds)
         {
             var meshData = new TerrainMeshData
             {
                 vertices = meshVertices,
                 meshCenter = meshCenter,
-                parent = parent
+                parent = parent,
+                meshBounds = meshBounds
             };
 
             CheckAndCreateTowersAndBuildings(meshData);
@@ -58,20 +60,7 @@ namespace FortBlast.Spawner
                         return;
 
                 var randomNumber = Random.Range(0, 1000) % yRotation.Length;
-                var buildingInstance = Instantiate(buildingPrefab, meshVertex,
-                    buildingPrefab.transform.rotation);
-                buildingInstance.transform.SetParent(meshData.parent);
-
-                var towerPointsParent = buildingInstance.transform.GetChild(0);
-                var position = towerPointsParent.GetChild(randomNumber).position;
-
-                var towerInstance = Instantiate(
-                    towerPrefab,
-                    position,
-                    Quaternion.Euler(0, yRotation[randomNumber], 0)
-                );
-
-                towerInstance.transform.SetParent(buildingInstance.transform);
+                CheckAndPlaceTower(randomNumber, meshVertex, meshData);
 
                 _totalBuildingToBeCreated -= 1;
             }
@@ -79,11 +68,62 @@ namespace FortBlast.Spawner
             _currentCount += 1;
         }
 
+        private void CheckAndPlaceTower(int randomCannonPoint, Vector3 meshVertex, TerrainMeshData meshData)
+        {
+            var buildingInstance = Instantiate(buildingPrefab, meshVertex,
+                buildingPrefab.transform.rotation);
+            buildingInstance.transform.SetParent(meshData.parent);
+
+            Vector3 meshMinBounds = meshData.meshBounds.min;
+            Vector3 meshMaxBounds = meshData.meshBounds.max;
+
+            float terrainLeftX = meshMinBounds.x;
+            float terrainRightX = meshMaxBounds.x;
+            float terrainBottomZ = meshMinBounds.y;
+            float terrainTopZ = meshMaxBounds.y;
+
+            Collider buildingCollider = buildingInstance.GetComponent<Collider>();
+            Bounds buildingBounds = buildingCollider.bounds;
+            Vector3 minBounds = buildingBounds.min;
+            Vector3 maxBounds = buildingBounds.max;
+
+            float buildingLeftX = minBounds.x;
+            float buildingRightX = maxBounds.x;
+            float buildingBottomZ = minBounds.z;
+            float buildingTopZ = maxBounds.z;
+
+            Vector3 currentBuildingPosition = meshVertex;
+
+            if (buildingLeftX < terrainLeftX)
+                currentBuildingPosition.x += ((terrainLeftX - buildingLeftX) + safeBufferDistance);
+            else if (buildingRightX > terrainRightX)
+                currentBuildingPosition.x -= ((terrainRightX - buildingRightX) - safeBufferDistance);
+
+            if (buildingBottomZ < terrainBottomZ)
+                currentBuildingPosition.z += ((terrainBottomZ - buildingBottomZ) + safeBufferDistance);
+            else if (buildingTopZ > terrainTopZ)
+                currentBuildingPosition.z -= ((terrainTopZ - buildingTopZ) - safeBufferDistance);
+
+            buildingInstance.transform.position = currentBuildingPosition;
+
+            var towerPointsParent = buildingInstance.transform.GetChild(0);
+            var position = towerPointsParent.GetChild(randomCannonPoint).position;
+
+            var towerInstance = Instantiate(
+                towerPrefab,
+                position,
+                Quaternion.Euler(0, yRotation[randomCannonPoint], 0)
+            );
+
+            towerInstance.transform.SetParent(buildingInstance.transform);
+        }
+
         private struct TerrainMeshData
         {
             public Vector3[] vertices;
             public Vector3 meshCenter;
             public Transform parent;
+            public Bounds meshBounds;
         }
 
         #region Singleton

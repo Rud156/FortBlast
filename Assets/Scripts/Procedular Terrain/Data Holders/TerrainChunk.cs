@@ -144,8 +144,8 @@ namespace FortBlast.ProceduralTerrain.DataHolders
                             CreateInitialDroids(lodMesh.meshVertices);
                         if (!_meshDatSentForTower)
                         {
-                            BuildingAndTowerSpawner.instance.AddTerrainData(lodMesh.meshVertices, _sampleCenter,
-                                _meshObject.transform);
+                            BuildingAndTowerSpawner.instance
+                                .AddTerrainData(lodMesh.meshVertices, _sampleCenter, _meshObject.transform, _bounds);
                             _meshDatSentForTower = true;
                         }
                     }

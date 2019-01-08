@@ -103,6 +103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4360157536752044}
   - component: {fileID: 114416243844887190}
+  - component: {fileID: 65795760016109200}
   m_Layer: 0
   m_Name: Garage
   m_TagString: Untagged
@@ -933,6 +934,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 24.596401, y: 1.0000048, z: 41.70611}
   m_Center: {x: -11, y: 1.4999986, z: -19.500006}
+--- !u!65 &65795760016109200
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1375358547644486}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 40, y: 10, z: 30}
+  m_Center: {x: -20, y: 5, z: 10}
 --- !u!65 &65962235729166846
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -968,9 +981,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7db3f7c896fbc54f8f2e30e5ca3cdc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorParticles: {fileID: 198922731259150748}
-  doorCollider: {fileID: 1422687396941090}
   deactivationTime: 3
+  doorCollider: {fileID: 1422687396941090}
+  doorParticles: {fileID: 198922731259150748}
   switchPoints:
   - {fileID: 4671155955863676}
   - {fileID: 4473995381296252}
