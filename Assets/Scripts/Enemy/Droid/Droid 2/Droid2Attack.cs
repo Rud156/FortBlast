@@ -6,29 +6,26 @@ namespace FortBlast.Enemy.Droid.Droid2
 {
     public class Droid2Attack : DroidAttack
     {
+        private static readonly int Attacking = Animator.StringToHash(AttackAnimationParam);
         private const string AttackAnimationParam = "Attacking";
-
+        
+        [Header("Attack Animations")] public float timeDiffSameAttack;
+        public Animator droidAnimator;
+        public float totalAttackTimes;
+        
         private Transform _target;
         private bool _usePlayerOffset;
-        public Animator droidAnimator;
-
-        [Header("Attack Animations")] public float timeDiffSameAttack;
-
-        public float totalAttackTimes;
 
         public override float Attack(Transform target, bool usePlayerOffset = false)
         {
             _target = target;
             _usePlayerOffset = usePlayerOffset;
-            droidAnimator.SetBool(AttackAnimationParam, true);
+            droidAnimator.SetBool(Attacking, true);
 
             return attackTime;
         }
 
-        public override void EndAttack()
-        {
-            droidAnimator.SetBool(AttackAnimationParam, false);
-        }
+        public override void EndAttack() => droidAnimator.SetBool(Attacking, false);
 
         public void AttackTarget()
         {
@@ -40,19 +37,19 @@ namespace FortBlast.Enemy.Droid.Droid2
         {
             yield return new WaitForSeconds(delayTime);
 
-            for (var i = 0; i < launchPoints.Length; i++)
+            foreach (var launchPoint in launchPoints)
             {
                 var position = _usePlayerOffset ? _target.position + Vector3.up * playerBaseOffset : _target.position;
 
-                var lookRotation = Quaternion.LookRotation(position - launchPoints[i].position);
-                launchPoints[i].transform.rotation = lookRotation;
+                var lookRotation = Quaternion.LookRotation(position - launchPoint.position);
+                launchPoint.transform.rotation = lookRotation;
 
-                Instantiate(launchEffect, launchPoints[i].position, lookRotation);
+                Instantiate(launchEffect, launchPoint.position, lookRotation);
 
                 var bulletInstance = Instantiate(droidBullet,
-                    launchPoints[i].transform.position, Quaternion.identity);
+                    launchPoint.transform.position, Quaternion.identity);
                 bulletInstance.transform.rotation = lookRotation;
-                bulletInstance.GetComponent<Rigidbody>().velocity = launchPoints[i].transform.forward *
+                bulletInstance.GetComponent<Rigidbody>().velocity = launchPoint.transform.forward *
                                                                     launchSpeed;
                 bulletInstance.layer = 10; // Put it in the Initial Bullet Layer
             }

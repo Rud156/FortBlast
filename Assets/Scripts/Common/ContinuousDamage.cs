@@ -4,12 +4,13 @@ namespace FortBlast.Common
 {
     public class ContinuousDamage : MonoBehaviour
     {
-        private HealthSetter _healthSetter;
         public float damagePerSecond;
+        
+        private HealthSetter _healthSetter;
 
         private void Update()
         {
-            if (_healthSetter == null)
+            if (!_healthSetter)
                 return;
 
             _healthSetter.ReduceHealth(damagePerSecond * Time.deltaTime);

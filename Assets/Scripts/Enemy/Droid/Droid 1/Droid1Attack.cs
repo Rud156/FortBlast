@@ -7,7 +7,7 @@ namespace FortBlast.Enemy.Droid.Droid1
     {
         public override float Attack(Transform target, bool usePlayerOffset = false)
         {
-            for (var i = 0; i < launchPoints.Length; i++)
+            foreach (var launchPoint in launchPoints)
             {
                 var targetPosition = target.position;
                 var position = usePlayerOffset
@@ -16,15 +16,15 @@ namespace FortBlast.Enemy.Droid.Droid1
                     : targetPosition;
 
                 var lookRotation = Quaternion.LookRotation(position -
-                                                           launchPoints[i].position);
-                launchPoints[i].transform.rotation = lookRotation;
+                                                           launchPoint.position);
+                launchPoint.transform.rotation = lookRotation;
 
-                Instantiate(launchEffect, launchPoints[i].position, lookRotation);
+                Instantiate(launchEffect, launchPoint.position, lookRotation);
 
                 var bulletInstance = Instantiate(droidBullet,
-                    launchPoints[i].position, Quaternion.identity);
+                    launchPoint.position, Quaternion.identity);
                 bulletInstance.transform.rotation = lookRotation;
-                bulletInstance.GetComponent<Rigidbody>().velocity = launchPoints[i].forward *
+                bulletInstance.GetComponent<Rigidbody>().velocity = launchPoint.forward *
                                                                     launchSpeed;
                 bulletInstance.layer = 10; // Put it in the Initial Bullet Layer
             }

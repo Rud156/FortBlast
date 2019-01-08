@@ -89,9 +89,9 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             for (var i = 0; i < detailLevels.Length; i++)
             {
                 _lodMeshes[i] = new LODMesh(detailLevels[i].lod);
-                _lodMeshes[i].updateCallback += UpdateTerrainChunk;
+                _lodMeshes[i].UpdateCallback += UpdateTerrainChunk;
                 if (i == _colliderLODIndex)
-                    _lodMeshes[i].updateCallback += UpdateCollisionMesh;
+                    _lodMeshes[i].UpdateCallback += UpdateCollisionMesh;
             }
 
             _maxViewDistance = detailLevels[detailLevels.Length - 1].visibleDistanceThreshold;

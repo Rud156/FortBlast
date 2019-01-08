@@ -10,10 +10,6 @@ namespace FortBlast.Player.AffecterActions
 
         public OnBulletCollided onBulletCollided;
 
-        /// <summary>
-        ///     OnTriggerEnter is called when the Collider other enters the trigger.
-        /// </summary>
-        /// <param name="other">The other Collider involved in this collision.</param>
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag(TagManager.Bullet))

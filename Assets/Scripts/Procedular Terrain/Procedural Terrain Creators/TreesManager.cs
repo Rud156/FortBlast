@@ -8,7 +8,6 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
     public class TreesManager : MonoBehaviour
     {
         public List<GameObject> treeBases;
-
         public List<Tree> trees;
 
         private void GenerateTrees()

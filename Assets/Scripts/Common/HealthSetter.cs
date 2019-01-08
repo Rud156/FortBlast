@@ -5,34 +5,29 @@ namespace FortBlast.Common
     [RequireComponent(typeof(Collider))]
     public class HealthSetter : MonoBehaviour
     {
-        public delegate void HealthZero();
-
-        private float _currentHealthAmount;
         public GameObject deathEffect;
         public bool destroyWithoutEffect;
         public Transform effectInstantiatePoint;
+        public float maxHealthAmount;
+        public bool useSkinnedMesh;
+
+        public delegate void HealthZero();
 
         public HealthZero healthZero;
 
-        public float maxHealthAmount;
-        public bool useSkinnedMesh;
+        private float _currentHealthAmount;
+
 
         /// <summary>
         ///     Start is called on the frame when a script is enabled just before
         ///     any of the Update methods is called the first time.
         /// </summary>
-        private void Start()
-        {
-            _currentHealthAmount = maxHealthAmount;
-        }
+        private void Start() => _currentHealthAmount = maxHealthAmount;
 
         /// <summary>
         ///     Update is called every frame, if the MonoBehaviour is enabled.
         /// </summary>
-        private void Update()
-        {
-            CheckIfHealthZero();
-        }
+        private void Update() => CheckIfHealthZero();
 
         /// <summary>
         ///     OnTriggerEnter is called when the Collider other enters the trigger.

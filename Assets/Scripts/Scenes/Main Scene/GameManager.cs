@@ -10,17 +10,13 @@ namespace FortBlast.Scenes.MainScene
 {
     public class GameManager : MonoBehaviour
     {
-        private bool _inventoryOpen;
-        private bool _itemSpawned;
         public PlayerHandControls playerAbsorbDamageController;
-
         public PlayerLookAtController playerLookAtController;
         public PlayerSpawner playerSpawner;
+        
+        private bool _inventoryOpen;
+        private bool _itemSpawned;
 
-        /// <summary>
-        ///     Start is called on the frame when a script is enabled just before
-        ///     any of the Update methods is called the first time.
-        /// </summary>
         private void Start()
         {
             _inventoryOpen = false;
@@ -30,9 +26,6 @@ namespace FortBlast.Scenes.MainScene
             TerrainGenerator.instance.terrainGenerationComplete += StartFadingIn;
         }
 
-        /// <summary>
-        ///     Update is called every frame, if the MonoBehaviour is enabled.
-        /// </summary>
         private void Update()
         {
             if (!Input.GetKeyDown(Controls.CloseKey))
@@ -53,37 +46,7 @@ namespace FortBlast.Scenes.MainScene
         }
 
         #endregion PlayerBase
-
-        private void LockCursor()
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-
-        private void UnlockCursor()
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-
-        #region Singleton
-
-        public static GameManager instance;
-
-        /// <summary>
-        ///     Awake is called when the script instance is being loaded.
-        /// </summary>
-        private void Awake()
-        {
-            if (instance == null)
-                instance = this;
-
-            if (instance != this)
-                Destroy(gameObject);
-        }
-
-        #endregion Singleton
-
+        
         #region Inventory
 
         public void InventoryOpened()
@@ -132,5 +95,35 @@ namespace FortBlast.Scenes.MainScene
         }
 
         #endregion InventoryItem
+
+        private void LockCursor()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
+        private void UnlockCursor()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
+        #region Singleton
+
+        public static GameManager instance;
+
+        /// <summary>
+        ///     Awake is called when the script instance is being loaded.
+        /// </summary>
+        private void Awake()
+        {
+            if (instance == null)
+                instance = this;
+
+            if (instance != this)
+                Destroy(gameObject);
+        }
+
+        #endregion Singleton
     }
 }

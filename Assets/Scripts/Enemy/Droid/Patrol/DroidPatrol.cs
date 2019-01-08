@@ -12,11 +12,17 @@ namespace FortBlast.Enemy.Droid.Patrol
     [RequireComponent(typeof(DroidLaze))]
     public class DroidPatrol : MonoBehaviour
     {
-        private bool _attacking;
+        [Header("Distances")] public float distanceToStopFromIntrestingTarget;
+        public float distanceToStopFromPatrolPoint;
+        public float minimumDetectionDistance;
 
+        [Header("Droid FOV")] public Transform lookingPoint;
+        public float lookRotationSpeed;
+        [Range(0, 360)] public float maxLookAngle;
+        public float angleTolerance;
+        
         private Coroutine _coroutine;
-        private float _currentNormalizedLookAngle;
-
+        
         private Transform _currentTarget;
         private Transform _distractorHolder;
 
@@ -24,26 +30,15 @@ namespace FortBlast.Enemy.Droid.Patrol
         private DroidAttack _droidAttack;
         private DroidAttackTarget _droidAttackTarget;
         private DroidLaze _droidLaze;
+        
         private bool _lazingAround;
-        private Vector3 _meshCenter;
-
+        private float _currentNormalizedLookAngle;
+        private bool _attacking;
+        
         private Transform _player;
+        private Vector3 _meshCenter;
         private Vector3[] _terrainMeshVertices;
-        public float angleTolerance;
 
-        [Header("Distances")] public float distanceToStopFromIntrestingTarget;
-        public float distanceToStopFromPatrolPoint;
-
-        [Header("Droid FOV")] public Transform lookingPoint;
-        public float lookRotationSpeed;
-        [Range(0, 360)] public float maxLookAngle;
-
-        [Header("Patrol Stats")] public float minimumDetectionDistance;
-
-        /// <summary>
-        ///     Start is called on the frame when a script is enabled just before
-        ///     any of the Update methods is called the first time.
-        /// </summary>
         private void Start()
         {
             _droidAgent = GetComponent<NavMeshAgent>();
@@ -60,19 +55,12 @@ namespace FortBlast.Enemy.Droid.Patrol
             SetAgentRandomPatrolPoint();
         }
 
-        /// <summary>
-        ///     Update is called every frame, if the MonoBehaviour is enabled.
-        /// </summary>
         private void Update()
         {
             CheckAndSetNextTarget();
             CheckPatrolPointTargetReached();
         }
 
-        /// <summary>
-        ///     OnTriggerEnter is called when the Collider other enters the trigger.
-        /// </summary>
-        /// <param name="other">The other Collider involved in this collision.</param>
         private void OnTriggerEnter(Collider other)
         {
             if (!other.CompareTag(TagManager.Terrain))

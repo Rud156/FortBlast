@@ -56,10 +56,7 @@ namespace FortBlast.Enemy.Tower.Helpers
             if (normalizedAngle < 0)
                 return false;
 
-            if (normalizedAngle <= attackAngleTolerance)
-                return true;
-
-            return false;
+            return normalizedAngle <= attackAngleTolerance;
         }
     }
 }

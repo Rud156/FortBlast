@@ -5,12 +5,6 @@ namespace FortBlast.Spawner
 {
     public class BuildingAndTowerSpawner : MonoBehaviour
     {
-        private int _currentCount;
-
-        private int _terrainCount;
-        private int _totalBuildingToBeCreated;
-        private int _totalTerrainCount;
-
         [Header("Building Prefabs")] public GameObject buildingPrefab;
         public ClearingSettings clearingSettings;
         public float heightAboveBaseGround;
@@ -20,15 +14,14 @@ namespace FortBlast.Spawner
         public GameObject towerPrefab;
         public int[] yRotation;
 
-        private void Start()
-        {
-            _totalBuildingToBeCreated = levelSettings.maxTowers;
-        }
+        private int _currentCount;
+        private int _terrainCount;
+        private int _totalBuildingToBeCreated;
+        private int _totalTerrainCount;
 
-        public void SetTotalTerrainCount(int totalTerrainCount)
-        {
-            _totalTerrainCount = totalTerrainCount;
-        }
+        private void Start() => _totalBuildingToBeCreated = levelSettings.maxTowers;
+
+        public void SetTotalTerrainCount(int totalTerrainCount) => _totalTerrainCount = totalTerrainCount;
 
         public void AddTerrainData(Vector3[] meshVertices, Vector3 meshCenter, Transform parent, Bounds meshBounds)
         {

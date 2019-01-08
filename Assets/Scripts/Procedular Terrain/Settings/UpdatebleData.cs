@@ -11,10 +11,6 @@ namespace FortBlast.ProceduralTerrain.Settings
 
 #if UNITY_EDITOR
 
-        /// <summary>
-        ///     Called when the script is loaded or a value is changed in the
-        ///     inspector (Called in the editor only).
-        /// </summary>
         protected virtual void OnValidate()
         {
             if (autoUpdate)

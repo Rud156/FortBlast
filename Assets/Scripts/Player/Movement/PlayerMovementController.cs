@@ -7,20 +7,14 @@ namespace FortBlast.Player.Movement
     [RequireComponent(typeof(Animator))]
     public class PlayerMovementController : MonoBehaviour
     {
+        [Header("Movement")] public float movementSpeed;
+        public float runningSpeed;
+        public float animatorLerpRate;
+        
         private Animator _playerAnimator;
-
         private Rigidbody _playerRB;
         private float _prevMoveZ;
-        public float animatorLerpRate;
 
-        [Header("Movement")] public float movementSpeed;
-
-        public float runningSpeed;
-
-        /// <summary>
-        ///     Start is called on the frame when a script is enabled just before
-        ///     any of the Update methods is called the first time.
-        /// </summary>
         private void Start()
         {
             _playerRB = GetComponent<Rigidbody>();
@@ -28,9 +22,6 @@ namespace FortBlast.Player.Movement
             _prevMoveZ = 0;
         }
 
-        /// <summary>
-        ///     Update is called every frame, if the MonoBehaviour is enabled.
-        /// </summary>
         private void Update()
         {
             var moveX = Input.GetAxis(PlayerData.HorizontalAxis);

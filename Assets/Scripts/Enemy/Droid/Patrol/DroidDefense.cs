@@ -9,19 +9,14 @@ namespace FortBlast.Enemy.Droid.Patrol
         private const string AnimatorHitParam = "Hit";
         private static readonly int Hit = Animator.StringToHash(AnimatorHitParam);
 
+        [Header("Animation")] public Animator droidAnimator;
+        [Range(0, 1)] public float selectionProbability;
+        public GameObject shieldEffect;
+
         private bool _initiateShieldActivation;
         private bool _shieldActivated;
         private GameObject _shieldSystem;
 
-        [Header("Animation")] public Animator droidAnimator;
-
-        [Range(0, 1)] public float selectionProbability;
-
-        public GameObject shieldEffect;
-
-        /// <summary>
-        ///     Update is called every frame, if the MonoBehaviour is enabled.
-        /// </summary>
         private void Update()
         {
             if (!_shieldSystem)
@@ -31,10 +26,6 @@ namespace FortBlast.Enemy.Droid.Patrol
                 Debug.Break();
         }
 
-        /// <summary>
-        ///     OnTriggerEnter is called when the Collider other enters the trigger.
-        /// </summary>
-        /// <param name="other">The other Collider involved in this collision.</param>
         private void OnTriggerEnter(Collider other)
         {
             if (!other.CompareTag(TagManager.Bullet))

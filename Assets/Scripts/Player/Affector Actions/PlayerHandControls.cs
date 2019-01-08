@@ -8,37 +8,30 @@ namespace FortBlast.Player.AffecterActions
     [RequireComponent(typeof(Animator))]
     public class PlayerHandControls : MonoBehaviour
     {
-        private float _currentReflectionCount;
-        private float _currentTeleporterCount;
-        private bool _mechanismActive;
-        private MechanismState _mechanismState;
-
-        private Animator _playerAnimator;
-
-        private bool _teleporterPrevState;
-        public Transform lookPoint;
-
         [Header("Reflection Controls")] public int maxReflectionCount;
-
-        [Header("Teleporter Controls")] public int maxTeleporterCount;
-
-        [Header("Camera Shaker")] public CameraShakerStats reflectCameraShaker;
-
+        public ReflectorTriggerEventCreator reflectorTrigger;
         public float reflectionGenerationRate;
 
-        [Header("Mechanism System")] public GameObject reflector;
-
-        public ReflectorTriggerEventCreator reflectorTrigger;
-        public CameraShakerStats teleportCameraShaker;
-        public float teleportDistance;
+        [Header("Teleporter Controls")] public int maxTeleporterCount;
         public GameObject teleporter;
+        public float teleportDistance;
         public float teleporterGenerationRate;
         public GameObject teleporterLandEffect;
 
-        /// <summary>
-        ///     Start is called on the frame when a script is enabled just before
-        ///     any of the Update methods is called the first time.
-        /// </summary>
+        [Header("Camera Shaker")] public CameraShakerStats reflectCameraShaker;
+        public CameraShakerStats teleportCameraShaker;
+
+        [Header("Mechanism System")] public GameObject reflector;
+        public Transform lookPoint;
+
+        private float _currentReflectionCount;
+        private float _currentTeleporterCount;
+        private bool _teleporterPrevState;
+
+        private bool _mechanismActive;
+        private MechanismState _mechanismState;
+        private Animator _playerAnimator;
+
         private void Start()
         {
             _playerAnimator = GetComponent<Animator>();
@@ -53,9 +46,6 @@ namespace FortBlast.Player.AffecterActions
             _currentReflectionCount = maxReflectionCount;
         }
 
-        /// <summary>
-        ///     Update is called every frame, if the MonoBehaviour is enabled.
-        /// </summary>
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.F)) // TODO: Remove this later on...

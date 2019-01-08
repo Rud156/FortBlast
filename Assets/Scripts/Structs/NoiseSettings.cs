@@ -7,18 +7,15 @@ namespace FortBlast.Structs
     [Serializable]
     public class NoiseSettings
     {
-        public float lacunarity = 2;
-        public NormalizedMode normalizedMode;
-
-        [Header("Map Noise Data")] public int octaves = 6;
-
+        [Header("Map Noise Data")] public NormalizedMode normalizedMode;
         public Vector2 offset;
-
-        [Range(0, 1)] public float persistance = 0.6f;
-
         public float scale = 50;
 
+
         [Header("Randomness")] public int seed;
+        public float lacunarity = 2;
+        [Range(0, 1)] public float persistance = 0.6f;
+        public int octaves = 6;
 
         public void ValidateValues()
         {

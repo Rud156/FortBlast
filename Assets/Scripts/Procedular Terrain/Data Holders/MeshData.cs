@@ -39,10 +39,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             _outOfMeshTriangleIndex = 0;
         }
 
-        public Vector3[] GetVertices()
-        {
-            return _vertices;
-        }
+        public Vector3[] GetVertices() => _vertices;
 
         public void AddVertex(Vector3 vertexPosition, Vector2 uv, int vertexIndex)
         {
@@ -87,11 +84,8 @@ namespace FortBlast.ProceduralTerrain.DataHolders
 
         public Mesh CreateMesh()
         {
-            var mesh = new Mesh();
+            var mesh = new Mesh {vertices = _vertices, triangles = _triangles, uv = _uvs};
 
-            mesh.vertices = _vertices;
-            mesh.triangles = _triangles;
-            mesh.uv = _uvs;
             if (_useFlatShading)
                 mesh.RecalculateNormals();
             else

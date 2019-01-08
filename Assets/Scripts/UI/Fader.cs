@@ -9,84 +9,87 @@ namespace FortBlast.UI
     {
         public delegate void FadeInComplete();
 
+        public FadeInComplete fadeInComplete;
+
         public delegate void FadeOutComplete();
+
+        public FadeOutComplete fadeOutComplete;
 
         public delegate void FadeStart();
 
-        private bool activateFadeIn;
-        private bool activateFadeOut;
-        private float currentAlpha;
+        public FadeStart fadeStart;
 
-        private Image fadeImage;
-        public FadeInComplete fadeInComplete;
 
         [Header("Fade Rate")] public float fadeInRate;
-        public FadeOutComplete fadeOutComplete;
         public float fadeOutRate;
 
-        public FadeStart fadeStart;
+        private Image _fadeImage;
+
+        private float _currentAlpha;
+        private bool _activateFadeIn;
+        private bool _activateFadeOut;
 
         private void Start()
         {
-            fadeImage = GetComponent<Image>();
-            currentAlpha = ExtensionFunctions.Map(fadeImage.color.a, 0, 1, 0, 255);
+            _fadeImage = GetComponent<Image>();
+            _currentAlpha = ExtensionFunctions.Map(_fadeImage.color.a, 0, 1, 0, 255);
         }
 
         private void Update()
         {
-            if (activateFadeIn)
+            if (_activateFadeIn)
                 FadeIn();
-            else if (activateFadeOut)
+            else if (_activateFadeOut)
                 FadeOut();
         }
 
         public void StartFadeIn()
         {
             fadeStart?.Invoke();
-            activateFadeIn = true;
-            activateFadeOut = false;
+            _activateFadeIn = true;
+            _activateFadeOut = false;
         }
 
         private void FadeIn()
         {
-            currentAlpha -= fadeInRate * Time.deltaTime;
+            _currentAlpha -= fadeInRate * Time.deltaTime;
 
-            var fadeImageColor = fadeImage.color;
-            fadeImage.color =
+            var fadeImageColor = _fadeImage.color;
+            _fadeImage.color =
                 ExtensionFunctions.ConvertAndClampColor(fadeImageColor.r, fadeImageColor.g, fadeImageColor.b,
-                    currentAlpha);
+                    _currentAlpha);
 
-            if (!(currentAlpha <= 0))
+            if (!(_currentAlpha <= 0))
                 return;
 
             fadeInComplete?.Invoke();
-            activateFadeIn = false;
-            fadeImage.gameObject.SetActive(false);
+            _activateFadeIn = false;
+            _fadeImage.gameObject.SetActive(false);
         }
 
         public void StartFadeOut()
         {
-            fadeImage.gameObject.SetActive(true);
+            _fadeImage.gameObject.SetActive(true);
 
             fadeStart?.Invoke();
-            activateFadeOut = true;
-            activateFadeIn = false;
+            _activateFadeOut = true;
+            _activateFadeIn = false;
         }
 
         private void FadeOut()
         {
-            currentAlpha += fadeOutRate * Time.deltaTime;
+            _currentAlpha += fadeOutRate * Time.deltaTime;
 
-            var fadeImageColor = fadeImage.color;
-            fadeImage.color =
+            var fadeImageColor = _fadeImage.color;
+            _fadeImage.color =
                 ExtensionFunctions.ConvertAndClampColor(fadeImageColor.r, fadeImageColor.g, fadeImageColor.b,
-                    currentAlpha);
+                    _currentAlpha);
 
-            if (!(currentAlpha >= 255))
+            if (!(_currentAlpha >= 255))
                 return;
 
             fadeOutComplete?.Invoke();
-            activateFadeOut = false;
+            _activateFadeOut = false;
         }
 
         #region Singleton

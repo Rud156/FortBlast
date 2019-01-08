@@ -7,24 +7,34 @@ namespace FortBlast.ProceduralTerrain.Settings
     [CreateAssetMenu(fileName = "TextureData", menuName = "Terrain/Texture")]
     public class TextureData : UpdatebleData
     {
+        public Layer[] layers;
+
         private const int TextureSize = 512;
         private const TextureFormat _textureFormat = TextureFormat.RGB565;
         private float _savedMaxHeight;
-
         private float _savedMinHeight;
-        public Layer[] layers;
+
+        private static readonly int BaseBlends = Shader.PropertyToID("baseBlends");
+        private static readonly int BaseStartHeights = Shader.PropertyToID("baseStartHeights");
+        private static readonly int BaseColors = Shader.PropertyToID("baseColors");
+        private static readonly int LayerCount = Shader.PropertyToID("layerCount");
+        private static readonly int BaseColorStrengths = Shader.PropertyToID("baseColorStrengths");
+        private static readonly int BaseTextureScales = Shader.PropertyToID("baseTextureScales");
+        private static readonly int BaseTextures = Shader.PropertyToID("baseTextures");
+        private static readonly int MinHeight = Shader.PropertyToID("minHeight");
+        private static readonly int MaxHeight = Shader.PropertyToID("maxHeight");
 
         public void ApplyToMaterial(Material material)
         {
-            material.SetInt("layerCount", layers.Length);
-            material.SetColorArray("baseColors", layers.Select(_ => _.tint).ToArray());
-            material.SetFloatArray("baseStartHeights", layers.Select(_ => _.startHeight).ToArray());
-            material.SetFloatArray("baseBlends", layers.Select(_ => _.blendStrength).ToArray());
-            material.SetFloatArray("baseColorStrengths", layers.Select(_ => _.tintStrength).ToArray());
-            material.SetFloatArray("baseTextureScales", layers.Select(_ => _.textureScale).ToArray());
+            material.SetInt(LayerCount, layers.Length);
+            material.SetColorArray(BaseColors, layers.Select(_ => _.tint).ToArray());
+            material.SetFloatArray(BaseStartHeights, layers.Select(_ => _.startHeight).ToArray());
+            material.SetFloatArray(BaseBlends, layers.Select(_ => _.blendStrength).ToArray());
+            material.SetFloatArray(BaseColorStrengths, layers.Select(_ => _.tintStrength).ToArray());
+            material.SetFloatArray(BaseTextureScales, layers.Select(_ => _.textureScale).ToArray());
 
             var textureArray = GenerateTextureArray(layers.Select(_ => _.texture).ToArray());
-            material.SetTexture("baseTextures", textureArray);
+            material.SetTexture(BaseTextures, textureArray);
 
             UpdateMeshHeights(material, _savedMinHeight, _savedMaxHeight);
         }
@@ -34,8 +44,8 @@ namespace FortBlast.ProceduralTerrain.Settings
             _savedMinHeight = minHeight;
             _savedMaxHeight = maxHeight;
 
-            material.SetFloat("minHeight", minHeight);
-            material.SetFloat("maxHeight", maxHeight);
+            material.SetFloat(MinHeight, minHeight);
+            material.SetFloat(MaxHeight, maxHeight);
         }
 
         private Texture2DArray GenerateTextureArray(Texture2D[] textures)

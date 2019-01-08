@@ -6,20 +6,14 @@ namespace FortBlast.Enemy.Droid.Helpers
 {
     public static class DroidPatrolHelpers
     {
-        public static Vector3 GetNextTarget(Vector3[] meshVertices)
-        {
-            return meshVertices[Random.Range(0, meshVertices.Length)];
-        }
+        public static Vector3 GetNextTarget(Vector3[] meshVertices) => meshVertices[Random.Range(0, meshVertices.Length)];
 
         public static bool IsAngleWithinToleranceLevel(float normalizedAngle, float angleTolerance)
         {
             if (normalizedAngle < 0)
                 return false;
 
-            if (normalizedAngle <= angleTolerance)
-                return true;
-
-            return false;
+            return normalizedAngle <= angleTolerance;
         }
 
         public static Transform GetClosestDistractor(Transform distactorHolder, Transform currentPosition)

@@ -9,22 +9,18 @@ namespace FortBlast.Player.AffecterActions
     [RequireComponent(typeof(Animator))]
     public class PlayerSpawner : MonoBehaviour
     {
+        public float itemLaunchVelocity;
+        public GameObject launchEffect;
+        public Transform spawnPoint;
+        
         private InventoryItem _item;
         private Collider _itemCollider;
 
         private Transform _itemHolder;
         private GameObject _itemInstance;
         private Rigidbody _itemRB;
-
         private Animator _playerAnimator;
-        public float itemLaunchVelocity;
-        public GameObject launchEffect;
-        public Transform spawnPoint;
-
-        /// <summary>
-        ///     Start is called on the frame when a script is enabled just before
-        ///     any of the Update methods is called the first time.
-        /// </summary>
+        
         private void Start()
         {
             _playerAnimator = GetComponent<Animator>();
@@ -33,9 +29,6 @@ namespace FortBlast.Player.AffecterActions
             _itemHolder = GameObject.FindGameObjectWithTag(TagManager.DistractorHolder)?.transform;
         }
 
-        /// <summary>
-        ///     Update is called every frame, if the MonoBehaviour is enabled.
-        /// </summary>
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))
@@ -67,9 +60,9 @@ namespace FortBlast.Player.AffecterActions
             _item = item;
         }
 
-        public void SpawnItemWorld()
+        private void SpawnItemWorld()
         {
-            if (_itemInstance == null)
+            if (!_itemInstance )
                 return;
 
             GameManager.instance.InventoryItemUsed();

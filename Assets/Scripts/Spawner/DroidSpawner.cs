@@ -5,10 +5,9 @@ namespace FortBlast.Spawner
     public class DroidSpawner : MonoBehaviour
     {
         public GameObject[] droidPrefabs;
-
         [Range(10, 90)] public int secondDroidSpawnProbability;
 
-        public GameObject[] SpawnDroids(Vector3[] meshVertices, Transform parent)
+        public void SpawnDroids(Vector3[] meshVertices, Transform parent)
         {
             var droids = new GameObject[meshVertices.Length];
 
@@ -26,8 +25,6 @@ namespace FortBlast.Spawner
                     droidPrefab.transform.rotation);
                 droids[i].transform.SetParent(parent);
             }
-
-            return droids;
         }
 
         #region Singleton

@@ -6,13 +6,12 @@ namespace FortBlast.Enemy.Helpers
     [RequireComponent(typeof(LightFlickerFastFaster))]
     public class TowerBombExplosion : MonoBehaviour
     {
-        private DamageAmountSetter _damageAmountSetter;
-
-        private LightFlickerFastFaster _lightFlickerFastFaster;
         public GameObject bombExplosion;
         public float explosionRadius;
+        
+        private DamageAmountSetter _damageAmountSetter;
+        private LightFlickerFastFaster _lightFlickerFastFaster;
 
-        // Use this for initialization
         private void Start()
         {
             _lightFlickerFastFaster = GetComponent<LightFlickerFastFaster>();

@@ -12,18 +12,16 @@ namespace FortBlast.Resources
     {
         private const float FiftyPercentAlpha = 0.196f;
 
-        private List<InventoryDisplay> _itemsDisplay;
-
-        private InventoryDisplay _itemSelected;
-
-        private HealthSetter _playerHealth;
-        public RectTransform contentContainer;
+        public List<InventoryItem> inventoryItems;
 
         [Header("UI Display Image States")] public Sprite defaultBorder;
+        public Sprite selectedBorder;
+        public Sprite notAvailableBorder;
 
         [Header("Inventory Display")] public GameObject inventory;
-
-        public List<InventoryItem> inventoryItems;
+        public GameObject itemDisplayPrefab;
+        public ScrollRect scrollRect;
+        public RectTransform contentContainer;
 
         [Header("Item Use Interaction")] public Button itemConfirmButton;
         public Text itemConfirmButtonText;
@@ -33,10 +31,11 @@ namespace FortBlast.Resources
         public RawImage itemDetailImage;
         public Text itemDetailName;
         public Text itemDetailType;
-        public GameObject itemDisplayPrefab;
-        public Sprite notAvailableBorder;
-        public ScrollRect scrollRect;
-        public Sprite selectedBorder;
+
+        private List<InventoryDisplay> _itemsDisplay;
+        private InventoryDisplay _itemSelected;
+        private HealthSetter _playerHealth;
+
 
         private InventoryDisplay ItemSelected
         {
@@ -48,10 +47,6 @@ namespace FortBlast.Resources
             }
         }
 
-        /// <summary>
-        ///     Start is called on the frame when a script is enabled just before
-        ///     any of the Update methods is called the first time.
-        /// </summary>
         private void Start()
         {
             _itemsDisplay = new List<InventoryDisplay>();
@@ -66,9 +61,6 @@ namespace FortBlast.Resources
             _playerHealth = GameObject.FindGameObjectWithTag(TagManager.Player)?.GetComponent<HealthSetter>();
         }
 
-        /// <summary>
-        ///     Update is called every frame, if the MonoBehaviour is enabled.
-        /// </summary>
         private void Update()
         {
             if (Input.GetKeyDown(Controls.InventoryKey))
@@ -205,6 +197,31 @@ namespace FortBlast.Resources
                 _itemsDisplay.Add(inventoryDisplay);
             }
         }
+        
+        #region InventoryActions
+
+        public void OpenInventory()
+        {
+            inventory.SetActive(true);
+            scrollRect.verticalNormalizedPosition = 1;
+
+            GameManager.instance.InventoryOpened();
+        }
+
+        public void CloseInventory()
+        {
+            inventory.SetActive(false);
+            itemDetail.SetActive(false);
+
+            ClearItemSelection();
+        }
+
+        public void ClearItemSelection()
+        {
+            ItemSelected = null;
+        }
+
+        #endregion InventoryActions
 
         private class InventoryDisplay
         {
@@ -233,30 +250,5 @@ namespace FortBlast.Resources
         }
 
         #endregion Singleton
-
-        #region InventoryActions
-
-        public void OpenInventory()
-        {
-            inventory.SetActive(true);
-            scrollRect.verticalNormalizedPosition = 1;
-
-            GameManager.instance.InventoryOpened();
-        }
-
-        public void CloseInventory()
-        {
-            inventory.SetActive(false);
-            itemDetail.SetActive(false);
-
-            ClearItemSelection();
-        }
-
-        public void ClearItemSelection()
-        {
-            ItemSelected = null;
-        }
-
-        #endregion InventoryActions
     }
 }

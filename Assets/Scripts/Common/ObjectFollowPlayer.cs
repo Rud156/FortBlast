@@ -5,7 +5,6 @@ namespace FortBlast.Common
 {
     public class ObjectFollowPlayer : MonoBehaviour
     {
-        private Vector3 _lastPlayerPosition;
         [Header("Base Stats")] public float followSpeed = 10f;
         public float lookSpeed = 10f;
         public Vector3 objectOffset;
@@ -13,11 +12,8 @@ namespace FortBlast.Common
         [Header("Rotation")] public bool useRotation;
 
         private Transform _player;
+        private Vector3 _lastPlayerPosition;
 
-        /// <summary>
-        ///     Start is called on the frame when a script is enabled just before
-        ///     any of the Update methods is called the first time.
-        /// </summary>
         private void Start()
         {
             _player = GameObject.FindGameObjectWithTag(TagManager.Player)?.transform;

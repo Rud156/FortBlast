@@ -6,23 +6,18 @@ namespace FortBlast.Player.StatusDisplay
 {
     public class PlayerMechanismDisplay : MonoBehaviour
     {
-        public Color halfReflectorColor = Color.yellow;
-        public Color halfTeleporterColor = Color.magenta;
-        public Color maxReflectorColor = Color.green;
-        public Color maxTeleporterColor = Color.cyan;
-
         [Header("Reflector Colors")] public Color minReflectorColor = Color.red;
+        public Color halfReflectorColor = Color.yellow;
+        public Color maxReflectorColor = Color.green;
 
         [Header("Teleporter Colors")] public Color minTeleporterColor = Color.white;
+        public Color halfTeleporterColor = Color.magenta;
+        public Color maxTeleporterColor = Color.cyan;
 
         [Header("Required Components")] public PlayerHandControls playerHandControls;
-
         public Image reflectionDial;
         public Image teleporterDial;
 
-        /// <summary>
-        ///     Update is called every frame, if the MonoBehaviour is enabled.
-        /// </summary>
         private void Update()
         {
             DisplayReflectionCount();

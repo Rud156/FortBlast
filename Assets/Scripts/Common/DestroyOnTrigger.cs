@@ -6,16 +6,6 @@ namespace FortBlast.Common
     {
         public bool destoryOthersOnTrigger;
 
-        /// <summary>
-        ///     OnTriggerEnter is called when the Collider other enters the trigger.
-        /// </summary>
-        /// <param name="other">The other Collider involved in this collision.</param>
-        private void OnTriggerEnter(Collider other)
-        {
-            if (destoryOthersOnTrigger)
-                Destroy(other.gameObject);
-            else
-                Destroy(gameObject);
-        }
+        private void OnTriggerEnter(Collider other) => Destroy(destoryOthersOnTrigger ? other.gameObject : gameObject);
     }
 }

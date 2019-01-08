@@ -9,19 +9,19 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
 {
     public class LODMesh
     {
-        private readonly int _lod;
         public bool hasMesh;
         public bool hasRequestedMesh;
         public Mesh mesh;
-
         public Vector3[] meshVertices;
+
+        private readonly int _lod;
 
         public LODMesh(int lod)
         {
             _lod = lod;
         }
 
-        public event Action updateCallback;
+        public event Action UpdateCallback;
 
         public void RequestMesh(HeightMap heightMap, MeshSettings meshSettings)
         {
@@ -41,7 +41,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
             hasMesh = true;
             meshVertices = meshData.GetVertices();
 
-            updateCallback?.Invoke();
+            UpdateCallback?.Invoke();
         }
     }
 }

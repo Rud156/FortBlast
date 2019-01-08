@@ -7,9 +7,6 @@ namespace FortBlast.Enemy.Droid.Patrol
         public DroidDefense droidDefense;
 
         // Hit Animation Complete
-        public void HitAnimationComplete()
-        {
-            droidDefense.HitAnimationComplete();
-        }
+        public void HitAnimationComplete() => droidDefense.HitAnimationComplete();
     }
 }

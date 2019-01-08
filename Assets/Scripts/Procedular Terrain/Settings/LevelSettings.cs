@@ -6,8 +6,9 @@ namespace FortBlast.ProceduralTerrain.Settings
     public class LevelSettings : ScriptableObject
     {
         [Header("Terrain Size Based on LOD")] public LODInfo[] detailLevels;
-        public int maxCollectibles;
+
         [Header("Items Per Terrain Chunk")] public int maxDroids;
         public int maxTowers;
+        public int maxCollectibles;
     }
 }

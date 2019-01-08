@@ -10,6 +10,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
     public class TerrainGenerator : MonoBehaviour
     {
         public delegate void TerrainGenerationInitialComplete();
+
         public TerrainGenerationInitialComplete terrainGenerationComplete;
 
         private const float ViewerMoveThresholdForChunkUpdate = 25f;
@@ -17,8 +18,21 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
         private const float SqrViewerMoveThresholdForChunkUpdate =
             ViewerMoveThresholdForChunkUpdate * ViewerMoveThresholdForChunkUpdate;
 
-        private int _chunksVisibleInViewDistance;
+        [Header("Map Values")] public int colliderLODIndex;
+        public bool fixedTerrainSize;
+        public Material mapMaterial;
 
+        [Header("Settings")] public MeshSettings meshSettings;
+        public TextureData textureData;
+        public TreeSettings treeSettings;
+        public HeightMapSettings heightMapSettings;
+        public LevelSettings levelSettings;
+        public ClearingSettings clearingSettings;
+
+        [Header("Extra Terrain Params")] public Transform viewer;
+        public bool enemiesOnCenterTile;
+
+        private int _chunksVisibleInViewDistance;
         private float _meshWorldSize;
 
         private Vector2 _prevViewerPosition;
@@ -29,24 +43,6 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
         private Vector2 _viewerPosition;
         private List<TerrainChunk> _visibleTerrainChunks;
 
-        [Header("Extra Terrain Params")] public bool fixedTerrainSize;
-        public Material mapMaterial;
-
-        [Header("Settings")] public MeshSettings meshSettings;
-        public TextureData textureData;
-        public TreeSettings treeSettings;
-        public HeightMapSettings heightMapSettings;
-        public LevelSettings levelSettings;
-        public ClearingSettings clearingSettings;
-
-        [Header("Map Values")] public Transform viewer;
-        public int colliderLODIndex;
-        public bool enemiesOnCenterTile;
-
-        /// <summary>
-        ///     Start is called on the frame when a script is enabled just before
-        ///     any of the Update methods is called the first time.
-        /// </summary>
         private void Start()
         {
             _prevViewerPosition = new Vector2(int.MaxValue, int.MaxValue);
@@ -72,9 +68,6 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
             StartCoroutine(UpdateVisibleChunks(true, true));
         }
 
-        /// <summary>
-        ///     Update is called every frame, if the MonoBehaviour is enabled.
-        /// </summary>
         private void Update()
         {
             if (!viewer)

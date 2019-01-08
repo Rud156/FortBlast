@@ -8,24 +8,22 @@ namespace FortBlast.Resources
 {
     public class CollectCollectibles : MonoBehaviour
     {
-        private bool _collectibleCollected;
-
-        private float _currentInteractionTime;
-        private bool _isPlayerLooking;
-        private bool _isPlayerNearby;
-
-        private Transform _player;
-        public List<InventoryItemStats> collectibles;
+        [Header("UI Display")] public Slider uiSlider;
         public GameObject collectibleUiDisplay;
+        
+        [Header("Collectible Stats")]
         public GameObject collectionCompletedExplosion;
         public float maxInteractionTime;
+        public List<InventoryItemStats> collectibles;
 
-        [Header("UI Display")] public Slider uiSlider;
+        private bool _collectibleCollected;
+        private float _currentInteractionTime;
+        
+        private bool _isPlayerLooking;
+        private bool _isPlayerNearby;
+        private Transform _player;
 
-        /// <summary>
-        ///     Start is called on the frame when a script is enabled just before
-        ///     any of the Update methods is called the first time.
-        /// </summary>
+
         private void Start()
         {
             _currentInteractionTime = 0;
@@ -36,10 +34,6 @@ namespace FortBlast.Resources
             _player = GameObject.FindGameObjectWithTag(TagManager.Player)?.transform;
         }
 
-        /// <summary>
-        ///     OnTriggerEnter is called when the Collider other enters the trigger.
-        /// </summary>
-        /// <param name="other">The other Collider involved in this collision.</param>
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag(TagManager.Player))
@@ -48,10 +42,6 @@ namespace FortBlast.Resources
                 _isPlayerLooking = true;
         }
 
-        /// <summary>
-        ///     OnTriggerExit is called when the Collider other has stopped touching the trigger.
-        /// </summary>
-        /// <param name="other">The other Collider involved in this collision.</param>
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag(TagManager.Player))
@@ -60,9 +50,6 @@ namespace FortBlast.Resources
                 _isPlayerLooking = false;
         }
 
-        /// <summary>
-        ///     Update is called every frame, if the MonoBehaviour is enabled.
-        /// </summary>
         private void Update()
         {
             if (_collectibleCollected)
@@ -86,7 +73,7 @@ namespace FortBlast.Resources
 
         private void RotateCanvasTowardsPlayer()
         {
-            if (_player == null)
+            if (!_player)
                 return;
 
             var lookDirection = _player.position - collectibleUiDisplay.transform.position;
@@ -138,11 +125,11 @@ namespace FortBlast.Resources
                 }
 
                 ResourceManager.instance.AddResources(collectionItems);
-                DestoryCollectible();
+                DestroyCollectible();
             }
         }
 
-        private void DestoryCollectible()
+        private void DestroyCollectible()
         {
             Instantiate(collectionCompletedExplosion, transform.position, Quaternion.identity);
             Destroy(gameObject);

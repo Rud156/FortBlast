@@ -6,25 +6,22 @@ namespace FortBlast.Buildings
 {
     public class DoorController : MonoBehaviour
     {
-        private float _currentDeactivationTime;
-        private bool _gateDeactivated;
-
-        private bool _isPlayerNearby;
-        private Renderer _switchLightRenderer;
-
-        private Slider _timeSlider;
-
         [Header("Time Controls")] public float deactivationTime;
-        public GameObject doorCollider;
-        [Header("Blockers")] public ParticleSystem doorParticles;
 
-        [Header("Objects")] public Transform[] switchPoints;
+        [Header("Blockers")] public GameObject doorCollider;
+
+        [Header("Objects")] public ParticleSystem doorParticles;
+        public Transform[] switchPoints;
         public GameObject switchPrefab;
 
-        private void Start()
-        {
-            CreateAndActivateDoorSwitch();
-        }
+        private float _currentDeactivationTime;
+        private bool _gateDeactivated;
+        private bool _isPlayerNearby;
+
+        private Renderer _switchLightRenderer;
+        private Slider _timeSlider;
+
+        private void Start() => CreateAndActivateDoorSwitch();
 
         private void Update()
         {

@@ -7,6 +7,22 @@ namespace FortBlast.Enemy.Tower
 {
     public class TowerController : MonoBehaviour
     {
+        [Header("Attack")] public float attackAngleTolerance;
+        public float waitTimeBetweenAttack;
+        public float waitTimeBetweenLaze;
+        public float launchSpeed;
+
+        [Header("Movement")] [Range(0, 360)] public int maxLookAngle;
+        public float maxTargetRange;
+        public float rotationSpeed;
+
+        [Header("Prefabs And Movement Points")]
+        public Transform towerTop;
+
+        public GameObject bombLaunchEffect;
+        public GameObject bombPrefab;
+        public Transform shootingPoint;
+
         private bool _attacking;
         private Coroutine _coroutine;
 
@@ -18,28 +34,6 @@ namespace FortBlast.Enemy.Tower
 
         private Transform _player;
 
-        [Header("Attack")] public float attackAngleTolerance;
-
-        public GameObject bombLaunchEffect;
-        public GameObject bombPrefab;
-        public float launchSpeed;
-
-        [Header("Movement")] [Range(0, 360)] public int maxLookAngle;
-
-        public float maxTargetRange;
-        public float rotationSpeed;
-        public Transform shootingPoint;
-
-        [Header("Prefabs And Movement Points")]
-        public Transform towerTop;
-
-        public float waitTimeBetweenAttack;
-        public float waitTimeBetweenLaze;
-
-        /// <summary>
-        ///     Start is called on the frame when a script is enabled just before
-        ///     any of the Update methods is called the first time.
-        /// </summary>
         private void Start()
         {
             _player = GameObject.FindGameObjectWithTag(TagManager.Player)?.transform;
@@ -50,9 +44,6 @@ namespace FortBlast.Enemy.Tower
             _deactivateTower = false;
         }
 
-        /// <summary>
-        ///     Update is called every frame, if the MonoBehaviour is enabled.
-        /// </summary>
         private void Update()
         {
             if (_deactivateTower)

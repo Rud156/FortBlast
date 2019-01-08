@@ -7,16 +7,14 @@ namespace FortBlast.Resources
 {
     public class InventoryHotKeysManager : MonoBehaviour
     {
-        private HealthSetter _playerHealth;
         public InventoryItem bandage;
-
         public InventoryItem bottle;
         public InventoryItem chocolate;
+        
+        private HealthSetter _playerHealth;
 
-        private void Start()
-        {
+        private void Start() =>
             _playerHealth = GameObject.FindGameObjectWithTag(TagManager.Player)?.GetComponent<HealthSetter>();
-        }
 
         private void Update()
         {

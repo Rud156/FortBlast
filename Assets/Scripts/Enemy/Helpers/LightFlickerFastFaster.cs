@@ -7,28 +7,23 @@ namespace FortBlast.Enemy.Helpers
     {
         public delegate void FlickerComplete();
 
-        private bool _completed;
+        public FlickerComplete flickerComplete;
 
+        private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
+
+        [Header("Color Data")] [Range(1, 4)] public float emissionStrength;
+        public Color emissionColor;
+
+        [Header("Flicker Data")] public float startFlickerRate;
+        [Range(4, 10)] public int maxFlickerTimes;
+
+        private bool _completed;
         private float _currentFlickerRateValue;
         private float _currentFlickerTimeValue;
         private bool _lightOn;
 
-
         private Renderer _renderer;
-        public Color emissionColor;
 
-        [Header("Color Data")] [Range(1, 4)] public float emissionStrength;
-
-        public FlickerComplete flickerComplete;
-
-        [Range(4, 10)] public int maxFlickerTimes;
-
-        [Header("Flicker Data")] public float startFlickerRate;
-
-        /// <summary>
-        ///     Start is called on the frame when a script is enabled just before
-        ///     any of the Update methods is called the first time.
-        /// </summary>
         private void Start()
         {
             _currentFlickerRateValue = startFlickerRate;
@@ -40,9 +35,6 @@ namespace FortBlast.Enemy.Helpers
             _renderer = GetComponent<Renderer>();
         }
 
-        /// <summary>
-        ///     Update is called every frame, if the MonoBehaviour is enabled.
-        /// </summary>
         private void Update()
         {
             MakeLightFlicker();
@@ -87,14 +79,9 @@ namespace FortBlast.Enemy.Helpers
             }
         }
 
-        private void TurnLightOn()
-        {
-            _renderer.material.SetColor("_EmissionColor", emissionColor * emissionStrength);
-        }
+        private void TurnLightOn() =>
+            _renderer.material.SetColor(EmissionColor, emissionColor * emissionStrength);
 
-        private void TurnLightOff()
-        {
-            _renderer.material.SetColor("_EmissionColor", emissionColor);
-        }
+        private void TurnLightOff() => _renderer.material.SetColor(EmissionColor, emissionColor);
     }
 }

@@ -19,7 +19,6 @@ namespace FortBlast.ProceduralTerrain.Settings
         public float meshScale = 2;
         public bool useFlatShading;
 
-
         // Number of vertices per line for mesh rendered at LOD = 0
         // Includes to 2 extra vertices that are excluded from final mesh but used for calculating normals
         public int numVerticesPerLine =>

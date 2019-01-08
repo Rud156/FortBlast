@@ -16,20 +16,18 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
         }
 
         [Header("Debug")] public bool autoUpdate;
-
         public DrawMode drawMode;
 
         [Header("Map Data")] [Range(0, MeshSettings.numSupportedLODs - 1)]
         public int editorPreviewLOD;
 
         public HeightMapSettings heightMapSettings;
-        public MeshFilter meshFilter;
-        public MeshRenderer meshRenderer;
         public MeshSettings meshSettings;
-        public Material terrainMaterial;
         public TextureData textureData;
 
         [Header("Mesh Components")] public Renderer textureRenderer;
+        public MeshFilter meshFilter;
+        public Material terrainMaterial;
 
         public void DrawMapInEditor()
         {
@@ -44,9 +42,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
                 Vector2.zero
             );
             if (drawMode == DrawMode.NoiseMap)
-            {
                 DrawTexture(TextureGenerator.TextureFromHeightMap(heightMap));
-            }
             else if (drawMode == DrawMode.Mesh)
             {
                 DrawMesh(MeshGenerator.GenerateTerrainMesh(
@@ -63,10 +59,6 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
             }
         }
 
-        /// <summary>
-        ///     Called when the script is loaded or a value is changed in the
-        ///     inspector (Called in the editor only).
-        /// </summary>
         private void OnValidate()
         {
             if (meshSettings != null)
@@ -88,7 +80,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
             }
         }
 
-        public void DrawTexture(Texture2D texture)
+        private void DrawTexture(Texture2D texture)
         {
             textureRenderer.sharedMaterial.mainTexture = texture;
             textureRenderer.transform.localScale = new Vector3(texture.width, 1, texture.height) / 10f;
@@ -97,7 +89,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
             meshFilter.gameObject.SetActive(false);
         }
 
-        public void DrawMesh(MeshData meshData)
+        private void DrawMesh(MeshData meshData)
         {
             meshFilter.sharedMesh = meshData.CreateMesh();
 
