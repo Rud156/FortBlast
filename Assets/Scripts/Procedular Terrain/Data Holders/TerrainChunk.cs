@@ -55,6 +55,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             this.coord = coord;
 
             _droidsRequested = !createEnemies;
+            _meshDatSentForTower = !createEnemies;
 
             _detailLevels = detailLevels;
             _prevLODIndex = -1;
@@ -98,7 +99,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
 
         private Vector2 viewerPosition => new Vector2(_viewer.position.x, _viewer.position.z);
 
-        public event Action<TerrainChunk, bool> onVisibilityChanged;
+        public event Action<TerrainChunk, bool> OnVisibilityChanged;
 
         public void Load()
         {
@@ -164,7 +165,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
             if (wasVisible != visible)
             {
                 SetVisible(visible);
-                onVisibilityChanged?.Invoke(this, visible);
+                OnVisibilityChanged?.Invoke(this, visible);
             }
         }
 

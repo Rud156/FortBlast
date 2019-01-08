@@ -10,6 +10,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
     public class TerrainGenerator : MonoBehaviour
     {
         public delegate void TerrainGenerationInitialComplete();
+        public TerrainGenerationInitialComplete terrainGenerationComplete;
 
         private const float ViewerMoveThresholdForChunkUpdate = 25f;
 
@@ -27,23 +28,20 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
 
         private Vector2 _viewerPosition;
         private List<TerrainChunk> _visibleTerrainChunks;
-        public ClearingSettings clearingSettings;
-        public int colliderLODIndex;
-        public bool enemiesOnCenterTile;
 
         [Header("Extra Terrain Params")] public bool fixedTerrainSize;
-        public HeightMapSettings heightMapSettings;
-        public LevelSettings levelSettings;
         public Material mapMaterial;
 
-
         [Header("Settings")] public MeshSettings meshSettings;
-
-        public TerrainGenerationInitialComplete terrainGenerationComplete;
         public TextureData textureData;
         public TreeSettings treeSettings;
+        public HeightMapSettings heightMapSettings;
+        public LevelSettings levelSettings;
+        public ClearingSettings clearingSettings;
 
         [Header("Map Values")] public Transform viewer;
+        public int colliderLODIndex;
+        public bool enemiesOnCenterTile;
 
         /// <summary>
         ///     Start is called on the frame when a script is enabled just before
@@ -137,7 +135,7 @@ namespace FortBlast.ProceduralTerrain.ProceduralTerrainCreators
                             levelSettings.detailLevels, colliderLODIndex, transform, viewer, mapMaterial,
                             createEnemies);
                         _terrainChunkDict.Add(viewChunkCoord, newChunk);
-                        newChunk.onVisibilityChanged += OnTerrainChunkVisibilityChanged;
+                        newChunk.OnVisibilityChanged += OnTerrainChunkVisibilityChanged;
                         newChunk.Load();
                     }
                 }
