@@ -13,6 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minTreesInMaxChunkSize: 150
   maxTreesInMaxChunkSize: 300
-  createClearing: 1
-  clearingBottomLeft: {x: -20, y: -20}
-  clearingTopRight: {x: 20, y: 20}
+  useRandomTreeRotation: 1

@@ -53,12 +53,15 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
                 if (treePoints[i] == Vector3.zero)
                     Debug.Log("Tree At Zero");
 
-                var normalizedPoint = ExtensionFunctions.Map(treePoints[i].y, 0, maxValue, 0, 1);
+                var normalizedPoint = ExtensionFunctions.Map(treePoints[i].y, 0, maxValue,
+                    0, 1);
                 trees[i] = TreesManager.instance.RequestTree(normalizedPoint);
 
                 if (trees[i] != null)
                 {
                     trees[i].transform.position = treePoints[i] + _meshCenter;
+                    if (_treeSettings.useRandomTreeRotation)
+                        trees[i].transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
                     trees[i].SetActive(true);
                 }
             }
