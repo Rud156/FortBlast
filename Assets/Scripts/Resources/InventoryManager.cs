@@ -39,7 +39,7 @@ namespace FortBlast.Resources
 
         private InventoryDisplay ItemSelected
         {
-            get { return _itemSelected; }
+            get => _itemSelected;
             set
             {
                 _itemSelected = value;
@@ -67,20 +67,21 @@ namespace FortBlast.Resources
                 OpenInventory();
         }
 
+        public List<InventoryItem> GetInventoryItems() => inventoryItems;
 
         private void SpawnItemOnButtonPress()
         {
             if (ItemSelected == null)
                 return;
 
-            if (ResourceManager.instance.HasResource(ItemSelected.inventoryItem.displayName))
+            if (ResourceManager.instance.HasResource(ItemSelected.inventoryItem.itemId))
             {
                 if (ItemSelected.inventoryItem.type == ItemType.Spawnable)
                     GameManager.instance.InventoryItemSelected(ItemSelected.inventoryItem);
                 else if (ItemSelected.inventoryItem.type == ItemType.Consumable)
                     _playerHealth.AddHealth(ItemSelected.inventoryItem.healthAmount);
 
-                ResourceManager.instance.UseResource(ItemSelected.inventoryItem.displayName);
+                ResourceManager.instance.UseResource(ItemSelected.inventoryItem.itemId);
 
                 ClearItemSelection();
                 CloseInventory();
@@ -90,10 +91,10 @@ namespace FortBlast.Resources
         private void UpdateUIWithResources()
         {
             foreach (var item in _itemsDisplay)
-                if (ResourceManager.instance.HasResource(item.inventoryItem.displayName))
+                if (ResourceManager.instance.HasResource(item.inventoryItem.itemId))
                 {
                     item.itemCountText.text =
-                        $"X {ResourceManager.instance.CountResource(item.inventoryItem.displayName)}";
+                        $"X {ResourceManager.instance.CountResource(item.inventoryItem.itemId)}";
                     item.itemBorder.sprite = defaultBorder;
                     item.itemBorder.color = Color.white;
                 }
@@ -143,7 +144,7 @@ namespace FortBlast.Resources
 
                     itemDetail.SetActive(true);
 
-                    if (ResourceManager.instance.HasResource(ItemSelected.inventoryItem.displayName))
+                    if (ResourceManager.instance.HasResource(ItemSelected.inventoryItem.itemId))
                     {
                         itemConfirmButton.interactable = true;
                     }

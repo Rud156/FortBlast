@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using FortBlast.Enemy.Tower.Helpers;
 using FortBlast.Extras;
+using FortBlast.Missions;
 using UnityEngine;
 
 namespace FortBlast.Enemy.Tower
@@ -111,6 +112,7 @@ namespace FortBlast.Enemy.Tower
             }
 
             LookAtTarget(_player);
+            MissionManager.instance.IncrementSpottedTimes();
 
             if (TowerControllerHelpers.IsAngleWithinToleranceLevel(normalizedAngle, attackAngleTolerance))
                 _coroutine = StartCoroutine(AttackTarget(_player));

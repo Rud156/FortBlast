@@ -1,18 +1,100 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using FortBlast.Enums;
+using FortBlast.ProceduralTerrain.ProceduralTerrainCreators;
+using FortBlast.ProceduralTerrain.Settings;
+using FortBlast.Resources;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class MissionManager : MonoBehaviour
+namespace FortBlast.Missions
 {
-    // Start is called before the first frame update
-    void Start()
+    public class MissionManager : MonoBehaviour
     {
-        
-    }
+        [Header("UI Display")] public Text totalDisplay;
+        public Text timerTextDisplay;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        [Header("Level End Indicator")] public Image machinePartsBorder;
+        public Sprite successBorderImage;
+
+        [Header("Level End UI")] public GameObject levelEndUi;
+        public Text totalSpottedText;
+        public Text totalGameTimeText;
+        public Text totalMachinePartsCollected;
+
+        [Header("Level Data")] public LevelSettings levelSettings;
+
+        private int _totalMachinePartToBeCollected;
+        private int _totalSpottedTimes;
+        private bool _gameEndIndicated;
+
+        private float _currentLevelTime;
+
+        private void Start() => TerrainGenerator.instance.terrainGenerationComplete += Init;
+
+        private void Update()
+        {
+            UpdateTimerDisplay();
+            CheckForGameEnd();
+        }
+
+        public void IncrementSpottedTimes() => _totalSpottedTimes += 1;
+
+        public void DisplayGameEndUI()
+        {
+            levelEndUi.SetActive(true);
+
+            totalSpottedText.text = $"{_totalSpottedTimes}";
+
+            var machinePartsCollected = ResourceManager.instance.CountResource(ItemID.MachinePart);
+            var machinePartsDisplayText = $"{machinePartsCollected} / {_totalMachinePartToBeCollected}";
+            totalMachinePartsCollected.text = machinePartsDisplayText;
+
+            var totalLevelTime = Mathf.FloorToInt(_currentLevelTime);
+            totalGameTimeText.text = $"{totalLevelTime}";
+        }
+
+        private void Init()
+        {
+            var totalMachineParts = levelSettings.totalMachineParts;
+            _currentLevelTime = 0;
+
+            _totalMachinePartToBeCollected = totalMachineParts;
+            totalDisplay.text = $"/ {_totalMachinePartToBeCollected}";
+
+            TerrainGenerator.instance.terrainGenerationComplete -= Init;
+        }
+
+        private void UpdateTimerDisplay()
+        {
+            _currentLevelTime += Time.deltaTime;
+            timerTextDisplay.text = $"{_currentLevelTime}";
+        }
+
+        private void CheckForGameEnd()
+        {
+            if (_gameEndIndicated)
+                return;
+
+            var collectedMachineParts = ResourceManager.instance.CountResource(ItemID.MachinePart);
+            if (collectedMachineParts < _totalMachinePartToBeCollected)
+                return;
+
+            _gameEndIndicated = true;
+            machinePartsBorder.sprite = successBorderImage;
+        }
+
+        #region Singleton
+
+        public static MissionManager instance;
+
+        private void Awake()
+        {
+            if (instance == null)
+                instance = this;
+
+            if (instance != this)
+                Destroy(gameObject);
+        }
+
+        #endregion Singleton
     }
 }

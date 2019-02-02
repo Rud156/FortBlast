@@ -9,7 +9,6 @@ namespace FortBlast.Player.Data
         public const string PlayerShooting = "Shooting";
         public const string PlayerSpawning = "Spawning";
 
-
         // Movement Params
         public const string HorizontalAxis = "Horizontal";
         public const string VerticalAxis = "Vertical";

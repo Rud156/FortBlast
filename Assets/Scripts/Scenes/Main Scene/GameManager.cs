@@ -43,6 +43,7 @@ namespace FortBlast.Scenes.MainScene
         private void StartFadingIn()
         {
             Fader.instance.StartFadeIn();
+            TerrainGenerator.instance.terrainGenerationComplete -= StartFadingIn;
         }
 
         #endregion PlayerBase

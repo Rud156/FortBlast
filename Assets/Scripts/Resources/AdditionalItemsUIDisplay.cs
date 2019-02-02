@@ -24,7 +24,7 @@ namespace FortBlast.Resources
         {
             foreach (var inventoryItem in items)
                 inventoryItem.displayText.text =
-                    ResourceManager.instance.CountResource(inventoryItem.item.displayName).ToString();
+                    ResourceManager.instance.CountResource(inventoryItem.item.itemId).ToString();
         }
 
         #region Singleton

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using UnityEngine;
 
 namespace FortBlast.Structs
 {
-    [Serializable]
-    public struct CameraShakerStats
+    [CreateAssetMenu(fileName = "CameraShakerStats", menuName = "Camera/Stats/Shaker")]
+    public class CameraShakerStats : ScriptableObject
     {
         public float magnitude;
         public float roughness;

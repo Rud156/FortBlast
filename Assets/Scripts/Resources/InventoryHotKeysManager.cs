@@ -48,11 +48,11 @@ namespace FortBlast.Resources
 
         private void SpawnBottleOnKeyPress()
         {
-            if (!ResourceManager.instance.HasResource(bottle.displayName))
+            if (!ResourceManager.instance.HasResource(bottle.itemId))
                 return;
 
             GameManager.instance.InventoryItemSelected(bottle);
-            ResourceManager.instance.UseResource(bottle.displayName);
+            ResourceManager.instance.UseResource(bottle.itemId);
 
             InventoryManager.instance.CloseInventory();
             InventoryManager.instance.ClearItemSelection();
@@ -60,11 +60,11 @@ namespace FortBlast.Resources
 
         private void EatChocolateOnKeyPress()
         {
-            if (!ResourceManager.instance.HasResource(chocolate.displayName))
+            if (!ResourceManager.instance.HasResource(chocolate.itemId))
                 return;
 
             _playerHealth.AddHealth(chocolate.healthAmount);
-            ResourceManager.instance.UseResource(chocolate.displayName);
+            ResourceManager.instance.UseResource(chocolate.itemId);
 
             InventoryManager.instance.CloseInventory();
             InventoryManager.instance.ClearItemSelection();
@@ -72,11 +72,11 @@ namespace FortBlast.Resources
 
         private void UseBandageOnKeyPress()
         {
-            if (!ResourceManager.instance.HasResource(bandage.displayName))
+            if (!ResourceManager.instance.HasResource(bandage.itemId))
                 return;
 
             _playerHealth.AddHealth(bandage.healthAmount);
-            ResourceManager.instance.UseResource(bandage.displayName);
+            ResourceManager.instance.UseResource(bandage.itemId);
 
             InventoryManager.instance.CloseInventory();
             InventoryManager.instance.ClearItemSelection();

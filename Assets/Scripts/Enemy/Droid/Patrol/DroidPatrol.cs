@@ -2,6 +2,7 @@ using System.Collections;
 using FortBlast.Enemy.Droid.Base;
 using FortBlast.Enemy.Droid.Helpers;
 using FortBlast.Extras;
+using FortBlast.Missions;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -108,6 +109,7 @@ namespace FortBlast.Enemy.Droid.Patrol
             {
                 _droidAttackTarget = DroidAttackTarget.Player;
                 CheckAndSetInterestingTarget(_player);
+                MissionManager.instance.IncrementSpottedTimes();
             }
             else
             {

@@ -6,7 +6,8 @@ namespace FortBlast.Resources
     [CreateAssetMenu(fileName = "InventoryItem", menuName = "Inventory/Item")]
     public class InventoryItem : ScriptableObject
     {
-        [Header("Basic Data")] public string displayName;
+        [Header("Basic Data")] public ItemID itemId;
+        public string displayName;
         [TextArea] public string description;
         public ItemType type;
 

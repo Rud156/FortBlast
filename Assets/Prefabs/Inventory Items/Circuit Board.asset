@@ -4,17 +4,19 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37e729148fcf07d4b9687ec317712e8c, type: 3}
   m_Name: Circuit Board
   m_EditorClassIdentifier: 
+  itemId: 7
   displayName: Circuit Board
   description: A board consisting of intricate connections. Very helpful!!???
-  image: {fileID: 2800000, guid: 70b272b2fe5b9994681017fed24a5cf9, type: 3}
   type: 1
-  prefab: {fileID: 0}
   healthAmount: 0
   glassBreakingAudioPrefab: {fileID: 0}
+  image: {fileID: 2800000, guid: 70b272b2fe5b9994681017fed24a5cf9, type: 3}
+  prefab: {fileID: 0}

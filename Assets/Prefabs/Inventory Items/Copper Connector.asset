@@ -4,17 +4,19 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37e729148fcf07d4b9687ec317712e8c, type: 3}
   m_Name: Copper Connector
   m_EditorClassIdentifier: 
+  itemId: 6
   displayName: Copper Connector
   description: Wires for connecting stuff. Might be useful to make shield upgrades
-  image: {fileID: 2800000, guid: beb4181ef568e0f4fa18f06a2b4210d2, type: 3}
   type: 1
-  prefab: {fileID: 0}
   healthAmount: 0
   glassBreakingAudioPrefab: {fileID: 0}
+  image: {fileID: 2800000, guid: beb4181ef568e0f4fa18f06a2b4210d2, type: 3}
+  prefab: {fileID: 0}

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using FortBlast.Enums;
 using FortBlast.Extras;
 using FortBlast.Structs;
 using UnityEngine;
@@ -18,12 +19,14 @@ namespace FortBlast.Resources
 
         [Header("Test Item")] public InventoryItem testItem; // TODO: Remove this later on...
 
-        private Dictionary<string, InventoryItemStats> _items;
+        private Dictionary<ItemID, InventoryItemStats> _items;
 
         private void Start()
         {
-            _items = new Dictionary<string, InventoryItemStats>();
-            _items.Add(testItem.displayName, new InventoryItemStats
+            _items = new Dictionary<ItemID, InventoryItemStats>();
+            
+            // TODO: Remove After Testing
+            _items.Add(testItem.itemId, new InventoryItemStats
             {
                 inventoryItem = testItem,
                 itemCount = 20
@@ -34,11 +37,11 @@ namespace FortBlast.Resources
 
         public void AddResource(InventoryItem item, int count = 1)
         {
-            if (_items.ContainsKey(item.displayName))
+            if (_items.ContainsKey(item.itemId))
             {
-                var inventoryItemStats = _items[item.displayName];
+                var inventoryItemStats = _items[item.itemId];
                 inventoryItemStats.itemCount += count;
-                _items[item.displayName] = inventoryItemStats;
+                _items[item.itemId] = inventoryItemStats;
             }
             else
             {
@@ -46,30 +49,32 @@ namespace FortBlast.Resources
                 {
                     itemCount = count, inventoryItem = item
                 };
-                _items.Add(item.displayName, inventoryItemStats);
+                _items.Add(item.itemId, inventoryItemStats);
             }
 
             resourcesChanged?.Invoke();
         }
 
-        public void AddResources(List<InventoryItemStats> itemStats, bool displayOnUI = true)
+        public void AddResources(List<InventoryItemStats> itemStats, bool displayOnUi = true)
         {
             var sb = new StringBuilder("Found ");
 
             foreach (var item in itemStats)
             {
-                if (_items.ContainsKey(item.inventoryItem.displayName))
+                if (_items.ContainsKey(item.inventoryItem.itemId))
                 {
-                    var inventoryItemStats = _items[item.inventoryItem.displayName];
+                    var inventoryItemStats = _items[item.inventoryItem.itemId];
                     inventoryItemStats.itemCount += item.itemCount;
-                    _items[item.inventoryItem.displayName] = inventoryItemStats;
+                    _items[item.inventoryItem.itemId] = inventoryItemStats;
                 }
                 else
                 {
-                    var inventoryItemStats = new InventoryItemStats();
-                    inventoryItemStats.itemCount = item.itemCount;
-                    inventoryItemStats.inventoryItem = item.inventoryItem;
-                    _items.Add(item.inventoryItem.displayName, inventoryItemStats);
+                    var inventoryItemStats = new InventoryItemStats
+                    {
+                        itemCount = item.itemCount, 
+                        inventoryItem = item.inventoryItem
+                    };
+                    _items.Add(item.inventoryItem.itemId, inventoryItemStats);
                 }
 
                 sb.Append($"{item.itemCount} {item.inventoryItem.displayName}, ");
@@ -82,30 +87,30 @@ namespace FortBlast.Resources
             resourcesChanged?.Invoke();
         }
 
-        public void UseResource(string itemName)
+        public void UseResource(ItemID itemId)
         {
-            if (!_items.ContainsKey(itemName))
+            if (!_items.ContainsKey(itemId))
                 return;
 
-            var inventoryItemStats = _items[itemName];
+            var inventoryItemStats = _items[itemId];
             inventoryItemStats.itemCount -= 1;
 
             if (inventoryItemStats.itemCount <= 0)
-                _items.Remove(itemName);
+                _items.Remove(itemId);
             else
-                _items[itemName] = inventoryItemStats;
+                _items[itemId] = inventoryItemStats;
 
             resourcesChanged?.Invoke();
         }
 
-        public bool HasResource(string itemName)
+        public bool HasResource(ItemID itemId)
         {
-            return _items.ContainsKey(itemName);
+            return _items.ContainsKey(itemId);
         }
 
-        public int CountResource(string itemName)
+        public int CountResource(ItemID itemId)
         {
-            return _items.ContainsKey(itemName) ? _items[itemName].itemCount : 0;
+            return _items.ContainsKey(itemId) ? _items[itemId].itemCount : 0;
         }
 
         #region  Singleton
