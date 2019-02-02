@@ -19,6 +19,7 @@ namespace FortBlast.Missions
         public Text totalSpottedText;
         public Text totalGameTimeText;
         public Text totalMachinePartsCollected;
+        public Button continueButton;
 
         [Header("Level Data")] public LevelSettings levelSettings;
 
@@ -28,7 +29,11 @@ namespace FortBlast.Missions
 
         private float _currentLevelTime;
 
-        private void Start() => TerrainGenerator.instance.terrainGenerationComplete += Init;
+        private void Start()
+        {
+            TerrainGenerator.instance.terrainGenerationComplete += Init;
+            continueButton.onClick.AddListener(HandleContinueButtonClicked);
+        }
 
         private void Update()
         {
@@ -80,6 +85,11 @@ namespace FortBlast.Missions
 
             _gameEndIndicated = true;
             machinePartsBorder.sprite = successBorderImage;
+        }
+
+        private void HandleContinueButtonClicked()
+        {
+            // TODO: Use Async Scene Loading to Switch to Next Scene
         }
 
         #region Singleton
