@@ -1,4 +1,5 @@
 ﻿using FortBlast.Enums;
+using FortBlast.Extras;
 using FortBlast.ProceduralTerrain.ProceduralTerrainCreators;
 using FortBlast.ProceduralTerrain.Settings;
 using FortBlast.Resources;
@@ -79,7 +80,7 @@ namespace FortBlast.Missions
         private void UpdateTimerDisplay()
         {
             _currentLevelTime += Time.deltaTime;
-            timerTextDisplay.text = $"{_currentLevelTime}";
+            timerTextDisplay.text = ExtensionFunctions.FormatSecondsToMinutes(Mathf.FloorToInt(_currentLevelTime));
         }
 
         private void CheckForGameEnd()

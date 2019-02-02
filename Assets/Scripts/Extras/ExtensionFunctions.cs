@@ -34,5 +34,16 @@ namespace FortBlast.Extras
 
             return angle;
         }
+
+        public static string FormatSecondsToMinutes(int seconds)
+        {
+            var minutes = seconds / 60;
+            var remainingSeconds = seconds - minutes * 60;
+
+            if (minutes <= 0 && remainingSeconds <= 0)
+                return "0 s";
+
+            return remainingSeconds <= 0 ? $"{minutes} M" : $"{minutes} M {remainingSeconds} S";
+        }
     }
 }

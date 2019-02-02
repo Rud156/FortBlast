@@ -291,6 +291,7 @@ GameObject:
   - component: {fileID: 7889199851279023695}
   - component: {fileID: 7889199851279023689}
   - component: {fileID: 7889199851279023688}
+  - component: {fileID: 2471108445757270832}
   m_Layer: 5
   m_Name: Stats Information
   m_TagString: Untagged
@@ -348,10 +349,25 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: 4d07b2098820749219726c7524130fdf, type: 3}
+  m_Texture: {fileID: 2800000, guid: 6b0847d683a7e534e90dbaea40e517d8, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
     y: 0
     width: 1
     height: 1
+--- !u!114 &2471108445757270832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7889199851279023694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 5, y: 5}
+  m_UseGraphicAlpha: 1
