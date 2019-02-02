@@ -1,4 +1,5 @@
 using System.Collections;
+using FortBlast.Common;
 using FortBlast.Enemy.Droid.Base;
 using FortBlast.Enemy.Droid.Helpers;
 using FortBlast.Extras;
@@ -31,6 +32,7 @@ namespace FortBlast.Enemy.Droid.Patrol
         private DroidAttack _droidAttack;
         private DroidAttackTarget _droidAttackTarget;
         private DroidLaze _droidLaze;
+        private HealthSetter _droidHealthSetter;
         
         private bool _lazingAround;
         private float _currentNormalizedLookAngle;
@@ -45,6 +47,8 @@ namespace FortBlast.Enemy.Droid.Patrol
             _droidAgent = GetComponent<NavMeshAgent>();
             _droidLaze = GetComponent<DroidLaze>();
             _droidAttack = GetComponent<DroidAttack>();
+            _droidHealthSetter = GetComponent<HealthSetter>();
+            _droidHealthSetter.healthZero += NotifyKilled;
 
             _player = GameObject.FindGameObjectWithTag(TagManager.Player)?.transform;
             _distractorHolder = GameObject.FindGameObjectWithTag(TagManager.DistractorHolder)?.transform;
@@ -69,6 +73,12 @@ namespace FortBlast.Enemy.Droid.Patrol
 
             _terrainMeshVertices = other.gameObject.GetComponent<MeshFilter>().mesh.vertices;
             transform.SetParent(other.transform);
+        }
+
+        private void NotifyKilled()
+        {
+            MissionManager.instance.AddEnemyKilled();
+            _droidHealthSetter.healthZero -= NotifyKilled;
         }
 
         private void CheckPatrolPointTargetReached()

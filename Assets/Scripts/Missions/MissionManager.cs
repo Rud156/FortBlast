@@ -9,7 +9,7 @@ namespace FortBlast.Missions
 {
     public class MissionManager : MonoBehaviour
     {
-        [Header("UI Display")] public Text totalDisplay;
+        [Header("UI Display")] public Text totalMachinePartsDisplay;
         public Text timerTextDisplay;
 
         [Header("Level End Indicator")] public GameObject machinePartsBorder;
@@ -17,6 +17,7 @@ namespace FortBlast.Missions
         [Header("Level End UI")] public GameObject levelEndUi;
         public Text totalSpottedText;
         public Text totalGameTimeText;
+        public Text totalEnemiesKilledText;
         public Text totalMachinePartsCollected;
         public Button continueButton;
 
@@ -24,6 +25,8 @@ namespace FortBlast.Missions
 
         private int _totalMachinePartToBeCollected;
         private int _totalSpottedTimes;
+        private int _totalEnemiesKilled;
+        
         private bool _gameEndIndicated;
 
         private float _currentLevelTime;
@@ -42,6 +45,8 @@ namespace FortBlast.Missions
 
         public void IncrementSpottedTimes() => _totalSpottedTimes += 1;
 
+        public void AddEnemyKilled() => _totalEnemiesKilled += 1;
+
         public void DisplayGameEndUI()
         {
             // TODO: Plug Back In When Loading Scene Exists
@@ -56,6 +61,8 @@ namespace FortBlast.Missions
 
             var totalLevelTime = Mathf.FloorToInt(_currentLevelTime);
             totalGameTimeText.text = $"{totalLevelTime}";
+
+            totalEnemiesKilledText.text = $"{_totalEnemiesKilled}";
         }
 
         private void Init()
@@ -64,7 +71,7 @@ namespace FortBlast.Missions
             _currentLevelTime = 0;
 
             _totalMachinePartToBeCollected = totalMachineParts;
-            totalDisplay.text = $"/ {_totalMachinePartToBeCollected}";
+            totalMachinePartsDisplay.text = $"/ {_totalMachinePartToBeCollected}";
 
             TerrainGenerator.instance.terrainGenerationComplete -= Init;
         }
