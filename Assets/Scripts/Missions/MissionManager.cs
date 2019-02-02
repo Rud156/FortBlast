@@ -12,8 +12,7 @@ namespace FortBlast.Missions
         [Header("UI Display")] public Text totalDisplay;
         public Text timerTextDisplay;
 
-        [Header("Level End Indicator")] public Image machinePartsBorder;
-        public Sprite successBorderImage;
+        [Header("Level End Indicator")] public GameObject machinePartsBorder;
 
         [Header("Level End UI")] public GameObject levelEndUi;
         public Text totalSpottedText;
@@ -45,6 +44,8 @@ namespace FortBlast.Missions
 
         public void DisplayGameEndUI()
         {
+            // TODO: Plug Back In When Loading Scene Exists
+            // LevelSceneManager.instance.AsyncLoadScene();
             levelEndUi.SetActive(true);
 
             totalSpottedText.text = $"{_totalSpottedTimes}";
@@ -84,12 +85,13 @@ namespace FortBlast.Missions
                 return;
 
             _gameEndIndicated = true;
-            machinePartsBorder.sprite = successBorderImage;
+            machinePartsBorder.SetActive(true);
         }
 
         private void HandleContinueButtonClicked()
         {
             // TODO: Use Async Scene Loading to Switch to Next Scene
+            // LevelSceneManager.instance.ActivateBackgroundScene();
         }
 
         #region Singleton
