@@ -29,6 +29,7 @@ namespace FortBlast.Missions
         private int _totalEnemiesKilled;
         
         private bool _gameEndIndicated;
+        private bool _missionsInstantiated;
 
         private float _currentLevelTime;
 
@@ -74,6 +75,8 @@ namespace FortBlast.Missions
             _totalMachinePartToBeCollected = totalMachineParts;
             totalMachinePartsDisplay.text = $"/ {_totalMachinePartToBeCollected}";
 
+            _missionsInstantiated = true;
+
             TerrainGenerator.instance.terrainGenerationComplete -= Init;
         }
 
@@ -85,7 +88,7 @@ namespace FortBlast.Missions
 
         private void CheckForGameEnd()
         {
-            if (_gameEndIndicated)
+            if (_gameEndIndicated || !_missionsInstantiated)
                 return;
 
             var collectedMachineParts = ResourceManager.instance.CountResource(ItemID.MachinePart);

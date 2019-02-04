@@ -1,7 +1,7 @@
 // Unity built-in shader source. Copyright (c) 2016 Unity Technologies. MIT license (see license.txt)
 // Modifications by David Leon. Copyright (c) 2017 Lince Works SL. MIT license (see license.txt)
 
-Shader "ToonDeferredShading2017" {
+Shader "CustomBasicToonShader" {
 Properties {
 	_LightTexture0 ("", any) = "" {}
 	_LightTextureB0 ("", 2D) = "" {}

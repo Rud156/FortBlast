@@ -11,6 +11,7 @@ namespace FortBlast.Spawner
         private void Start()
         {
             player.GetComponent<Rigidbody>().isKinematic = true;
+            player.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Discrete;
             Fader.instance.fadeStart += FadeStart;
         }
 
@@ -21,6 +22,7 @@ namespace FortBlast.Spawner
 
             player.transform.position = playerSpawnPoint;
             player.GetComponent<Rigidbody>().isKinematic = false;
+            player.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         }
     }
 }
