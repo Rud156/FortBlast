@@ -117,10 +117,9 @@ namespace FortBlast.Player.AffecterActions
             if (currentTeleporterState != _teleporterPrevState
                 && _teleporterPrevState)
             {
-                RaycastHit hit;
                 var destination = lookPoint.position + lookPoint.forward * teleportDistance;
 
-                if (Physics.Linecast(lookPoint.position, destination, out hit))
+                if (Physics.Linecast(lookPoint.position, destination, out var hit))
                     destination = lookPoint.position + lookPoint.forward * (hit.distance - 1);
 
                 if (Physics.Raycast(destination, Vector3.down, out hit))

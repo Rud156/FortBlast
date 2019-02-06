@@ -333,6 +333,7 @@ GameObject:
   - component: {fileID: 114416243844887190}
   - component: {fileID: 65795760016109200}
   - component: {fileID: 1077210164044002272}
+  - component: {fileID: 848294915110373996}
   m_Layer: 0
   m_Name: Garage
   m_TagString: Untagged
@@ -404,6 +405,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a85293d2bb1a53e428ad3e9013b0f9ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &848294915110373996
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375358547644486}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &1391879508383078
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FortBlast.Common;
 using FortBlast.Enums;
 using FortBlast.Extras;
@@ -32,6 +33,8 @@ namespace FortBlast.Resources
         public Text itemDetailName;
         public Text itemDetailType;
 
+        [Header("Player")] public HealthSetter playerHealthSetter;
+
         private List<InventoryDisplay> _itemsDisplay;
         private InventoryDisplay _itemSelected;
         private HealthSetter _playerHealth;
@@ -56,7 +59,7 @@ namespace FortBlast.Resources
 
             ItemSelected = null;
 
-            itemConfirmButton.onClick.AddListener(SpawnItemOnButtonPress);
+            itemConfirmButton.onClick.AddListener(UseSelectedItemOnPress);
 
             _playerHealth = GameObject.FindGameObjectWithTag(TagManager.Player)?.GetComponent<HealthSetter>();
         }
@@ -69,23 +72,43 @@ namespace FortBlast.Resources
 
         public List<InventoryItem> GetInventoryItems() => inventoryItems;
 
-        private void SpawnItemOnButtonPress()
+        private void UseSelectedItemOnPress()
         {
             if (ItemSelected == null)
                 return;
 
-            if (ResourceManager.instance.HasResource(ItemSelected.inventoryItem.itemId))
+
+            if (!ResourceManager.instance.HasResource(ItemSelected.inventoryItem.itemId))
+                return;
+
+            bool closeInventoryWindow = true;
+            switch (ItemSelected.inventoryItem.type)
             {
-                if (ItemSelected.inventoryItem.type == ItemType.Spawnable)
+                case ItemType.Spawnable:
                     GameManager.instance.InventoryItemSelected(ItemSelected.inventoryItem);
-                else if (ItemSelected.inventoryItem.type == ItemType.Consumable)
+                    break;
+
+                case ItemType.Consumable:
                     _playerHealth.AddHealth(ItemSelected.inventoryItem.healthAmount);
+                    closeInventoryWindow = false;
+                    break;
 
-                ResourceManager.instance.UseResource(ItemSelected.inventoryItem.itemId);
+                case ItemType.UpgradeHelper:
+                    Debug.LogWarning("Item type can only be used in bunker...");
+                    break;
 
-                ClearItemSelection();
-                CloseInventory();
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
+
+            ResourceManager.instance.UseResource(ItemSelected.inventoryItem.itemId);
+
+            ClearItemSelection();
+
+            if (closeInventoryWindow)
+                CloseInventory();
+            else
+                UpdateUIWithResources();
         }
 
         private void UpdateUIWithResources()
@@ -198,7 +221,7 @@ namespace FortBlast.Resources
                 _itemsDisplay.Add(inventoryDisplay);
             }
         }
-        
+
         #region InventoryActions
 
         public void OpenInventory()

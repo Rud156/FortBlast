@@ -11,7 +11,10 @@ namespace FortBlast.Common
         private void OnCollisionEnter(Collision other)
         {
             if (other.gameObject.CompareTag(TagManager.Player))
+            {
                 ResourceManager.instance.AddResource(inventoryItem);
+                Destroy(gameObject);
+            }
         }
     }
 }

@@ -17,22 +17,8 @@ namespace FortBlast.Common
 
         private float _currentHealthAmount;
 
-
-        /// <summary>
-        ///     Start is called on the frame when a script is enabled just before
-        ///     any of the Update methods is called the first time.
-        /// </summary>
         private void Start() => _currentHealthAmount = maxHealthAmount;
 
-        /// <summary>
-        ///     Update is called every frame, if the MonoBehaviour is enabled.
-        /// </summary>
-        private void Update() => CheckIfHealthZero();
-
-        /// <summary>
-        ///     OnTriggerEnter is called when the Collider other enters the trigger.
-        /// </summary>
-        /// <param name="other">The other Collider involved in this collision.</param>
         private void OnTriggerEnter(Collider other)
         {
             var damageAmountSetter = other.GetComponent<DamageAmountSetter>();
@@ -43,22 +29,18 @@ namespace FortBlast.Common
             }
         }
 
-        public float GetCurrentHealth()
-        {
-            return _currentHealthAmount;
-        }
+        public float GetCurrentHealth() => _currentHealthAmount;
 
-        public void AddHealth(float healthAmount)
-        {
+        public void AddHealth(float healthAmount) =>
             _currentHealthAmount =
                 _currentHealthAmount + healthAmount > maxHealthAmount
                     ? maxHealthAmount
                     : _currentHealthAmount + healthAmount;
-        }
 
         public void ReduceHealth(float healthAmount)
         {
             _currentHealthAmount -= healthAmount;
+            CheckIfHealthZero();
         }
 
         private void CheckIfHealthZero()
