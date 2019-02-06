@@ -13,13 +13,10 @@ namespace FortBlast.Spawner
 
             for (var i = 0; i < meshVertices.Length; i++)
             {
-                GameObject droidPrefab;
                 var randomValue = Random.Range(0, 100);
 
-                if (randomValue <= secondDroidSpawnProbability)
-                    droidPrefab = droidPrefabs[1];
-                else
-                    droidPrefab = droidPrefabs[0];
+                var droidPrefab = randomValue <= secondDroidSpawnProbability ?
+                    droidPrefabs[1] : droidPrefabs[0];
 
                 droids[i] = Instantiate(droidPrefab, meshVertices[i],
                     droidPrefab.transform.rotation);

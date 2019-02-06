@@ -9,5 +9,6 @@ namespace FortBlast.Extras
         public const string VisibleCollider = "VisibleCollider";
 
         public const string DistractorHolder = "DistractorHolder";
+        public const string Tree = "Tree";
     }
 }

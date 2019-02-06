@@ -68,8 +68,8 @@ namespace FortBlast.Player.AffecterActions
         private void ReflectBullet(GameObject bullet)
         {
             bullet.layer = 9; // Put it in the Droid Layer to enable collision
-            var bulletRB = bullet.GetComponent<Rigidbody>();
-            bulletRB.velocity *= -1;
+            var bulletRb = bullet.GetComponent<Rigidbody>();
+            bulletRb.velocity *= -1;
 
             CameraShaker.Instance.ShakeOnce(
                 reflectCameraShaker.magnitude,
