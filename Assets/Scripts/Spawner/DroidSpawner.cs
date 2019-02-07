@@ -4,8 +4,8 @@ namespace FortBlast.Spawner
 {
     public class DroidSpawner : MonoBehaviour
     {
-        public GameObject[] droidPrefabs;
-        [Range(10, 90)] public int secondDroidSpawnProbability;
+        public GameObject[] droidPrefabs = new GameObject[2];
+        [Range(0.1f, 0.9f)] public float secondDroidSpawnProbability;
 
         public void SpawnDroids(Vector3[] meshVertices, Transform parent)
         {
@@ -13,7 +13,7 @@ namespace FortBlast.Spawner
 
             for (var i = 0; i < meshVertices.Length; i++)
             {
-                var randomValue = Random.Range(0, 100);
+                var randomValue = Random.value;
 
                 var droidPrefab = randomValue <= secondDroidSpawnProbability ?
                     droidPrefabs[1] : droidPrefabs[0];

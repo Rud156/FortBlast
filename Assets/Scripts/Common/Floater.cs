@@ -22,15 +22,15 @@ namespace FortBlast.Common
             _tempPos = _posOffset;
             switch (direction)
             {
-                case Direction.xAxis:
+                case Direction.XAxis:
                     _tempPos.x += Mathf.Sin(Time.fixedTime * Mathf.PI * frequency) * amplitude;
                     break;
 
-                case Direction.yAxis:
+                case Direction.YAxis:
                     _tempPos.y += Mathf.Sin(Time.fixedTime * Mathf.PI * frequency) * amplitude;
                     break;
 
-                case Direction.zAxis:
+                case Direction.ZAxis:
                     _tempPos.z += Mathf.Sin(Time.fixedTime * Mathf.PI * frequency) * amplitude;
                     break;
             }

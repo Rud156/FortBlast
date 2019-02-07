@@ -210,7 +210,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
 
         private void CreateInitialDroids(Vector3[] meshVertices)
         {
-            _terrainInteractibles.RequestInteractiblesPoints(meshVertices, TerrainInteractibles.droids);
+            _terrainInteractibles.RequestInteractiblesPoints(meshVertices, TerrainInteractibles.Droids);
             _droidsRequested = true;
         }
 
@@ -229,7 +229,7 @@ namespace FortBlast.ProceduralTerrain.DataHolders
         {
             if (!_collectiblesRequested)
                 _terrainInteractibles.RequestInteractiblesPoints(lodMesh.meshVertices,
-                    TerrainInteractibles.collectibles);
+                    TerrainInteractibles.Collectibles);
             _collectiblesRequested = true;
         }
 

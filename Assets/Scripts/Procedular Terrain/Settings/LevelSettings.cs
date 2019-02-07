@@ -9,7 +9,7 @@ namespace FortBlast.ProceduralTerrain.Settings
 
         [Header("Terrain Size Based on LOD")] public LODInfo[] detailLevels;
 
-        [Header("Items Per Terrain Chunk")] public int maxDroids;
+        [Header("Items Per Terrain Chunk")] public float maxDroids;
         public int maxTowers;
         public int maxCollectibles;
     }

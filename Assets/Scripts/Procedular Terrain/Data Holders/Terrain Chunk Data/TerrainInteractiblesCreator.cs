@@ -31,10 +31,10 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
                 {
                     switch (interactiblesType)
                     {
-                        case TerrainInteractibles.collectibles:
+                        case TerrainInteractibles.Collectibles:
                             return FixedRandomPointsSpawner.GeneratePoints(meshVertices,
                                 _levelSettings.maxCollectibles);
-                        case TerrainInteractibles.droids:
+                        case TerrainInteractibles.Droids:
                             return FixedRandomPointsSpawner.GeneratePoints(meshVertices,
                                 _levelSettings.maxDroids);
                         default:
@@ -57,13 +57,13 @@ namespace FortBlast.ProceduralTerrain.DataHolders.TerrainChunkData
 
             switch (interactiblesType)
             {
-                case TerrainInteractibles.collectibles:
+                case TerrainInteractibles.Collectibles:
                     if (_clearingSettings.createClearing)
                         ClearCollectiblePointsAndSpawn(rawPoints);
                     else
                         CollectiblesSpawner.instance.SpawnCollectibles(rawPoints, _parent);
                     break;
-                case TerrainInteractibles.droids:
+                case TerrainInteractibles.Droids:
                     DroidSpawner.instance.SpawnDroids(rawPoints, _parent);
                     break;
             }

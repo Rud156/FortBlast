@@ -2,8 +2,8 @@
 {
     public enum Direction
     {
-        xAxis,
-        yAxis,
-        zAxis
+        XAxis,
+        YAxis,
+        ZAxis
     }
 }

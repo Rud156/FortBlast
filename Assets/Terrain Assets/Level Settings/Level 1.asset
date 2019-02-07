@@ -18,6 +18,6 @@ MonoBehaviour:
     visibleDistanceThreshold: 100
   - lod: 2
     visibleDistanceThreshold: 200
-  maxDroids: 1
+  maxDroids: 0.5
   maxTowers: 3
   maxCollectibles: 10
