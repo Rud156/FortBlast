@@ -1,27 +1,22 @@
 ﻿using System.Collections.Generic;
 using FortBlast.Extras;
 using FortBlast.Structs;
+using FortBlast.UI;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace FortBlast.Resources
 {
     public class CollectCollectibles : MonoBehaviour
     {
-        [Header("UI Display")] public Slider uiSlider;
-        public GameObject collectibleUiDisplay;
-        
-        [Header("Collectible Stats")]
-        public GameObject collectionCompletedExplosion;
+        [Header("Collectible Stats")] public GameObject collectionCompletedExplosion;
         public float maxInteractionTime;
         public List<InventoryItemStats> collectibles;
 
         private bool _collectibleCollected;
         private float _currentInteractionTime;
-        
+
         private bool _isPlayerLooking;
         private bool _isPlayerNearby;
-        private Transform _player;
 
 
         private void Start()
@@ -30,8 +25,6 @@ namespace FortBlast.Resources
             _collectibleCollected = false;
             _isPlayerNearby = false;
             _isPlayerLooking = false;
-
-            _player = GameObject.FindGameObjectWithTag(TagManager.Player)?.transform;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -62,29 +55,13 @@ namespace FortBlast.Resources
             else
             {
                 _currentInteractionTime = 0;
-                collectibleUiDisplay.SetActive(false);
+                UniSlider.instance.DiscardSlider(gameObject);
             }
 
-            var interactionRatio = _currentInteractionTime / maxInteractionTime;
-            uiSlider.value = interactionRatio;
-
-            RotateCanvasTowardsPlayer();
-        }
-
-        private void RotateCanvasTowardsPlayer()
-        {
-            if (!_player)
-                return;
-
-            var lookDirection = _player.position - collectibleUiDisplay.transform.position;
-            lookDirection.y = 0;
-
-            if (lookDirection != Vector3.zero)
+            if (_currentInteractionTime > 0)
             {
-                var rotation = Quaternion.LookRotation(-lookDirection);
-                collectibleUiDisplay.transform.rotation =
-                    Quaternion.Slerp(collectibleUiDisplay.transform.rotation, rotation,
-                        5 * Time.deltaTime);
+                var interactionRatio = _currentInteractionTime / maxInteractionTime;
+                UniSlider.instance.UpdateSliderValue(interactionRatio, gameObject);
             }
         }
 
@@ -93,18 +70,18 @@ namespace FortBlast.Resources
             if (Input.GetKey(Controls.InteractionKey))
             {
                 _currentInteractionTime += Time.deltaTime;
-                collectibleUiDisplay.SetActive(true);
+                UniSlider.instance.InitSlider(gameObject);
             }
             else
             {
                 _currentInteractionTime = 0;
-                collectibleUiDisplay.SetActive(false);
+                UniSlider.instance.DiscardSlider(gameObject);
             }
 
             if (_currentInteractionTime >= maxInteractionTime)
             {
                 _collectibleCollected = true;
-                collectibleUiDisplay.SetActive(false);
+                UniSlider.instance.DiscardSlider(gameObject);
 
                 var collectionItems = new List<InventoryItemStats>();
                 for (var i = 0; i < collectibles.Count; i++)
@@ -117,9 +94,11 @@ namespace FortBlast.Resources
                     if (randomValue <= 0)
                         randomValue = 1;
 
-                    var newCollectionItem = new InventoryItemStats();
-                    newCollectionItem.itemCount = randomValue;
-                    newCollectionItem.inventoryItem = inventoryItemStats.inventoryItem;
+                    var newCollectionItem = new InventoryItemStats
+                    {
+                        itemCount = randomValue,
+                        inventoryItem = inventoryItemStats.inventoryItem
+                    };
 
                     collectionItems.Add(newCollectionItem);
                 }
