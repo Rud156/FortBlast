@@ -1073,8 +1073,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53aefa576411f904fa4b8d7019fa8c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceToStopFromIntrestingTarget: 10
-  distanceToStopFromPatrolPoint: 0
+  distanceToStopFromInterestingTarget: 10
+  distanceToStopFromPatrolPoint: 10
   minimumDetectionDistance: 20
   lookingPoint: {fileID: 4295247924510168}
   lookRotationSpeed: 7

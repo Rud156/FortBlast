@@ -6,6 +6,7 @@ using FortBlast.Extras;
 using FortBlast.Missions;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace FortBlast.Enemy.Droid.Patrol
 {
@@ -14,7 +15,7 @@ namespace FortBlast.Enemy.Droid.Patrol
     [RequireComponent(typeof(DroidLaze))]
     public class DroidPatrol : MonoBehaviour
     {
-        [Header("Distances")] public float distanceToStopFromIntrestingTarget;
+        [Header("Distances")] public float distanceToStopFromInterestingTarget;
         public float distanceToStopFromPatrolPoint;
         public float minimumDetectionDistance;
 
@@ -169,7 +170,7 @@ namespace FortBlast.Enemy.Droid.Patrol
         private void CheckAndSetInterestingTarget(Transform target)
         {
             _currentTarget = target;
-            _droidAgent.stoppingDistance = distanceToStopFromIntrestingTarget;
+            _droidAgent.stoppingDistance = distanceToStopFromInterestingTarget;
             var position = _currentTarget.position;
 
             SetAgentDestination(position);
