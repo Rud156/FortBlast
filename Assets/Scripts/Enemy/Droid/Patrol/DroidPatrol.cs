@@ -6,7 +6,6 @@ using FortBlast.Extras;
 using FortBlast.Missions;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 namespace FortBlast.Enemy.Droid.Patrol
 {
