@@ -21,9 +21,6 @@ namespace FortBlast.Enemy.Droid.Patrol
         {
             if (!_shieldSystem)
                 _shieldActivated = false;
-
-            if (Input.GetKeyDown(KeyCode.F)) // TODO: Remove this later
-                Debug.Break();
         }
 
         private void OnTriggerEnter(Collider other)

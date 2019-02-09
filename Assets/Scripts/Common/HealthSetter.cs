@@ -12,8 +12,10 @@ namespace FortBlast.Common
         public bool useSkinnedMesh;
 
         public delegate void HealthZero();
+        public delegate void HealthChanged();
 
         public HealthZero healthZero;
+        public HealthChanged healthChanged;
 
         private float _currentHealthAmount;
 
@@ -31,15 +33,21 @@ namespace FortBlast.Common
 
         public float GetCurrentHealth() => _currentHealthAmount;
 
-        public void AddHealth(float healthAmount) =>
+        public void AddHealth(float healthAmount)
+        {
             _currentHealthAmount =
                 _currentHealthAmount + healthAmount > maxHealthAmount
                     ? maxHealthAmount
                     : _currentHealthAmount + healthAmount;
 
+            healthChanged?.Invoke();
+        }
+
         public void ReduceHealth(float healthAmount)
         {
             _currentHealthAmount -= healthAmount;
+            healthChanged?.Invoke();
+
             CheckIfHealthZero();
         }
 

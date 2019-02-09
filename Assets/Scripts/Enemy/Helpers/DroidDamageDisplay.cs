@@ -7,12 +7,12 @@ namespace FortBlast.Enemy.Helpers
     [RequireComponent(typeof(HealthSetter))]
     public class DroidDamageDisplay : MonoBehaviour
     {
-        private const float _maxSmokeParticles = 7;
-        private const float _minSmokeParticles = 2;
-        
+        private const float MaxSmokeParticles = 7;
+        private const float MinSmokeParticles = 2;
+
         public Transform instancePoint;
         public GameObject smokeEffect;
-        
+
         private HealthSetter _healthSetter;
         private float _maxHealth;
         private float _oneThirdHealth;
@@ -27,9 +27,12 @@ namespace FortBlast.Enemy.Helpers
 
             _smokeInstantiated = false;
             _oneThirdHealth = _maxHealth * 0.75f;
+
+            DisplayDamageEffect();
+            _healthSetter.healthChanged += DisplayDamageEffect;
         }
 
-        private void Update()
+        private void DisplayDamageEffect()
         {
             var currentHealth = _healthSetter.GetCurrentHealth();
 
@@ -45,7 +48,7 @@ namespace FortBlast.Enemy.Helpers
             if (_smokeInstantiated)
             {
                 var emissionRate = ExtensionFunctions.Map(currentHealth, 0, _oneThirdHealth,
-                    _maxSmokeParticles, _minSmokeParticles);
+                    MaxSmokeParticles, MinSmokeParticles);
                 _smokeEmission.rateOverTime = emissionRate;
             }
         }
