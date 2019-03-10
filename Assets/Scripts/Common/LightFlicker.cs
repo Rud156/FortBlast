@@ -43,7 +43,7 @@ namespace FortBlast.Common
                     yield return new WaitForSeconds(flickerInformation.onTime);
 
                     _affectorLight.intensity = flickerInformation.offIntensity;
-                    yield return new WaitForSeconds(flickerInformation.offIntensity);
+                    yield return new WaitForSeconds(flickerInformation.offTime);
                 }
             }
         }

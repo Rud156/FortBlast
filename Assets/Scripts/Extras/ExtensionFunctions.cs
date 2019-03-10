@@ -47,12 +47,12 @@ namespace FortBlast.Extras
             return remainingSeconds <= 0 ? $"{minutes} M" : $"{minutes} M {remainingSeconds} S";
         }
 
+        private static readonly System.Random Random = new System.Random();
         public static List<T> Shuffle<T>(List<T> list)
         {
-            var random = new System.Random();
             for (int i = list.Count - 1; i > 1; i--)
             {
-                int rnd = random.Next(i + 1);
+                int rnd = Random.Next(i + 1);
 
                 T value = list[rnd];
                 list[rnd] = list[i];

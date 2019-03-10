@@ -1,5 +1,6 @@
 namespace FortBlast.Structs
 {
+    [System.Serializable]
     public struct FlickerInformation
     {
         public float onTime;
