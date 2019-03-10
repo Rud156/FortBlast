@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FortBlast.Extras
@@ -44,6 +45,21 @@ namespace FortBlast.Extras
                 return "0 s";
 
             return remainingSeconds <= 0 ? $"{minutes} M" : $"{minutes} M {remainingSeconds} S";
+        }
+
+        public static List<T> Shuffle<T>(List<T> list)
+        {
+            var random = new System.Random();
+            for (int i = list.Count - 1; i > 1; i--)
+            {
+                int rnd = random.Next(i + 1);
+
+                T value = list[rnd];
+                list[rnd] = list[i];
+                list[i] = value;
+            }
+
+            return list;
         }
     }
 }
