@@ -149,6 +149,7 @@ fabric.properties
 
 # Build results
 [Dd]ebug/
+!Assets/Scripts/Debug/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
