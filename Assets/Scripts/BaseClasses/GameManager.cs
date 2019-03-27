@@ -2,6 +2,7 @@ using FortBlast.Extras;
 using FortBlast.Player.AffecterActions;
 using FortBlast.Player.Movement;
 using FortBlast.Resources;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace FortBlast.BaseClasses
@@ -103,5 +104,20 @@ namespace FortBlast.BaseClasses
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+
+        #region Singleton
+
+        public static GameManager instance;
+
+        private void Awake()
+        {
+            if (instance == null)
+                instance = this;
+
+            if (instance != this)
+                Destroy(gameObject);
+        }
+
+        #endregion
     }
 }

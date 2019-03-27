@@ -21,23 +21,5 @@ namespace FortBlast.Scenes.MainScene
         }
 
         #endregion PlayerBase
-
-        #region Singleton
-
-        public static MainSceneGameManager instance;
-
-        /// <summary>
-        ///     Awake is called when the script instance is being loaded.
-        /// </summary>
-        private void Awake()
-        {
-            if (instance == null)
-                instance = this;
-
-            if (instance != this)
-                Destroy(gameObject);
-        }
-
-        #endregion Singleton
     }
 }

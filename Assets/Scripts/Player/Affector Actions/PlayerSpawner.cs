@@ -1,7 +1,7 @@
-﻿using FortBlast.Extras;
+﻿using FortBlast.BaseClasses;
+using FortBlast.Extras;
 using FortBlast.Player.Data;
 using FortBlast.Resources;
-using FortBlast.Scenes.MainScene;
 using UnityEngine;
 
 namespace FortBlast.Player.AffecterActions
@@ -12,7 +12,7 @@ namespace FortBlast.Player.AffecterActions
         public float itemLaunchVelocity;
         public GameObject launchEffect;
         public Transform spawnPoint;
-        
+
         private InventoryItem _item;
         private Collider _itemCollider;
 
@@ -20,7 +20,7 @@ namespace FortBlast.Player.AffecterActions
         private GameObject _itemInstance;
         private Rigidbody _itemRB;
         private Animator _playerAnimator;
-        
+
         private void Start()
         {
             _playerAnimator = GetComponent<Animator>();
@@ -62,10 +62,10 @@ namespace FortBlast.Player.AffecterActions
 
         private void SpawnItemWorld()
         {
-            if (!_itemInstance )
+            if (_itemInstance == null)
                 return;
 
-            MainSceneGameManager.instance.InventoryItemUsed();
+            GameManager.instance.InventoryItemUsed();
 
             _itemRB.isKinematic = false;
             _itemRB.velocity = itemLaunchVelocity * transform.forward;
