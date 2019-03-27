@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using FortBlast.Common;
 using FortBlast.Enums;
 using FortBlast.Extras;
-using FortBlast.Scenes.MainScene;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,6 +37,13 @@ namespace FortBlast.Resources
         private List<InventoryDisplay> _itemsDisplay;
         private InventoryDisplay _itemSelected;
         private HealthSetter _playerHealth;
+
+        public delegate void InventoryOpened();
+
+        public delegate void InventoryItemSelected(InventoryItem inventoryItem);
+
+        public InventoryOpened inventoryOpened;
+        public InventoryItemSelected inventoryItemSelected;
 
 
         private InventoryDisplay ItemSelected
@@ -85,7 +91,7 @@ namespace FortBlast.Resources
             switch (ItemSelected.inventoryItem.type)
             {
                 case ItemType.Spawnable:
-                    GameManager.instance.InventoryItemSelected(ItemSelected.inventoryItem);
+                    inventoryItemSelected?.Invoke(ItemSelected.inventoryItem);
                     break;
 
                 case ItemType.Consumable:
@@ -229,7 +235,7 @@ namespace FortBlast.Resources
             inventory.SetActive(true);
             scrollRect.verticalNormalizedPosition = 1;
 
-            GameManager.instance.InventoryOpened();
+            inventoryOpened?.Invoke();
         }
 
         public void CloseInventory()

@@ -1,32 +1,31 @@
-﻿using FortBlast.Extras;
+using FortBlast.Extras;
 using FortBlast.Player.AffecterActions;
 using FortBlast.Player.Movement;
-using FortBlast.ProceduralTerrain.ProceduralTerrainCreators;
 using FortBlast.Resources;
-using FortBlast.UI;
 using UnityEngine;
 
-namespace FortBlast.Scenes.MainScene
+namespace FortBlast.BaseClasses
 {
-    public class GameManager : MonoBehaviour
+    public abstract class GameManager : MonoBehaviour
     {
-        public PlayerHandControls playerAbsorbDamageController;
+        [Header("Player")] public PlayerHandControls playerAbsorbDamageController;
         public PlayerLookAtController playerLookAtController;
         public PlayerSpawner playerSpawner;
-        
+
         private bool _inventoryOpen;
         private bool _itemSpawned;
 
-        private void Start()
+        protected virtual void Start()
         {
             _inventoryOpen = false;
             _itemSpawned = false;
 
             LockCursor();
-            TerrainGenerator.instance.terrainGenerationComplete += StartFadingIn;
+            InventoryManager.instance.inventoryOpened += InventoryOpened;
+            InventoryManager.instance.inventoryItemSelected += InventoryItemSelected;
         }
 
-        private void Update()
+        protected void Update()
         {
             if (!Input.GetKeyDown(Controls.CloseKey))
                 return;
@@ -38,19 +37,15 @@ namespace FortBlast.Scenes.MainScene
                 CloseInventory();
         }
 
-        #region PlayerBase
-
-        private void StartFadingIn()
+        protected void OnDestroy()
         {
-            Fader.instance.StartFadeIn();
-            TerrainGenerator.instance.terrainGenerationComplete -= StartFadingIn;
+            InventoryManager.instance.inventoryOpened -= InventoryOpened;
+            InventoryManager.instance.inventoryItemSelected -= InventoryItemSelected;
         }
 
-        #endregion PlayerBase
-        
         #region Inventory
 
-        public void InventoryOpened()
+        private void InventoryOpened()
         {
             _inventoryOpen = true;
             playerLookAtController.DeActivateRotation();
@@ -59,7 +54,7 @@ namespace FortBlast.Scenes.MainScene
             UnlockCursor();
         }
 
-        public void CloseInventory()
+        private void CloseInventory()
         {
             _inventoryOpen = false;
             playerLookAtController.ActivateRotation();
@@ -108,23 +103,5 @@ namespace FortBlast.Scenes.MainScene
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
-
-        #region Singleton
-
-        public static GameManager instance;
-
-        /// <summary>
-        ///     Awake is called when the script instance is being loaded.
-        /// </summary>
-        private void Awake()
-        {
-            if (instance == null)
-                instance = this;
-
-            if (instance != this)
-                Destroy(gameObject);
-        }
-
-        #endregion Singleton
     }
 }

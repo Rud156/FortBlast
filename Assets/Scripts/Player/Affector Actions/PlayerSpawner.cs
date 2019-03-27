@@ -65,7 +65,7 @@ namespace FortBlast.Player.AffecterActions
             if (!_itemInstance )
                 return;
 
-            GameManager.instance.InventoryItemUsed();
+            MainSceneGameManager.instance.InventoryItemUsed();
 
             _itemRB.isKinematic = false;
             _itemRB.velocity = itemLaunchVelocity * transform.forward;

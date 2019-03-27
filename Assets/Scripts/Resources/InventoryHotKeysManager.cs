@@ -51,7 +51,7 @@ namespace FortBlast.Resources
             if (!ResourceManager.instance.HasResource(bottle.itemId))
                 return;
 
-            GameManager.instance.InventoryItemSelected(bottle);
+            MainSceneGameManager.instance.InventoryItemSelected(bottle);
             ResourceManager.instance.UseResource(bottle.itemId);
 
             InventoryManager.instance.CloseInventory();
