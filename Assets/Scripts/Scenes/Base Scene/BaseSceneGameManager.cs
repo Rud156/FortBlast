@@ -1,19 +1,22 @@
 ﻿using FortBlast.BaseClasses;
 
-public class BaseSceneGameManager : GameManager
+namespace FortBlast.Scenes.BaseScene
 {
-    #region Singleton
-
-    public static BaseSceneGameManager instance;
-
-    private void Awake()
+    public class BaseSceneGameManager : GameManager
     {
-        if (instance == null)
-            instance = this;
+        #region Singleton
 
-        if (instance != this)
-            Destroy(gameObject);
+        public static BaseSceneGameManager instance;
+
+        private void Awake()
+        {
+            if (instance == null)
+                instance = this;
+
+            if (instance != this)
+                Destroy(gameObject);
+        }
+
+        #endregion
     }
-
-    #endregion
 }

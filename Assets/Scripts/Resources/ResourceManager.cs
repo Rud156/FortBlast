@@ -31,6 +31,7 @@ namespace FortBlast.Resources
                 inventoryItem = testItem,
                 itemCount = 20
             });
+
             // TODO: Read initial resources from file
             resourcesChanged?.Invoke();
         }
@@ -47,7 +48,8 @@ namespace FortBlast.Resources
             {
                 var inventoryItemStats = new InventoryItemStats
                 {
-                    itemCount = count, inventoryItem = item
+                    itemCount = count,
+                    inventoryItem = item
                 };
                 _items.Add(item.itemId, inventoryItemStats);
             }

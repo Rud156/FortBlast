@@ -7,8 +7,8 @@ namespace FortBlast.Player.Movement
     [RequireComponent(typeof(Animator))]
     public class PlayerMovementController : MonoBehaviour
     {
-        [Header("Movement")] public float movementSpeed;
-        public float runningSpeed;
+        [Header("Movement")] public float movementSpeed = 300;
+        public float runningSpeed = 500;
         public float animatorLerpRate;
         
         private Animator _playerAnimator;
