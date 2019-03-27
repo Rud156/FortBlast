@@ -24,7 +24,7 @@ namespace FortBlast.Resources
         private void Start()
         {
             _items = new Dictionary<ItemID, InventoryItemStats>();
-            
+
             // TODO: Remove After Testing
             _items.Add(testItem.itemId, new InventoryItemStats
             {
@@ -71,7 +71,7 @@ namespace FortBlast.Resources
                 {
                     var inventoryItemStats = new InventoryItemStats
                     {
-                        itemCount = item.itemCount, 
+                        itemCount = item.itemCount,
                         inventoryItem = item.inventoryItem
                     };
                     _items.Add(item.inventoryItem.itemId, inventoryItemStats);
@@ -81,8 +81,12 @@ namespace FortBlast.Resources
             }
 
             sb.Length -= 2;
-            contentDisplay.text = sb.ToString();
-            contentDisplayAnimator.SetTrigger(Controls.UIDisplayTextTrigger);
+
+            if (displayOnUi)
+            {
+                contentDisplay.text = sb.ToString();
+                contentDisplayAnimator.SetTrigger(Controls.UIDisplayTextTrigger);
+            }
 
             resourcesChanged?.Invoke();
         }
