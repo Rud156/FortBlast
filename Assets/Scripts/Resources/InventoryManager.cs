@@ -29,7 +29,7 @@ namespace FortBlast.Resources
 
         [Header("Item Details")] public GameObject itemDetail;
         public Text itemDetailDescription;
-        public RawImage itemDetailImage;
+        public Image itemDetailImage;
         public Text itemDetailName;
         public Text itemDetailType;
 
@@ -143,7 +143,7 @@ namespace FortBlast.Resources
 
                     itemDetailName.text = ItemSelected.inventoryItem.displayName;
                     itemDetailDescription.text = ItemSelected.inventoryItem.description;
-                    itemDetailImage.texture = ItemSelected.inventoryItem.image;
+                    itemDetailImage.sprite = ItemSelected.inventoryItem.image;
 
                     switch (ItemSelected.inventoryItem.type)
                     {
@@ -203,11 +203,11 @@ namespace FortBlast.Resources
                     itemBorder = itemDisplayInstance
                         .transform.GetChild(0).GetComponent<Image>(),
                     itemImage = itemDisplayInstance
-                        .transform.GetChild(1).GetComponent<RawImage>()
+                        .transform.GetChild(1).GetComponent<Image>()
                 };
 
 
-                inventoryDisplay.itemImage.texture = item.image;
+                inventoryDisplay.itemImage.sprite = item.image;
                 inventoryDisplay.itemNameText = itemDisplayInstance.transform.GetChild(2).GetComponent<Text>();
                 inventoryDisplay.itemNameText.text = item.displayName;
 
@@ -253,7 +253,7 @@ namespace FortBlast.Resources
             public Image itemBorder;
             public Button itemButton;
             public Text itemCountText;
-            public RawImage itemImage;
+            public Image itemImage;
             public Text itemNameText;
         }
 

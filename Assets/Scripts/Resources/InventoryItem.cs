@@ -15,7 +15,7 @@ namespace FortBlast.Resources
         public GameObject glassBreakingAudioPrefab;
 
         [Header("Item Details")]
-        public Texture2D image;
+        public Sprite image;
         public GameObject prefab;
     }
 }
