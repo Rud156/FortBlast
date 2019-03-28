@@ -1450,7 +1450,13 @@ MonoBehaviour:
     type: 3}
   effectOffset: {x: 0, y: 4.5, z: 0}
   effectScale: {x: 3, y: 3, z: 3}
-  inventoryItems: []
+  inventoryItems:
+  - inventoryItem: {fileID: 11400000, guid: a88b717509ab4ef488845209c1a2e1de, type: 2}
+    itemCount: 1
+  - inventoryItem: {fileID: 11400000, guid: bd1d0f119cb517a4187b87d77983d792, type: 2}
+    itemCount: 2
+  - inventoryItem: {fileID: 11400000, guid: a201e37a38de4d74b9992161e7a9af78, type: 2}
+    itemCount: 1
   totalFixingTime: 3
   equipments:
   - affectedObject: {fileID: 500067109}
@@ -3004,6 +3010,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 149250, guid: d17bc9c1cdef1c5448255edad31c1c61, type: 3}
       propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 20556488, guid: d17bc9c1cdef1c5448255edad31c1c61, type: 3}
+      propertyPath: m_FadeMode
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 173432, guid: d17bc9c1cdef1c5448255edad31c1c61, type: 3}
@@ -4913,7 +4923,15 @@ MonoBehaviour:
     type: 3}
   effectOffset: {x: 0, y: 5, z: 0}
   effectScale: {x: 2, y: 2, z: 2}
-  inventoryItems: []
+  inventoryItems:
+  - inventoryItem: {fileID: 11400000, guid: 091e34a28b3ecc64cb8109487a273d54, type: 2}
+    itemCount: 1
+  - inventoryItem: {fileID: 11400000, guid: a201e37a38de4d74b9992161e7a9af78, type: 2}
+    itemCount: 1
+  - inventoryItem: {fileID: 11400000, guid: bd1d0f119cb517a4187b87d77983d792, type: 2}
+    itemCount: 1
+  - inventoryItem: {fileID: 11400000, guid: a88b717509ab4ef488845209c1a2e1de, type: 2}
+    itemCount: 1
   totalFixingTime: 5
   equipments:
   - affectedObject: {fileID: 2085468014}
@@ -14306,7 +14324,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You don't have the required resources
+  m_Text: 
 --- !u!222 &1125960339
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20891,7 +20909,11 @@ MonoBehaviour:
     type: 3}
   effectOffset: {x: 0, y: 3, z: 0}
   effectScale: {x: 2, y: 2, z: 2}
-  inventoryItems: []
+  inventoryItems:
+  - inventoryItem: {fileID: 11400000, guid: a201e37a38de4d74b9992161e7a9af78, type: 2}
+    itemCount: 3
+  - inventoryItem: {fileID: 11400000, guid: a88b717509ab4ef488845209c1a2e1de, type: 2}
+    itemCount: 2
   totalFixingTime: 5
   equipments:
   - affectedObject: {fileID: 987914286}
@@ -21511,7 +21533,11 @@ MonoBehaviour:
     type: 3}
   effectOffset: {x: 0, y: 2.5, z: 0}
   effectScale: {x: 1.5, y: 1.5, z: 1.5}
-  inventoryItems: []
+  inventoryItems:
+  - inventoryItem: {fileID: 11400000, guid: a88b717509ab4ef488845209c1a2e1de, type: 2}
+    itemCount: 3
+  - inventoryItem: {fileID: 11400000, guid: 091e34a28b3ecc64cb8109487a273d54, type: 2}
+    itemCount: 2
   totalFixingTime: 7
   equipments:
   - affectedObject: {fileID: 1730563209}

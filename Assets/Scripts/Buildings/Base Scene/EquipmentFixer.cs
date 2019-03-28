@@ -1,5 +1,6 @@
 ﻿using FortBlast.Extras;
 using FortBlast.Resources;
+using FortBlast.Structs;
 using FortBlast.UI;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,7 @@ namespace FortBlast.Buildings.BaseScene
         public Vector3 effectScale;
 
         [Header("Fixing Requirements")]
-        public List<InventoryItem> inventoryItems;
+        public List<InventoryItemStats> inventoryItems;
 
         [Header("Object Affected")]
         public float totalFixingTime;
@@ -71,7 +72,7 @@ namespace FortBlast.Buildings.BaseScene
             if (Input.GetKeyDown(Controls.InteractionKey))
             {
                 CheckForResources();
-                ContentDisplay.instance.DisplayText("<color=red>Not Enough Resources</color>");
+                ContentDisplay.instance.DisplayText("Not Enough Resources", Color.red);
                 UniSlider.instance.InitSlider(gameObject);
             }
             else if (Input.GetKeyUp(Controls.InteractionKey))
@@ -119,9 +120,11 @@ namespace FortBlast.Buildings.BaseScene
         private void CheckForResources()
         {
             bool allResourcesAvailable = true;
-            foreach (InventoryItem inventoryItem in inventoryItems)
+            foreach (InventoryItemStats inventoryItemStat in inventoryItems)
             {
-                if (!ResourceManager.instance.HasResource(inventoryItem.itemId))
+                int itemCount = ResourceManager.instance.CountResource(inventoryItemStat.inventoryItem.itemId);
+
+                if (itemCount < inventoryItemStat.itemCount)
                 {
                     allResourcesAvailable = false;
                     break;

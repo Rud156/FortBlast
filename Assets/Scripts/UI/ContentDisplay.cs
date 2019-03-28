@@ -19,8 +19,11 @@ namespace FortBlast.UI
             _textAnimator = GetComponent<Animator>();
         }
 
-        public void DisplayText(string textToDisplay)
+        public void DisplayText(string textToDisplay, Color color)
         {
+            float textAlpha = _displayText.color.a;
+            _displayText.color = new Color(color.r, color.g, color.b, textAlpha);
+
             _displayText.text = textToDisplay;
             _textAnimator.SetTrigger(TextAnimation);
         }
