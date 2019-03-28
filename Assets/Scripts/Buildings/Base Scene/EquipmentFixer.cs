@@ -1,5 +1,7 @@
 ﻿using FortBlast.Extras;
+using FortBlast.Resources;
 using FortBlast.UI;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FortBlast.Buildings.BaseScene
@@ -14,14 +16,20 @@ namespace FortBlast.Buildings.BaseScene
         public Vector3 effectOffset;
         public Vector3 effectScale;
 
+        [Header("Fixing Requirements")]
+        public List<InventoryItem> inventoryItems;
+
         [Header("Object Affected")]
         public float totalFixingTime;
         public EquipmentToBeAffected[] equipments;
 
         private float _currentFixingTime;
         private bool _equipmentFixed;
+
         private bool _playerIsNearby;
         private bool _isPlayerLooking;
+
+        private bool _resourcesAvailable;
 
         private void Start() => _currentFixingTime = 0;
 
@@ -61,11 +69,23 @@ namespace FortBlast.Buildings.BaseScene
         private void CheckPlayerInteraction()
         {
             if (Input.GetKeyDown(Controls.InteractionKey))
+            {
+                CheckForResources();
+                ContentDisplay.instance.DisplayText("<color=red>Not Enough Resources</color>");
                 UniSlider.instance.InitSlider(gameObject);
+            }
             else if (Input.GetKeyUp(Controls.InteractionKey))
                 UniSlider.instance.DiscardSlider(gameObject);
             else if (Input.GetKey(Controls.InteractionKey))
+            {
+                if (!_resourcesAvailable)
+                {
+                    _currentFixingTime = 0;
+                    return;
+                }
+
                 _currentFixingTime += Time.deltaTime;
+            }
 
             if (_currentFixingTime > 0)
             {
@@ -94,6 +114,21 @@ namespace FortBlast.Buildings.BaseScene
                 affectedObject.transform.position = equipment.originalPosition;
                 affectedObject.transform.rotation = Quaternion.Euler(equipment.originalRotation);
             }
+        }
+
+        private void CheckForResources()
+        {
+            bool allResourcesAvailable = true;
+            foreach (InventoryItem inventoryItem in inventoryItems)
+            {
+                if (!ResourceManager.instance.HasResource(inventoryItem.itemId))
+                {
+                    allResourcesAvailable = false;
+                    break;
+                }
+            }
+
+            _resourcesAvailable = allResourcesAvailable;
         }
 
 
