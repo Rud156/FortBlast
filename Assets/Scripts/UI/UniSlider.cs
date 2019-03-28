@@ -17,6 +17,8 @@ namespace FortBlast.UI
             if (_sliderUsed)
                 return;
 
+            Debug.Log("Initialzed Slider");
+
             _sliderUsed = true;
             _usingGameObject = usingGameObject;
             slider.gameObject.SetActive(true);
@@ -32,8 +34,10 @@ namespace FortBlast.UI
 
         public void DiscardSlider(GameObject usingGameObject)
         {
-            if(_usingGameObject != usingGameObject)
+            if (_usingGameObject != usingGameObject)
                 return;
+
+            Debug.Log("Discarded Slider");
 
             _sliderUsed = false;
             _usingGameObject = null;

@@ -3,6 +3,7 @@ using FortBlast.Extras;
 using FortBlast.Structs;
 using FortBlast.UI;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 namespace FortBlast.Resources
 {
@@ -38,9 +39,15 @@ namespace FortBlast.Resources
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag(TagManager.Player))
+            {
                 _isPlayerNearby = false;
+                UniSlider.instance.DiscardSlider(gameObject);
+            }
             else if (other.CompareTag(TagManager.VisibleCollider))
+            {
                 _isPlayerLooking = false;
+                UniSlider.instance.DiscardSlider(gameObject);
+            }
         }
 
         private void Update()
@@ -49,14 +56,9 @@ namespace FortBlast.Resources
                 return;
 
             if (_isPlayerNearby && _isPlayerLooking)
-            {
                 CheckInteractionTime();
-            }
             else
-            {
                 _currentInteractionTime = 0;
-                UniSlider.instance.DiscardSlider(gameObject);
-            }
 
             if (_currentInteractionTime > 0)
             {
@@ -67,16 +69,14 @@ namespace FortBlast.Resources
 
         private void CheckInteractionTime()
         {
-            if (Input.GetKey(Controls.InteractionKey))
-            {
-                _currentInteractionTime += Time.deltaTime;
+            if (Input.GetKeyDown(Controls.InteractionKey))
                 UniSlider.instance.InitSlider(gameObject);
-            }
-            else
-            {
-                _currentInteractionTime = 0;
+            else if (Input.GetKeyUp(Controls.InteractionKey))
                 UniSlider.instance.DiscardSlider(gameObject);
-            }
+            else if (Input.GetKey(Controls.InteractionKey))
+                _currentInteractionTime += Time.deltaTime;
+            else
+                _currentInteractionTime = 0;
 
             if (_currentInteractionTime >= maxInteractionTime)
             {
