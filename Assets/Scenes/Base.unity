@@ -4381,8 +4381,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df605d8ecf3dab64c9fecd2b3769113c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fixEffect: {fileID: 9134874375028661538, guid: 31e8eaf3c04e4804b967c6214e2881e4,
+  repairEffect: {fileID: 9134874375028661538, guid: 31e8eaf3c04e4804b967c6214e2881e4,
     type: 3}
+  effectOffset: {x: 0, y: 5, z: 0}
+  effectScale: {x: 2, y: 2, z: 2}
   totalFixingTime: 5
   equipments:
   - affectedObject: {fileID: 2085468014}
@@ -22120,7 +22122,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1987001676
 Transform:
   m_ObjectHideFlags: 0
@@ -23615,7 +23617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 495954, guid: e15141fc92cd7b947a0d7d838f1ffb48, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 495954, guid: e15141fc92cd7b947a0d7d838f1ffb48, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

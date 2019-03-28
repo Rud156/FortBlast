@@ -7,8 +7,12 @@ namespace FortBlast.Buildings.BaseScene
     [RequireComponent(typeof(BoxCollider))]
     public class EquipmentFixer : MonoBehaviour
     {
+        private const float DelayedFixingTime = 0.5f;
+
         [Header("Display")]
-        public GameObject fixEffect;
+        public GameObject repairEffect;
+        public Vector3 effectOffset;
+        public Vector3 effectScale;
 
         [Header("Object Affected")]
         public float totalFixingTime;
@@ -71,15 +75,24 @@ namespace FortBlast.Buildings.BaseScene
 
             if (_currentFixingTime >= totalFixingTime)
             {
-                _equipmentFixed = true;
-                UniSlider.instance.DiscardSlider(gameObject);
+                Vector3 effectPosition = equipments[0].affectedObject.transform.position + effectOffset;
+                GameObject repairEffectInstance = Instantiate(repairEffect, effectPosition, Quaternion.identity);
+                repairEffectInstance.transform.localScale = effectScale;
 
-                foreach (EquipmentToBeAffected equipment in equipments)
-                {
-                    GameObject affectedObject = equipment.affectedObject;
-                    affectedObject.transform.position = equipment.originalPosition;
-                    affectedObject.transform.rotation = Quaternion.Euler(equipment.originalRotation);
-                }
+                _equipmentFixed = true;
+
+                UniSlider.instance.DiscardSlider(gameObject);
+                Invoke(nameof(FixObjects), DelayedFixingTime);
+            }
+        }
+
+        private void FixObjects()
+        {
+            foreach (EquipmentToBeAffected equipment in equipments)
+            {
+                GameObject affectedObject = equipment.affectedObject;
+                affectedObject.transform.position = equipment.originalPosition;
+                affectedObject.transform.rotation = Quaternion.Euler(equipment.originalRotation);
             }
         }
 
