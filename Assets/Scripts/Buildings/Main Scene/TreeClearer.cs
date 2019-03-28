@@ -1,7 +1,7 @@
 ﻿using FortBlast.Extras;
 using UnityEngine;
 
-namespace FortBlast.Buildings
+namespace FortBlast.Buildings.MainScene
 {
     [RequireComponent(typeof(Rigidbody))]
     public class TreeClearer : MonoBehaviour

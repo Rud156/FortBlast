@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace FortBlast.Buildings
+namespace FortBlast.Buildings.MainScene
 {
     [RequireComponent(typeof(Collider))]
     public class SwitchColliderNotifier : MonoBehaviour

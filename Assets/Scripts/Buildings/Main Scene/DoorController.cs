@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FortBlast.Buildings
+namespace FortBlast.Buildings.MainScene
 {
     public class DoorController : MonoBehaviour
     {
