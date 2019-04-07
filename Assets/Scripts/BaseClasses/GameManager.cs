@@ -1,8 +1,8 @@
 using FortBlast.Extras;
 using FortBlast.Player.AffecterActions;
 using FortBlast.Player.Movement;
+using FortBlast.Player.StatusDisplay;
 using FortBlast.Resources;
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace FortBlast.BaseClasses
@@ -15,15 +15,20 @@ namespace FortBlast.BaseClasses
 
         private bool _inventoryOpen;
         private bool _itemSpawned;
+        private bool _statusDisplayOpen;
 
         protected virtual void Start()
         {
             _inventoryOpen = false;
             _itemSpawned = false;
+            _statusDisplayOpen = false;
 
             LockCursor();
+
             InventoryManager.instance.inventoryOpened += InventoryOpened;
             InventoryManager.instance.inventoryItemSelected += InventoryItemSelected;
+
+            PlayerUIDisplay.instance.statusDisplayOpened += StatusDisplayOpened;
         }
 
         protected void Update()
@@ -36,12 +41,16 @@ namespace FortBlast.BaseClasses
 
             else if (_inventoryOpen)
                 CloseInventory();
+
+            else if (_statusDisplayOpen)
+                CloseStatusDisplay();
         }
 
         protected void OnDestroy()
         {
             InventoryManager.instance.inventoryOpened -= InventoryOpened;
             InventoryManager.instance.inventoryItemSelected -= InventoryItemSelected;
+            PlayerUIDisplay.instance.statusDisplayOpened -= StatusDisplayOpened;
         }
 
         #region Inventory
@@ -92,6 +101,18 @@ namespace FortBlast.BaseClasses
         }
 
         #endregion InventoryItem
+
+        #region Status Display
+
+        private void StatusDisplayOpened() => _statusDisplayOpen = true;
+
+        private void CloseStatusDisplay()
+        {
+            _statusDisplayOpen = false;
+            PlayerUIDisplay.instance.CloseStatusDisplay();
+        }
+
+        #endregion
 
         private void LockCursor()
         {
