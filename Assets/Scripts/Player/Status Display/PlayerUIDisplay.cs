@@ -26,10 +26,7 @@ namespace FortBlast.Player.StatusDisplay
 
         #endregion
 
-        [Header("Prefabs")] public GameObject listItemPrefab;
-
         [Header("Display")] public Text generalDisplayText;
-        public RectTransform listHolder;
         public List<GameObject> listDisplayObjects;
 
         [Header("General")] public Animator statusDisplayAnimator;
@@ -45,9 +42,7 @@ namespace FortBlast.Player.StatusDisplay
         public void DisplayItemList(List<InventoryItemStats> inventoryDisplayItems)
         {
             foreach (var listDisplayObject in listDisplayObjects)
-            {
                 listDisplayObject.SetActive(false);
-            }
 
             for (int i = 0; i < inventoryDisplayItems.Count; i++)
             {

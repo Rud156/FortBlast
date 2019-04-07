@@ -6,10 +6,10 @@ namespace FortBlast.Common
     public class ObjectFollowPlayer : MonoBehaviour
     {
         [Header("Base Stats")] public float followSpeed = 10f;
-        public float lookSpeed = 10f;
         public Vector3 objectOffset;
 
         [Header("Rotation")] public bool useRotation;
+        public float lookSpeed = 10f;
 
         private Transform _player;
         private Vector3 _lastPlayerPosition;
