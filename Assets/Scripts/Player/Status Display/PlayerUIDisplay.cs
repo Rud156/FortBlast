@@ -11,10 +11,8 @@ namespace FortBlast.Player.StatusDisplay
         #region Animations
 
         private const string StatusDisplayOpenParam = "StatusOpen";
-        private const string StatusDisplayCloseParam = "StatusClose";
 
         private static readonly int StatusDisplayOpenAnimation = Animator.StringToHash(StatusDisplayOpenParam);
-        private static readonly int StatusDisplayCloseAnimation = Animator.StringToHash(StatusDisplayCloseParam);
 
         #endregion
 
@@ -35,8 +33,19 @@ namespace FortBlast.Player.StatusDisplay
         public GameObject generalDisplayTextGameObject;
         public GameObject listDisplayGameObject;
 
+        private bool _statusDisplayOpen;
+
+        private void Start()
+        {
+            listDisplayGameObject.SetActive(false);
+            generalDisplayTextGameObject.SetActive(false);
+        }
+
         public void DisplayGeneralText(string textToDisplay, Color textColor)
         {
+            OpenStatusDisplay();
+            generalDisplayTextGameObject.SetActive(true);
+
             float textAlpha = generalDisplayText.color.a;
             generalDisplayText.color = new Color(textColor.r, textColor.g, textColor.b, textAlpha);
 
@@ -49,6 +58,9 @@ namespace FortBlast.Player.StatusDisplay
         public void DisplayItemList(List<InventoryItemStats> inventoryDisplayItems, string headerTextContent,
             Color color, Color headerColor)
         {
+            OpenStatusDisplay();
+            listDisplayGameObject.SetActive(true);
+
             foreach (var listDisplayObject in listDisplayObjects)
                 listDisplayObject.SetActive(false);
 
@@ -61,6 +73,7 @@ namespace FortBlast.Player.StatusDisplay
             {
                 var inventoryDisplayItem = inventoryDisplayItems[i];
                 GameObject listItemInstance = listDisplayObjects[i];
+                listItemInstance.SetActive(true);
 
                 Transform listItemTransform = listItemInstance.transform;
                 listItemTransform.GetChild(0).GetComponent<Image>().sprite = inventoryDisplayItem.inventoryItem.image;
@@ -74,14 +87,24 @@ namespace FortBlast.Player.StatusDisplay
             generalDisplayTextGameObject.SetActive(false);
         }
 
-        public void OpenStatusDisplay()
+        private void OpenStatusDisplay()
         {
+            if (_statusDisplayOpen)
+                return;
+
+            _statusDisplayOpen = true;
             statusDisplayOpened?.Invoke();
             statusDisplayAnimator.SetBool(StatusDisplayOpenAnimation, true);
         }
 
-        public void CloseStatusDisplay() =>
-            statusDisplayAnimator.SetBool(StatusDisplayCloseAnimation, false);
+        public void CloseStatusDisplay()
+        {
+            _statusDisplayOpen = false;
+            statusDisplayAnimator.SetBool(StatusDisplayOpenAnimation, false);
+
+            listDisplayGameObject.SetActive(false);
+            generalDisplayTextGameObject.SetActive(false);
+        }
 
         #region Singleton
 

@@ -3,6 +3,7 @@ using FortBlast.Resources;
 using FortBlast.Structs;
 using FortBlast.UI;
 using System.Collections.Generic;
+using FortBlast.Player.StatusDisplay;
 using UnityEngine;
 
 namespace FortBlast.Buildings.BaseScene
@@ -72,7 +73,9 @@ namespace FortBlast.Buildings.BaseScene
             if (Input.GetKeyDown(Controls.InteractionKey))
             {
                 CheckForResources();
-                ContentDisplay.instance.DisplayText("Not Enough Resources", Color.red);
+                PlayerUIDisplay.instance.DisplayItemList(
+                    inventoryItems, "Not Enough Resources Available",
+                    Color.white, Color.red);
                 UniSlider.instance.InitSlider(gameObject);
             }
             else if (Input.GetKeyUp(Controls.InteractionKey))

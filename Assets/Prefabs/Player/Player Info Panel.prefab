@@ -470,7 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followSpeed: 100
-  objectOffset: {x: 0.5, y: 2, z: 3}
+  objectOffset: {x: 0, y: 2, z: 3}
   useRotation: 1
   lookSpeed: 21
 --- !u!1 &424861836945205417
