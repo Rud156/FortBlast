@@ -26,23 +26,36 @@ namespace FortBlast.Player.StatusDisplay
 
         #endregion
 
-        [Header("Display")] public Text generalDisplayText;
+        [Header("Display")] public TextMeshProUGUI generalDisplayText;
+        public Image borderImage;
         public List<GameObject> listDisplayObjects;
+        public TextMeshProUGUI headerText;
 
         [Header("General")] public Animator statusDisplayAnimator;
+        public GameObject generalDisplayTextGameObject;
+        public GameObject listDisplayGameObject;
 
-        public void DisplayGeneralText(string textToDisplay, Color color)
+        public void DisplayGeneralText(string textToDisplay, Color textColor)
         {
             float textAlpha = generalDisplayText.color.a;
-            generalDisplayText.color = new Color(color.r, color.g, color.b, textAlpha);
+            generalDisplayText.color = new Color(textColor.r, textColor.g, textColor.b, textAlpha);
 
             generalDisplayText.text = textToDisplay;
+            borderImage.color = textColor;
+
+            listDisplayGameObject.SetActive(false);
         }
 
-        public void DisplayItemList(List<InventoryItemStats> inventoryDisplayItems)
+        public void DisplayItemList(List<InventoryItemStats> inventoryDisplayItems, string headerTextContent,
+            Color color, Color headerColor)
         {
             foreach (var listDisplayObject in listDisplayObjects)
                 listDisplayObject.SetActive(false);
+
+            borderImage.color = color;
+            headerText.color = headerColor;
+
+            headerText.text = headerTextContent;
 
             for (int i = 0; i < inventoryDisplayItems.Count; i++)
             {
@@ -53,8 +66,12 @@ namespace FortBlast.Player.StatusDisplay
                 listItemTransform.GetChild(0).GetComponent<Image>().sprite = inventoryDisplayItem.inventoryItem.image;
                 listItemTransform.GetChild(1).GetComponent<TextMeshProUGUI>().text =
                     inventoryDisplayItem.inventoryItem.displayName;
+                listItemTransform.GetChild(1).GetComponent<TextMeshProUGUI>().color = color;
                 listItemTransform.GetChild(2).GetComponent<TextMeshProUGUI>().text = $"x {inventoryDisplayItem.itemCount}";
+                listItemTransform.GetChild(2).GetComponent<TextMeshProUGUI>().color = color;
             }
+
+            generalDisplayTextGameObject.SetActive(false);
         }
 
         public void OpenStatusDisplay()
